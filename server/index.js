@@ -18,4 +18,3 @@ app.get('/', (req, res) => {
     console.log(`Server listening on port ${config.app.port}`);
   });
 
-  
