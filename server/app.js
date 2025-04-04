@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const Database = require('better-sqlite3');
-const config = require('./config');
+const config = require('./config.js');
 
 const app = express();
 
