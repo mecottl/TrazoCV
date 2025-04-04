@@ -4,6 +4,7 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: #6A858C;
 /* Estilo para el menú de login */
+}
 
 .login-menu {
     display: flex;
