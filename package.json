@@ -1,17 +1,10 @@
 {
   "name": "app-cv",
   "version": "1.0.0",
-<<<<<<< HEAD
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "start": "nodemon server/index.js"
-=======
-  "main": "login.html",
-  "scripts": {
-  "start": "node server/index.js",
-  "postinstall": "npm rebuild better-sqlite3"
->>>>>>> 68c13f4898cc76e605ce52384dea48edc3b205f8
+    "start": "nodemon server/index.js",
+    "postinstall": "npm rebuild better-sqlite3"
   },
   "keywords": [],
   "author": "",
