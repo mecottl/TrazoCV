@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "login.html",
   "scripts": {
-    "start": "node server/index.js"
+  "start": "node server/index.js",
+  "postinstall": "npm rebuild better-sqlite3"
   },
   "keywords": [],
   "author": "",
