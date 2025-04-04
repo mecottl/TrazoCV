@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Iniciar Sesión</h1>
-    <form action="/login" method="post">
+    <form id="loginForm">
         <label for="email">Correo:</label>
         <input type="text" name="email" id="email" required>
         <br>
@@ -15,5 +15,8 @@
         <br>
         <button type="submit">Ingresar</button>
     </form>
+
+    <!-- Carga el archivo JS usando ruta absoluta -->
+    <script src="/js/login.js"></script>
 </body>
 </html>
