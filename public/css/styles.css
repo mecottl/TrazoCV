@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #6A858C;
+/* Estilo para el menú de login */
+}
+
+.login-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    color: white;
+  }
+
+  h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  form#loginForm {
+    background: transparent;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+    color: black;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 300px;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    outline: none;
+  }
+
+  button[type="submit"] {
+    background-color: #BF6D3C;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #a4572d;
+  }

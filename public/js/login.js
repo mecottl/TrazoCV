@@ -1,69 +1,57 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+document.addEventListener('DOMContentLoaded', () => {
+  const loginForm = document.getElementById('loginForm');
 
-const app = express();
+  loginForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
 
-// Configura body-parser para poder leer los datos de formularios
-app.use(bodyParser.urlencoded({ extended: false }));
+    // Obtén y recorta los valores de los campos
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-// Sirve los archivos estáticos (por ejemplo, tu archivo HTML)
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Conexión a la base de datos SQLite (se crea el archivo si no existe)
-const db = new sqlite3.Database(
-  path.join(__dirname, '..','db', 'trazocv.db'),
-  sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
-  (err) => {
-    if (err) {
-      console.error('Error al conectar a la base de datos:', err.message);
-    } else {
-      console.log('Conectado a la base de datos SQLite.');
+    // Validaciones básicas en el cliente
+    if (!email || !password) {
+      alert('Debes ingresar tanto el correo como la contraseña.');
+      return;
     }
-  }
-);
 
-// Ruta para mostrar el formulario de inicio de sesión
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'html', 'login.html'));
-});
-
-// Ruta para procesar el inicio de sesión
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  
-  // NOTA: En un entorno real, las contraseñas deben estar hasheadas.
-  const query = `SELECT * FROM users WHERE email = ? AND password = ?`;
-  db.get(query, [email, password], (err, row) => {
-    if (err) {
-      console.error('Error en la consulta:', err.message);
-      return res.status(500).send(`
-        <script>
-          alert("Error en la base de datos");
-          window.location.href = "/login";
-        </script>
-      `);
+    // Validación de formato de correo (opcional)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert('Ingresa un correo electrónico válido.');
+      return;
     }
-    if (row) {
-      res.send(`
-        <script>
-          alert("Inicio de sesión exitoso");
-          window.location.href = "/";
-        </script>
-      `);
-    } else {
-      res.send(`
-        <script>
-          alert("Usuario o contraseña incorrectos");
-          window.location.href = "/login";
-        </script>
-      `);
+
+    try {
+      // Enviar la petición POST al servidor
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      // Si el servidor respondió con un error HTTP (por ejemplo, 500)
+      if (!response.ok) {
+        alert('Ocurrió un error en la base de datos');
+        return;
+      }
+
+      // Parseamos la respuesta JSON
+      const data = await response.json();
+
+      // Verifica la respuesta del servidor
+      if (data.success) {
+        alert(data.message); // "Inicio de sesión exitoso"
+        // Redirige a la siguiente página (por ejemplo, a la raíz o a otra página protegida)
+        window.location.href = '/';
+      } else {
+        alert(data.message); // "Usuario o contraseña incorrectos"
+        loginForm.reset();
+      }
+    } catch (error) {
+      console.error('Error al procesar la solicitud:', error);
+      alert('Ocurrió un error en la solicitud');
     }
   });
-});
-
-// Inicia el servidor en el puerto 3000
-app.listen(3000, () => {
-  console.log('Servidor corriendo en http://localhost:3000');
 });
