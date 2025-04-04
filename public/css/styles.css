@@ -10,38 +10,29 @@ body {
     flex-direction: column;
     color: white;
   }
-  
-  .login-container {
+
+  h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
     text-align: center;
+  }
+
+  form#loginForm {
     background: transparent;
     padding: 2rem;
     border-radius: 10px;
+    text-align: center;
   }
-  
-  .login-container h1 {
-    font-size: 2.8rem;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-  }
-  
-  .login-container p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
+
   label {
+    display: block;
     margin: 10px 0 5px;
     font-weight: bold;
     color: black;
   }
-  
-  input[type="email"],
+
+  input[type="text"],
   input[type="password"] {
     width: 300px;
     padding: 12px;
@@ -51,15 +42,8 @@ body {
     margin-bottom: 15px;
     outline: none;
   }
-  
-  .forgot-password {
-    margin-bottom: 1.5rem;
-    font-size: 0.9rem;
-    color: white;
-    text-decoration: none;
-  }
-  
-  button {
+
+  button[type="submit"] {
     background-color: #BF6D3C;
     color: white;
     border: none;
@@ -70,24 +54,7 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
-  
-  button:hover {
+
+  button[type="submit"]:hover {
     background-color: #a4572d;
   }
-  
-  .register-link {
-    margin-top: 2rem;
-    font-size: 1rem;
-    color: white;
-  }
-  
-  .register-link a {
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  
-  .register-link a:hover {
-    text-decoration: underline;
-  }
-  
