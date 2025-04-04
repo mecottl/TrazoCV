@@ -1,31 +1,33 @@
 import readline from "readline";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Instancia del modelo con tu API Key
-const genAI = new GoogleGenerativeAI("AIzaSyAVVZJCTCM0pODMwTYBTWL52-LddUxvhX0");
+// Crea la instancia del modelo con tu API key
+const genAI = new GoogleGenerativeAI("AIzaSyAsOPZkxV2Mj5OX9Igu4G0IZ0Wiel6M5bc");
 
-// Configura la entrada y salida desde terminal
+// Interfaz para leer desde consola
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
-// Pregunta al usuario su prompt
-rl.question("Escribe tu pregunta para Gemini: ", async (userInput) => {
+// Declaramos variable global donde guardaremos el prompt
+let promptUsuario = "";
+
+// Preguntamos al usuario y almacenamos en la variable
+rl.question("Escribe tu pregunta para Gemini: ", async (entrada) => {
+  promptUsuario = entrada; // ✅ Guardamos en variable
+
   try {
-    // Obtiene el modelo Gemini
+    // Usamos la variable como input para el modelo
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const result = await model.generateContent(promptUsuario); // ✅ Usamos la variable
+    const respuesta = result.response.text();
 
-    // Envía el prompt ingresado por el usuario
-    const result = await model.generateContent(userInput);
-
-    // Obtiene y muestra el texto generado
-    const text = result.response.text();
-    console.log("\nRespuesta del modelo:");
-    console.log(text);
+    console.log("\nRespuesta de Gemini:");
+    console.log(respuesta);
   } catch (error) {
-    console.error("Ocurrió un error:", error);
+    console.error("Error al generar respuesta:", error);
   } finally {
-    rl.close(); // Cierra la interfaz de lectura
+    rl.close();
   }
 });
