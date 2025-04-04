@@ -3,17 +3,18 @@
   "version": "1.0.0",
   "main": "login.html",
   "scripts": {
-    "start": "nodemon server/index.js"
+  "start": "node server/index.js",
+  "postinstall": "npm rebuild better-sqlite3"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "better-sqlite3": "^11.9.1",
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
     "nodemon": "^3.1.9",
-    "path": "^0.12.7",
-    "sqlite3": "^5.1.7"
+    "path": "^0.12.7"
   }
 }
