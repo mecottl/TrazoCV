@@ -2,8 +2,9 @@
   "name": "app-cv",
   "version": "1.0.0",
   "main": "index.js",
+  "type" : "module",
   "scripts": {
-    "start": "nodemon server/index.js",
+    "start": "node server/index.js",
     "postinstall": "npm rebuild better-sqlite3"
   },
   "keywords": [],
