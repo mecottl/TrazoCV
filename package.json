@@ -11,24 +11,15 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-<<<<<<< HEAD
     "@google-cloud/vertexai": "^1.9.3",
     "@google/genai": "^0.7.0",
     "@google/generative-ai": "^0.24.0",
-=======
-    "better-sqlite3": "^11.9.1",
->>>>>>> 68c13f4898cc76e605ce52384dea48edc3b205f8
     "body-parser": "^2.2.0",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
-<<<<<<< HEAD
     "node-fetch": "^3.3.2",
     "openai": "^4.91.1",
     "path": "^0.12.7",
     "sqlite3": "^5.1.7"
-=======
-    "nodemon": "^3.1.9",
-    "path": "^0.12.7"
->>>>>>> 68c13f4898cc76e605ce52384dea48edc3b205f8
   }
 }
