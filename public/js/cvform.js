@@ -1,51 +1,90 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const cvForm = document.getElementById('cvForm');
-
-  // Array para almacenar las entradas del CV
-  let cvEntries = [];
-
-  // Cargar entradas almacenadas en localStorage (si existen)
-  const storedEntries = localStorage.getItem('cvEntries');
-  if (storedEntries) {
-    cvEntries = JSON.parse(storedEntries);
-  }
-
-  cvForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    // Capturar los valores de cada campo y eliminamos espacios extra
-    const nombre = document.getElementById('nombre').value.trim();
-    const apellidos = document.getElementById('apellidos').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const telefono = document.getElementById('telefono').value.trim();
-    const direccion = document.getElementById('direccion').value.trim();
-    const cp = document.getElementById('cp').value.trim();
-    const localidad = document.getElementById('localidad').value.trim();
-    const experiencia = document.getElementById('experiencia').value.trim();
-    const educacion = document.getElementById('educacion').value.trim();
-
-    // Crear un objeto con la información del CV
-    const cvData = {
-      nombre,
-      apellidos,
-      email,
-      telefono,
-      direccion,
-      experiencia,
-      educacion
-    };
-
-    // Agregar el objeto al array de entradas
-    cvEntries.push(cvData);
-
-    // Guardar el array actualizado en localStorage
-    localStorage.setItem('cvEntries', JSON.stringify(cvEntries));
-
-    // Limpiar el formulario
-    cvForm.reset();
-
-    // Notificar al usuario y mostrar en consola la entrada guardada
-    alert("CV guardado exitosamente");
-    console.log("Entradas de CV:", cvEntries);
+    // Determinar qué formulario está presente
+    if (document.getElementById('cvBasicForm')) {
+      document.getElementById('cvBasicForm').addEventListener('submit', handleBasicCV);
+    } else if (document.getElementById('cvIntermediateForm')) {
+      document.getElementById('cvIntermediateForm').addEventListener('submit', handleIntermediateCV);
+    } else if (document.getElementById('cvAdvancedForm')) {
+      document.getElementById('cvAdvancedForm').addEventListener('submit', handleAdvancedCV);
+    }
+  
+    // Función para el CV Básico
+    function handleBasicCV(event) {
+      event.preventDefault();
+      const nombre = document.getElementById('nombre').value.trim();
+      const apellido = document.getElementById('apellido').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+      const correo = document.getElementById('correo').value.trim();
+      const ciudad = document.getElementById('ciudad').value.trim();
+      const pais = document.getElementById('pais').value.trim();
+      const perfil = document.getElementById('perfil').value.trim();
+      const formacion = document.getElementById('formacion').value.trim();
+      const experiencia = document.getElementById('experiencia').value.trim();
+      const habilidades = document.getElementById('habilidades').value.trim();
+  
+      // Combina nombre y apellido
+      const fullName = `Mi nombre es ${nombre} ${apellido}.`;
+      // Combina teléfono y correo
+      const contacto = `Contacto: Tel. ${telefono} - Correo: ${correo}.`;
+      // Combina ubicación (si se proporcionan)
+      const ubicacion = (ciudad || pais) ? `Ubicación: ${ciudad}${ciudad && pais ? ', ' : ''}${pais}.` : '';
+      // Consolidación final para CV Básico
+      const resumenCV = `${fullName} ${contacto} ${ubicacion} Perfil: ${perfil} Formación: ${formacion} Experiencia: ${experiencia} Habilidades: ${habilidades}`;
+      
+      console.log("CV Básico:", resumenCV);
+      alert("CV Básico guardado:\n" + resumenCV);
+      event.target.reset();
+    }
+  
+    // Función para el CV Intermedio
+    function handleIntermediateCV(event) {
+      event.preventDefault();
+      const nombre = document.getElementById('nombre').value.trim();
+      const apellido = document.getElementById('apellido').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+      const correo = document.getElementById('correo').value.trim();
+      const perfilProfesional = document.getElementById('perfilProfesional').value.trim();
+      const formacion = document.getElementById('formacion').value.trim();
+      const experiencia = document.getElementById('experiencia').value.trim();
+      const habilidades = document.getElementById('habilidades').value.trim();
+      const idiomas = document.getElementById('idiomas').value.trim();
+      const certificaciones = document.getElementById('certificaciones').value.trim();
+      const proyectos = document.getElementById('proyectos').value.trim();
+  
+      const fullName = `Mi nombre es ${nombre} ${apellido}.`;
+      const contacto = `Contacto: Tel. ${telefono} - Correo: ${correo}.`;
+      const resumenCV = `${fullName} ${contacto} Perfil Profesional: ${perfilProfesional} Formación: ${formacion} Experiencia: ${experiencia} Habilidades: ${habilidades} Idiomas: ${idiomas} Certificaciones: ${certificaciones} Proyectos: ${proyectos}`;
+      
+      console.log("CV Intermedio:", resumenCV);
+      alert("CV Intermedio guardado:\n" + resumenCV);
+      event.target.reset();
+    }
+  
+    // Función para el CV Avanzado
+    function handleAdvancedCV(event) {
+      event.preventDefault();
+      const nombre = document.getElementById('nombre').value.trim();
+      const apellido = document.getElementById('apellido').value.trim();
+      const tituloProfesional = document.getElementById('tituloProfesional').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+      const correo = document.getElementById('correo').value.trim();
+      const linkedin = document.getElementById('linkedin').value.trim();
+      const portafolio = document.getElementById('portafolio').value.trim();
+      const resumen = document.getElementById('resumen').value.trim();
+      const experiencia = document.getElementById('experiencia').value.trim();
+      const formacion = document.getElementById('formacion').value.trim();
+      const habilidades = document.getElementById('habilidades').value.trim();
+      const idiomas = document.getElementById('idiomas').value.trim();
+      const publicaciones = document.getElementById('publicaciones').value.trim();
+      const portafolioAdicional = document.getElementById('portafolioAdicional').value.trim();
+  
+      const fullNameTitle = `Soy ${nombre} ${apellido}, ${tituloProfesional}.`;
+      const contacto = `Contacto: Tel. ${telefono} - Correo: ${correo} - LinkedIn: ${linkedin} - Portafolio: ${portafolio}.`;
+      const resumenCV = `${fullNameTitle} ${contacto} Resumen: ${resumen} Experiencia: ${experiencia} Formación: ${formacion} Habilidades: ${habilidades} Idiomas: ${idiomas} Publicaciones: ${publicaciones} Enlaces: ${portafolioAdicional}`;
+      
+      console.log("CV Avanzado:", resumenCV);
+      alert("CV Avanzado guardado:\n" + resumenCV);
+      event.target.reset();
+    }
   });
-});
+  
