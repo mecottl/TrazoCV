@@ -1,63 +1,93 @@
-/* Estilo para el menú de login */
-.login-menu {
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #6A858C;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
-}
-
-.login-menu h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
+    min-height: 100vh;
+    flex-direction: column;
+    color: white;
+  }
+  
+  .login-container {
     text-align: center;
-}
-
-.login-menu form {
-    width: 100%;
-}
-
-.login-menu input[type="Email"],
-.login-menu input[type="password"] {
-    width: 100%;
-    padding: 10px;
+    background: transparent;
+    padding: 2rem;
+    border-radius: 10px;
+  }
+  
+  .login-container h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .login-container p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  label {
+    margin: 10px 0 5px;
+    font-weight: bold;
+    color: black;
+  }
+  
+  input[type="email"],
+  input[type="password"] {
+    width: 300px;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-.login-menu button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
+    outline: none;
+  }
+  
+  .forgot-password {
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: white;
+    text-decoration: none;
+  }
+  
+  button {
+    background-color: #BF6D3C;
     color: white;
     border: none;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 25px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.login-menu button:hover {
-    background-color: #0056b3;
-}
-
-.login-menu a {
-    display: block;
-    margin-top: 10px;
-    text-align: center;
-    color: #007bff;
+  }
+  
+  button:hover {
+    background-color: #a4572d;
+  }
+  
+  .register-link {
+    margin-top: 2rem;
+    font-size: 1rem;
+    color: white;
+  }
+  
+  .register-link a {
+    color: white;
+    font-weight: bold;
     text-decoration: none;
-    font-size: 14px;
-}
-
-.login-menu a:hover {
+  }
+  
+  .register-link a:hover {
     text-decoration: underline;
-}
+  }
+  
