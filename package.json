@@ -1,9 +1,9 @@
 {
   "name": "app-cv",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "login.html",
   "scripts": {
-    "start": "node server/index.js"
+    "start": "nodemon server/index.js"
   },
   "keywords": [],
   "author": "",

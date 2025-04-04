@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>TRAZOCV</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css"/>
+
 </head>
 <body>
-    <h1>Iniciar Sesión</h1>
-    <form id="loginForm">
-        <label for="email">Correo:</label>
-        <input type="text" name="email" id="email" required>
-        <br>
-        <label for="password">Contraseña:</label>
-        <input type="password" name="password" id="password" required>
-        <br>
-        <button type="submit">Ingresar</button>
-    </form>
+    <div class="login-menu">
+        <form id="loginForm">
+            <h2>Iniciar Sesión</h2>
 
-    <!-- Carga el archivo JS usando ruta absoluta -->
+            <label for="email">Correo:</label>
+            <input type="email" name="email" id="email" required>
+
+            <label for="password">Contraseña:</label>
+            <input type="password" name="password" id="password" required>
+
+            <button type="submit">Ingresar</button>
+
+            <a href="#">¿Olvidaste tu contraseña?</a>
+        </form>
+    </div>
+
     <script src="/js/login.js"></script>
 </body>
 </html>
