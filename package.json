@@ -2,16 +2,23 @@
   "name": "app-cv",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node server/index.js"
+    "start": "nodemon server/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@google-cloud/vertexai": "^1.9.3",
+    "@google/genai": "^0.7.0",
+    "@google/generative-ai": "^0.24.0",
     "body-parser": "^2.2.0",
+    "dotenv": "^16.4.7",
     "express": "^5.1.0",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.91.1",
     "path": "^0.12.7",
     "sqlite3": "^5.1.7"
   }
