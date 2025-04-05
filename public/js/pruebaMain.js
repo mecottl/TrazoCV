@@ -1,6 +1,7 @@
 const obtenerRespuestaGemini = require("./geminiClient");
 
-const prompt1 = "¿Cómo te llamas?";
+
+const prompt1 = "crea un cv para un ingeniero "
 
 async function main() {
   const respuesta = await obtenerRespuestaGemini(prompt1);
