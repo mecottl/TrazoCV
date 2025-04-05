@@ -64,7 +64,6 @@ export function getAdvancedCVSummary() {
   const nombre    = document.getElementById('nombre').value.trim();
   const apellido  = document.getElementById('apellido').value.trim();
   const edad  = document.getElementById('edad').value.trim();
-
   const tituloProfesional = document.getElementById('tituloProfesional').value.trim();
   const telefono  = document.getElementById('telefono').value.trim();
   const correo    = document.getElementById('correo').value.trim();

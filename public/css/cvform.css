@@ -1,67 +1,121 @@
-
-/* Reset básico y estilos generales */
+/* Importante para que el padding no cause desbordes */
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background: #d8ccbf;
-  color: #333;
-  line-height: 1.6;
-  padding: 20px;
+  background: #a3846c;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
 }
 
-header {
-  background: #bea794;
-  color: #886245;
-  padding: 20px;
+/* Contenedor principal */
+.container {
+  max-width: 700px;
+  margin: 60px auto;
+  background: #d8ccbf;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+h1 {
   text-align: center;
+  color: #333;
   margin-bottom: 30px;
 }
 
-main {
-  max-width: 600px;
-  margin: 0 auto;
+/* Lista de archivos */
+ul#fileList {
+  list-style: none;
+  padding: 0;
 }
 
-.form-cv {
-  background: #886245;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+ul#fileList li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #d8ccbf9f;
+  padding: 12px 20px;
+  margin-bottom: 12px;
+  border-left: 4px solid #070012;
+  border-radius: 6px;
+  transition: background 0.3s;
 }
 
-.form-group {
-  margin-bottom: 15px;
+ul#fileList li:hover {
+  background: #eee;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+ul#fileList li span {
+  color: #444;
+  font-size: 16px;
 }
 
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
+/* Botón */
 .btn {
-  background: #bea794;
-  color: #fff;
-  padding: 10px 15px;
+  background-color: #bea794;
+  color: white;
+  padding: 10px 16px;
   border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.3s ease;
 }
 
 .btn:hover {
-  background: #a3846c;
+  background-color: #9c846b;
+}
+
+/* ------------------- RESPONSIVE ------------------- */
+@media (max-width: 768px) {
+  .container {
+    margin: 40px 20px;
+    padding: 25px 20px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  ul#fileList li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  ul#fileList li span {
+    font-size: 15px;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    margin: 30px 12px;
+    padding: 20px 16px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  ul#fileList li {
+    padding: 12px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
 }
