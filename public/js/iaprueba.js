@@ -1,3 +1,4 @@
+import { marked } from 'https://cdn.jsdelivr.net/npm/marked@4.3.0/lib/marked.esm.js';
 import {
   getBasicCVSummary,
   getIntermediateCVSummary,
@@ -107,4 +108,5 @@ document.addEventListener('DOMContentLoaded', () => {
       alert("No se pudo exportar el PDF.");
     }
   });
+  
 });
