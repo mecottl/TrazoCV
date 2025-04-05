@@ -140,3 +140,31 @@ main h2 {
     font-size: 1.2rem;
   }
 }
+
+/* --------- Responsive para móviles pequeños --------- */
+@media screen and (max-width: 480px) {
+  body {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.2rem;
+  }
+
+  .card h2 {
+    font-size: 20px;
+  }
+
+  .card p {
+    font-size: 18px;
+  }
+
+  .btn {
+    font-size: 15px;
+    padding: 14px 24px;
+  }
+
+  .page-title {
+    font-size: 28px;
+  }
+}

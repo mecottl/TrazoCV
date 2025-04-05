@@ -100,11 +100,14 @@ a:hover {
 
 .register-link {
   position: fixed;
-  bottom: 10px;
-  left: 15px;
-  font-size: 0.9rem;
-  color: rgb(5, 5, 5);
-  z-index: 10;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.95rem;
+  color: white;
+  font-weight: 400;
+  z-index: 100;
 }
 
 .register-link a {
@@ -116,6 +119,7 @@ a:hover {
 .register-link a:hover {
   text-decoration: underline;
 }
+
 
 /* Media queries para pantallas más grandes */
 @media (min-width: 600px) {

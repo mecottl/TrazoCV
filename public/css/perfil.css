@@ -1,7 +1,7 @@
 /* Fondo general y tipografía */
 body {
   margin: 0;
-  padding: 0;
+  padding: 2rem;
   font-family: 'Inter', sans-serif;
   background-color: #9A897B;
   color: white;
@@ -9,7 +9,6 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -18,11 +17,9 @@ body {
   color: rgb(10, 9, 9);
   font-size: 50px;
   font-weight: 600;
-  text-align: center;
   margin-top: 40px;
   margin-bottom: 20px;
 }
-
 
 /* Contenedor del menú de tarjetas */
 .menu {
@@ -34,13 +31,13 @@ body {
   max-width: 1200px;
 }
 
-/* Cada tarjeta (card) */
+/* Tarjetas */
 .card {
   background-color: #D8CCBF;
   color: #333;
   border-radius: 30px;
   padding: 2rem;
-  height: 300px;
+  height: auto;
   width: 500px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   text-align: center;
@@ -52,33 +49,30 @@ body {
 }
 
 .card h2 {
-  margin-top: 0;
   font-size: 30px;
   font-weight: 600;
-  text-align: center;
   margin-bottom: 1rem;
   color: #000;
 }
 
 .card p {
-  font-size: 30px;
+  font-size: 24px;
   line-height: 1.5;
-  text-align: center;
   margin-bottom: 1.5rem;
   color: #444;
 }
 
-/* Botón con borde blanco */
+/* Botón */
 .btn {
   display: inline-block;
-  padding: 24px 48px;
+  padding: 18px 36px;
   background-color: #bea794;
   color: white;
   border: 2px solid white;
   text-decoration: none;
   border-radius: 30px;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
@@ -104,9 +98,7 @@ body {
   transform: scale(1.05);
 }
 
-
-
-/* Responsive para móviles */
+/* --------- Responsive para tablets --------- */
 @media screen and (max-width: 768px) {
   .menu {
     flex-direction: column;
@@ -115,9 +107,51 @@ body {
 
   .card {
     width: 90%;
+    padding: 1.5rem;
   }
 
-  h1 {
-    font-size: 2rem;
+  .card h2 {
+    font-size: 24px;
+  }
+
+  .card p {
+    font-size: 20px;
+  }
+
+  .btn {
+    font-size: 16px;
+    padding: 16px 28px;
+  }
+
+  .page-title {
+    font-size: 36px;
+  }
+}
+
+/* --------- Responsive para móviles pequeños --------- */
+@media screen and (max-width: 480px) {
+  body {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.2rem;
+  }
+
+  .card h2 {
+    font-size: 20px;
+  }
+
+  .card p {
+    font-size: 18px;
+  }
+
+  .btn {
+    font-size: 15px;
+    padding: 14px 24px;
+  }
+
+  .page-title {
+    font-size: 28px;
   }
 }
