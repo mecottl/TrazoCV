@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <title>Selecciona el Nivel de tu CV</title>
   <link rel="stylesheet" href="/css/choose.css">
-
+  <style>
+    /* Puedes incluir estilos adicionales aquí */
+  </style>
 </head>
 <body>
   <header>
@@ -38,8 +40,8 @@
         <a href="/inter" class="btn-card">Siguiente</a>
       </div>
   
-      <!-- CV Avanzado -->
-      <div class="card">
+      <!-- CV Avanzado (sólo para usuarios premium) -->
+      <div class="card card-advanced">
         <h3>AVANZADO</h3>
         <ul>
           <li>Combina cronológico y funcional.</li>
@@ -52,4 +54,31 @@
   
     </div>
   </main>
-  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Realiza un fetch al endpoint para obtener el email del usuario autenticado
+      fetch('/api/user')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Usuario no autenticado');
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Asigna el email a window.userEmail (opcional, para otros usos)
+          window.userEmail = data.email;
+          // Si el email es free@example.com, oculta la tarjeta de CV Avanzado
+          if (window.userEmail === 'free@example.com') {
+            const advancedCard = document.querySelector('.card-advanced');
+            if (advancedCard) {
+              advancedCard.style.display = 'none';
+            }
+          }
+        })
+        .catch(error => {
+          console.error('Error al obtener el usuario:', error);
+        });
+    });
+  </script>
+</body>
+</html>
