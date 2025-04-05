@@ -53,3 +53,26 @@ app.get('/suscription', (req, res) => {
     console.log(`Server listening on port ${config.app.port}`);
   });
 
+  const exportarHtmlAPdf = require('./generarPdf');
+
+  app.post('/exportar-pdf', async (req, res) => {
+    const { html } = req.body;
+  
+    if (!html) return res.status(400).send('No se recibió contenido HTML');
+  
+    try {
+      const pdfBuffer = await exportarHtmlAPdf(html);
+  
+      res.set({
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': 'attachment; filename=CV_Generado.pdf',
+        'Content-Length': pdfBuffer.length
+      });
+  
+      res.send(pdfBuffer);
+    } catch (err) {
+      console.error("Error generando el PDF:", err);
+      res.status(500).send("Error generando el PDF");
+    }
+  });
+  
