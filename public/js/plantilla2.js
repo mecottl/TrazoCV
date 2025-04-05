@@ -86,4 +86,4 @@ function generarCV(formData) {
   
   // ✅ Exportamos para poder usarlo desde iaprueba.js
   export { generarCV };
-  
+  °
