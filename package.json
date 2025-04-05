@@ -16,6 +16,7 @@
     "@google/generative-ai": "^0.24.0",
     "better-sqlite3": "^11.9.1",
     "body-parser": "^2.2.0",
+    "chrome": "^0.1.0",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "express-session": "^1.18.1",
