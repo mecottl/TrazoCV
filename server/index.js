@@ -29,6 +29,21 @@ app.get('/test', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'html', 'test_upload.html'));
 });
 
+
+app.get('/basic', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'html', 'cv_basic.html'));
+});
+
+
+app.get('/inter', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'html', 'cv_mid.html'));
+});
+
+app.get('/advance', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'html', 'cv_advance.html'));
+});
+
+
   app.listen(app.get('port'), () =>
   
   
