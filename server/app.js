@@ -238,4 +238,28 @@ app.get('/api/user', (req, res) => {
 });
 const generarPdfRoute = require('./exportarPdf.js');
 app.use('/generar-pdf', generarPdfRoute);
+const generarPDF = require('./ruta/del/archivo/generarPDF'); // Ajusta el path
+
+app.post('/descargar-pdf', async (req, res) => {
+  const html = req.body.html; // Asegúrate de enviar el HTML desde el cliente
+
+  if (!html) {
+    return res.status(400).json({ error: 'No se recibió el HTML' });
+  }
+
+  try {
+    const buffer = await generarPDF(html, 'CV_Generado.pdf');
+
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename="CV_Generado.pdf"',
+      'Content-Length': buffer.length
+    });
+
+    res.send(buffer);
+  } catch (err) {
+    console.error('Error al generar el PDF:', err);
+    res.status(500).send('Error al generar el PDF');
+  }
+});
 module.exports = app;

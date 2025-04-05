@@ -1,4 +1,3 @@
-import { marked } from 'https://cdn.jsdelivr.net/npm/marked@4.3.0/lib/marked.esm.js';
 import {
   getBasicCVSummary,
   getIntermediateCVSummary,
@@ -19,7 +18,7 @@ function getCVData() {
 
 function generarPromptHTML(resumenCV, tipo) {
   return `
-Genera un CV en formato HTML moderno tambien ponle estilo para que sea unico y profesional para un CV de tipo ${tipo}.
+Genera un CV en formato HTML moderno, estilizado y profesional para un CV de tipo ${tipo}.
 Usa <div>, <h2>, <p>, <ul> y <li> para estructurar secciones como:
 - Datos personales
 - Perfil profesional
@@ -28,7 +27,6 @@ Usa <div>, <h2>, <p>, <ul> y <li> para estructurar secciones como:
 - Habilidades
 - Idiomas
 Solo devuelve el bloque HTML, sin etiquetas <html>, <body> ni comentarios.
-
 Datos del usuario: ${resumenCV}
 `.trim();
 }
@@ -60,20 +58,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const data = await response.json();
       let htmlGenerado = data.cv?.trim();
-      htmlGenerado = htmlGenerado.replace(/^```html/, '').replace(/^```/, '').replace(/```$/, '').trim();
+
+      htmlGenerado = htmlGenerado
+        .replace(/^```html/, '')
+        .replace(/^```/, '')
+        .replace(/```$/, '')
+        .trim();
 
       if (!htmlGenerado.startsWith('<')) {
         return alert("La IA no devolvió un bloque HTML válido.");
       }
 
       contenidoLimpio = htmlGenerado;
+
+      // Previsualización limpia en pantalla
       contenedor.innerHTML = '';
       const wrapper = document.createElement('div');
       wrapper.id = 'cv-render';
-      wrapper.style.maxWidth = '800px';
-      wrapper.style.padding = '20px';
-      wrapper.style.background = 'white';
-      wrapper.style.color = 'black';
       wrapper.innerHTML = contenidoLimpio;
       contenedor.appendChild(wrapper);
 
@@ -85,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // 🧾 Exportar CV usando Puppeteer desde backend
   exportarBtn.addEventListener('click', async () => {
     try {
       const response = await fetch('/exportar-pdf', {
@@ -108,5 +110,4 @@ document.addEventListener('DOMContentLoaded', () => {
       alert("No se pudo exportar el PDF.");
     }
   });
-  
 });
