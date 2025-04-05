@@ -1,4 +1,3 @@
-
 * {
   margin: 0;
   padding: 0;
@@ -39,6 +38,7 @@ body {
   cursor: pointer;
   text-decoration: none;
 }
+
 .login-btn:hover {
   background-color: #a3846c;
 }
@@ -59,10 +59,12 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 2rem 4rem;
+  flex-wrap: wrap;
 }
 
 .text-box {
   max-width: 40%;
+  min-width: 300px;
 }
 
 .text-box h1 {
@@ -71,8 +73,8 @@ body {
 }
 
 .create-btn {
-  display: inline-block; /* Necesario para que margin funcione bien en <a> */
-  margin-top: 42px; /* 10px extra respecto al estilo anterior */
+  display: inline-block;
+  margin-top: 42px;
   padding: 1rem 2rem;
   background-color: #d8ccbf;
   color: #765137;
@@ -81,34 +83,280 @@ body {
   border-radius: 30px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  text-decoration: none;
 }
 
 .create-btn:hover {
   background-color: #a3846c;
 }
 
-.images {
-  display: flex;
-  flex-direction: row;      /* Cambia de columna a fila */
-  flex-wrap: wrap;          /* Permite que se acomoden en varias filas si es necesario */
-  gap: 2rem;
-  justify-content: center;  /* Centra horizontalmente las imágenes */
-  margin-top: 2rem;         /* Espacio arriba de las imágenes */
+/* CARRUSEL */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  padding: 2rem 1rem;
+  overflow: hidden;
 }
 
-.image-placeholder {
-  flex: 1;
-  max-width: 300px;
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-slide.active {
+  display: flex;
+}
+
+.carousel-slide img {
+  width: 100%;
+  max-width: 100%;
   height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-indicators {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dot {
+  height: 12px;
+  width: 12px;
+  margin: 0 6px;
+  background-color: #ccc;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dot.active {
+  background-color: #765137;
+}
+
+/* SECCIÓN DE CARACTERÍSTICAS */
+.features {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: #fff;
+}
+
+.features h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.features .subtitle {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 3rem;
+}
+
+.feature-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.feature-item {
+  max-width: 300px;
+  text-align: center;
+}
+
+.icon-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.image-placeholder img {
-  width: 100%;
+.icon-circle img {
+  width: 50px;
   height: auto;
-  border-radius: 12px; /* Bordes redondeados */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+}
+
+.icon-circle.pink {
+  background-color: #fbdada;
+}
+
+.icon-circle.yellow {
+  background-color: #fcecb3;
+}
+
+.icon-circle.blue {
+  background-color: #dcd9ff;
+}
+
+.feature-item p {
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* BENEFICIOS MÁS GRANDES */
+.benefits {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 3rem;
+  text-align: center;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.benefit {
+  flex: 1 1 300px;
+  max-width: 350px;
+}
+
+.icon-circle {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-circle img {
+  width: 150px;
+  height: auto;
+}
+
+.pink {
+  background-color: #fbdada;
+}
+
+.yellow {
+  background-color: #fcecb3;
+}
+
+.blue {
+  background-color: #dcd9ff;
+}
+
+.benefit p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+}
+
+.footer {
+  background-color: #333; /* Fondo oscuro */
+  color: #fff; /* Texto blanco */
+  padding: 2rem 1rem;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Contenedor principal del contenido del footer */
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+/* Secciones individuales del footer */
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Títulos de las secciones */
+.footer-section h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: white; /* Color dorado para los títulos */
+}
+
+/* Texto dentro de las secciones */
+.footer-section p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+/* Enlaces dentro del footer */
+.footer-section a {
+  display: block;
+  color: white; /* Color dorado para los enlaces */
+  text-decoration: none;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.footer-section a:hover {
+  text-decoration: underline;
+  color: white; /* Color naranja al pasar el mouse */
+}
+
+/* Parte inferior del footer */
+.footer-bottom {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: #ccc; /* Texto gris claro */
+}
+
+/* RESPONSIVE PARA ANDROID Y MÓVIL */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+  }
+
+  .text-box {
+    max-width: 100%;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .carousel-container {
+    max-width: 100%;
+    padding: 1rem;
+    overflow: hidden;
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .carousel-shape {
+    display: none;
+  }
+
+  .icon-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .icon-circle img {
+    width: 70px;
+  }
+
+  .feature-item,
+  .benefit {
+    max-width: 100%;
+  }
 }
