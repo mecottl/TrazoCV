@@ -31,20 +31,17 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({ email, password })
       });
 
-      // Si el servidor respondió con un error HTTP (por ejemplo, 500)
       if (!response.ok) {
         alert('Ocurrió un error en la base de datos');
         return;
       }
 
-      // Parseamos la respuesta JSON
       const data = await response.json();
-
-      // Verifica la respuesta del servidor
+      console.log('Respuesta del servidor:', data);
       if (data.success) {
         alert(data.message); // "Inicio de sesión exitoso"
-        // Redirige a la siguiente página (por ejemplo, a la raíz o a otra página protegida)
-        window.location.href = '/';
+        // Redirige a la URL proporcionada (por ejemplo, /profile)
+        window.location.href = data.redirect || '/profile';
       } else {
         alert(data.message); // "Usuario o contraseña incorrectos"
         loginForm.reset();

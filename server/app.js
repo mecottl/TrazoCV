@@ -37,10 +37,6 @@ try {
 // Configuración de multer para subir archivos (almacenamiento en memoria)
 const upload = multer({ storage: multer.memoryStorage() });
 
-/* ---------------------------
-   Rutas de Autenticación
---------------------------- */
-// Mostrar formulario de login
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'html', 'login.html'));
 });
@@ -53,7 +49,8 @@ app.post('/login', (req, res) => {
     const user = stmt.get(email, password);
     if (user) {
       req.session.user = { email: user.email };
-      return res.json({ success: true, message: 'Inicio de sesión exitoso' });
+      // Si el login es correcto, devolvemos en el JSON la URL de redirección (por ejemplo, a /profile)
+      return res.json({ success: true, message: 'Inicio de sesión exitoso', redirect: '/perfil' });
     } else {
       return res.json({ success: false, message: 'Usuario o contraseña incorrectos' });
     }
@@ -62,7 +59,6 @@ app.post('/login', (req, res) => {
     return res.status(500).json({ success: false, message: 'Error en la base de datos' });
   }
 });
-
 // Mostrar formulario de registro
 app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'html', 'register.html'));
@@ -160,7 +156,7 @@ app.get('/download-cv/:id', (req, res) => {
    Rutas para Perfil y Selección de CV
 --------------------------- */
 app.get('/perfil', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'html', 'profile.html'));
+  res.sendFile(path.join(__dirname, '..', 'public', 'html', 'perfil.html'));
 });
 
 app.get('/cv', (req, res) => {
