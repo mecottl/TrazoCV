@@ -122,5 +122,30 @@ app.get('/my-cv', (req, res) => {
   }
 });
 
+const multer = require('multer');
+// Configura Multer para almacenar archivos en memoria (o en disco, según lo que necesites)
+const upload = multer({ storage: multer.memoryStorage() });
+
+// Ruta para procesar la subida de CV en PDF
+app.post('/upload-cv', upload.single('pdf'), (req, res) => {
+  // Verifica que el usuario esté autenticado (se supone que el correo está en la sesión)
+  if (!req.session.user) {
+    return res.status(401).send("No autorizado. Inicia sesión primero.");
+  }
+  // Verifica que se haya subido un archivo
+  if (!req.file) {
+    return res.status(400).send("No se ha seleccionado ningún archivo.");
+  }
+  try {
+    const userEmail = req.session.user.email;
+    // Inserta el archivo en la tabla cv_pdf (asegúrate de que la tabla esté creada correctamente)
+    const stmt = db.prepare('INSERT INTO cv_pdf (email, nombre_archivo, tipo_archivo, pdf) VALUES (?, ?, ?, ?)');
+    stmt.run(userEmail, req.file.originalname, req.file.mimetype, req.file.buffer);
+    res.send("Archivo subido y guardado correctamente.");
+  } catch (err) {
+    console.error("Error al insertar archivo:", err.message);
+    res.status(500).send("Error al guardar el archivo en la base de datos.");
+  }
+});
 
 module.exports = app;

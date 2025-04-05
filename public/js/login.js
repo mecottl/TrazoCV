@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data.success) {
         alert(data.message); // "Inicio de sesión exitoso"
         // Redirige a la URL proporcionada (por ejemplo, /profile)
-        window.location.href = data.redirect || '/profile';
+        window.location.href = data.redirect || '/perfil';
       } else {
         alert(data.message); // "Usuario o contraseña incorrectos"
         loginForm.reset();
