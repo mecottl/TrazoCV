@@ -88,18 +88,25 @@ body {
 
 .images {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;      /* Cambia de columna a fila */
+  flex-wrap: wrap;          /* Permite que se acomoden en varias filas si es necesario */
   gap: 2rem;
+  justify-content: center;  /* Centra horizontalmente las imágenes */
+  margin-top: 2rem;         /* Espacio arriba de las imágenes */
 }
 
 .image-placeholder {
-  width: 200px;
-  height: 150px;
-  background-color: black;
-  color: white;
+  flex: 1;
+  max-width: 300px;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  font-size: 1.2rem;
+}
+
+.image-placeholder img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px; /* Bordes redondeados */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
 }
