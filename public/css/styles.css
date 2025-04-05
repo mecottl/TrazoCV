@@ -25,7 +25,7 @@ body {
   align-items: center;
 }
 
-#loginForm {
+#loginForm, #registerForm {
   display: flex;
   flex-direction: column;
   justify-content: center;
