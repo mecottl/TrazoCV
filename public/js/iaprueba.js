@@ -18,22 +18,18 @@ function getCVData() {
 
 function generarPromptHTML(resumenCV, tipo) {
   return `
-Crea un CV visualmente atractivo en formato HTML moderno, sin comentarios ni bloques de código.
-Utiliza etiquetas HTML como <div>, <h2>, <p>, <ul>, etc. 
-Debe contener estas secciones:
-
+Genera un CV en HTML moderno y profesional para un CV de tipo ${tipo}.
+Usa <div>, <h2>, <p>, <ul> y <li> para estructurar secciones como:
 - Datos personales
 - Perfil profesional
 - Experiencia
 - Educación
 - Habilidades
-- Idiomas (si aplica)
+- Idiomas
 
-No incluyas etiquetas <html>, <head> ni <body>. No uses markdown ni bloques de código. Solo devuelve el contenido HTML del CV listo para insertar en el DOM.
-
-Datos del usuario:
-${resumenCV}
-`;
+Solo devuelve el bloque HTML sin etiquetas <html>, <body>, <head>, ni comentarios.
+Datos del usuario: ${resumenCV}
+`.trim();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -41,7 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const contenedor = document.getElementById('contenedorCV');
   const exportarBtn = document.getElementById('exportarPDF');
 
-  if (!form) return;
+  if (!form || !contenedor || !exportarBtn) return;
+
+  let contenidoHTMLGenerado = '';
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -64,32 +62,63 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
       let htmlGenerado = data.cv?.trim();
 
-      // 🔥 Limpieza por seguridad en caso de que la IA aún agregue ```html o comentarios
       htmlGenerado = htmlGenerado
-        .replace(/^```html\s*/i, '')
-        .replace(/```$/i, '')
-        .replace(/<!--[\s\S]*?-->/g, '')
+        .replace(/^```html/, '')
+        .replace(/^```/, '')
+        .replace(/```$/, '')
         .trim();
 
-      if (!htmlGenerado) return alert("La IA no devolvió un contenido HTML válido.");
-
-      contenedor.innerHTML = htmlGenerado;
-
-      if (exportarBtn) {
-        exportarBtn.style.display = 'inline-block';
-        exportarBtn.onclick = () => {
-          const { jsPDF } = window.jspdf;
-          const doc = new jsPDF();
-          doc.html(contenedor, {
-            callback: (doc) => doc.save(`CV_Generado.pdf`),
-            x: 10,
-            y: 10
-          });
-        };
+      if (!htmlGenerado.startsWith('<')) {
+        return alert("La IA no devolvió un bloque HTML válido.");
       }
+
+      // Guardamos para luego exportar
+      contenidoHTMLGenerado = htmlGenerado;
+
+      // Renderizar en pantalla
+      contenedor.innerHTML = '';
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = contenidoHTMLGenerado;
+      contenedor.appendChild(wrapper);
+
+      exportarBtn.style.display = 'inline-block';
+
     } catch (err) {
       console.error("❌ Error procesando el CV:", err);
       alert("Ocurrió un error al generar el CV.");
     }
+  });
+
+  exportarBtn.addEventListener('click', () => {
+    if (!contenidoHTMLGenerado) return;
+
+    // Creamos un contenedor temporal invisible
+    const tempDiv = document.createElement('div');
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.left = '-9999px';
+    tempDiv.style.top = '0';
+    tempDiv.innerHTML = contenidoHTMLGenerado;
+    document.body.appendChild(tempDiv);
+
+    const opt = {
+      margin: [10, 10, 10, 10],
+      filename: 'CV_Generado.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf()
+      .set(opt)
+      .from(tempDiv)
+      .save()
+      .then(() => {
+        document.body.removeChild(tempDiv); // limpieza
+      })
+      .catch((error) => {
+        console.error("Error al exportar a PDF:", error);
+        alert("Error al exportar el PDF.");
+        document.body.removeChild(tempDiv);
+      });
   });
 });

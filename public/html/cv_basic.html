@@ -2,35 +2,77 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CV Básico</title>
     <link rel="stylesheet" href="/css/cv.css" />
     <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+      }
+
       #contenedorCV {
         margin-top: 30px;
+        padding: 20px;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      button[type="submit"] {
+        background-color: #28a745;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #218838;
       }
 
       .exportar-pdf-btn {
+        display: inline-block;
         margin-top: 20px;
         padding: 10px 20px;
-        font-size: 14px;
-        background-color: #4caf50;
+        font-size: 1rem;
+        background-color: #007bff;
         color: white;
         border: none;
-        border-radius: 6px;
+        border-radius: 0.25rem;
         cursor: pointer;
-        transition: background-color 0.3s ease;
       }
 
       .exportar-pdf-btn:hover {
-        background-color: #388e3c;
+        background-color: #0056b3;
       }
     </style>
 
-    <!-- 📦 html2canvas necesario para exportar -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-    <!-- 📄 jsPDF para generar PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Script para exportar a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   </head>
   <body>
     <header>
@@ -41,76 +83,55 @@
       <form id="cvBasicForm">
         <div class="form-group">
           <label for="nombre">Nombre:</label>
-          <input type="text" id="nombre" name="Nombre" required />
+          <input type="text" id="nombre" required />
         </div>
         <div class="form-group">
           <label for="apellido">Apellido:</label>
-          <input type="text" id="apellido" name="Apellido" required />
+          <input type="text" id="apellido" required />
         </div>
         <div class="form-group">
           <label for="edad">Edad:</label>
-          <input type="text" id="edad" name="Edad" required />
+          <input type="text" id="edad" required />
         </div>
         <div class="form-group">
           <label for="telefono">Teléfono:</label>
-          <input type="text" id="telefono" name="Teléfono" required />
+          <input type="text" id="telefono" required />
         </div>
         <div class="form-group">
           <label for="correo">Correo electrónico:</label>
-          <input type="email" id="correo" name="Correo electrónico" required />
+          <input type="email" id="correo" required />
         </div>
         <div class="form-group">
           <label for="ciudad">Ciudad:</label>
-          <input type="text" id="ciudad" name="Ciudad" placeholder="Opcional" />
+          <input type="text" id="ciudad" />
         </div>
         <div class="form-group">
           <label for="pais">País:</label>
-          <input type="text" id="pais" name="País" placeholder="Opcional" />
+          <input type="text" id="pais" />
         </div>
         <div class="form-group">
-          <label for="perfil">Perfil personal (2-3 líneas):</label>
-          <textarea
-            id="perfil"
-            name="Perfil personal"
-            rows="3"
-            placeholder="Quién eres, qué haces y qué buscas"
-          ></textarea>
+          <label for="perfil">Perfil personal:</label>
+          <textarea id="perfil" rows="3"></textarea>
         </div>
         <div class="form-group">
           <label for="formacion">Formación académica:</label>
-          <textarea
-            id="formacion"
-            name="Formación académica"
-            rows="3"
-            placeholder="Institución, carrera, fechas"
-          ></textarea>
+          <textarea id="formacion" rows="3"></textarea>
         </div>
         <div class="form-group">
           <label for="experiencia">Experiencia laboral:</label>
-          <textarea
-            id="experiencia"
-            name="Experiencia laboral"
-            rows="3"
-            placeholder="Nombre del lugar, puesto, fechas"
-          ></textarea>
+          <textarea id="experiencia" rows="3"></textarea>
         </div>
         <div class="form-group">
           <label for="habilidades">Habilidades básicas:</label>
-          <input
-            type="text"
-            id="habilidades"
-            name="Habilidades básicas"
-            placeholder="Ej: Microsoft Office, trabajo en equipo"
-          />
+          <input type="text" id="habilidades" />
         </div>
-
-        <button type="submit">Generar CV Básico</button>
+        <button type="submit">Generar CV</button>
       </form>
 
-      <!-- 📄 Aquí se mostrará el CV generado -->
+      <!-- Aquí se insertará el contenido generado -->
       <div id="contenedorCV"></div>
 
-      <!-- 🖨 Botón para exportar a PDF -->
+      <!-- Botón para exportar el contenido -->
       <button
         type="button"
         id="exportarPDF"
@@ -121,9 +142,8 @@
       </button>
     </main>
 
-    <!-- Scripts del proyecto -->
+    <!-- Tus scripts -->
     <script type="module" src="/js/cvform.js"></script>
-    <script type="module" src="/js/plantilla.js"></script>
     <script type="module" src="/js/iaprueba.js"></script>
   </body>
 </html>
