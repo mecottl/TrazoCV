@@ -31,3 +31,4 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("No se detectó ningún formulario de CV.");
   }
 });
+
