@@ -43,7 +43,9 @@ app.get('/advance', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'html', 'cv_advance.html'));
 });
 
-
+app.get('/suscription', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'html', 'suscription.html'));
+});
   app.listen(app.get('port'), () =>
   
   

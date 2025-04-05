@@ -1,4 +1,5 @@
 import { getBasicCVSummary, getIntermediateCVSummary, getAdvancedCVSummary } from '/js/cvform.js';
+import { generarCV } from '/js/plantillaVisual.js';
 
 function getCVSummary() {
   if (document.getElementById('cvBasicForm')) {
@@ -24,9 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
           const response = await fetch('/generar-cv', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               resumenCV: `Usa los siguientes datos para generar un CV profesional con este formato exacto:
 
@@ -36,9 +35,6 @@ window.resumen = "...";
 window.experiencia = "...";
 window.educacion = "...";
 window.habilidades = "...";
-window.idiomas = "...";
-window.certificaciones = "...";
-window.proyectos = "...";
 
 DATOS DEL USUARIO: ${resumen.resumenCV}
 
@@ -53,43 +49,28 @@ Quiero que devuelvas únicamente un bloque de código JavaScript, sin comentario
             codigoLimpio = codigoLimpio.replace(/^```[\s\S]*?\n/, "");
             codigoLimpio = codigoLimpio.replace(/```$/, "").trim();
 
-            // Evalúa el código generado (asignaciones a window)
-            eval(codigoLimpio);
+            eval(codigoLimpio); // Define window.nombre, etc.
 
-            // Construimos el objeto con los datos
-            const formData = {
-              Nombre: window.nombre,
-              Apellido: window.apellido || '',
-              Teléfono: window.telefono || '',
-              'Correo electrónico': window.correo || '',
-              'Perfil personal (2-3 líneas)': window.resumen || '',
-              'Perfil profesional (3-4 líneas)': window.resumen || '',
-              'Formación académica': window.educacion || '',
-              'Experiencia laboral': window.experiencia || '',
-              'Habilidades básicas': window.habilidades || '',
-              'Habilidades (técnicas y blandas)': window.habilidades || '',
-              'Idiomas': window.idiomas || '',
-              'Certificaciones / Cursos': window.certificaciones || '',
-              'Proyectos personales / Freelance / Voluntariado': window.proyectos || ''
-            };
-
-            const contenedorCV = document.getElementById('contenedorCV');
-            contenedorCV.innerHTML = ''; // Limpiar antes
-
-            // Detectar qué plantilla usar
-            if (document.getElementById('cvBasicForm')) {
-              const mod = await import('/js/plantillaVisual.js');
-              contenedorCV.appendChild(mod.generarCV(formData));
-            } else if (document.getElementById('cvIntermediateForm')) {
-              const mod = await import('/js/plantillaVisualIntermedio.js');
-              contenedorCV.appendChild(mod.generarCVIntermedio(formData));
+            if (window.nombre && window.profesion && window.resumen) {
+              const contenedorCV = document.getElementById('contenedorCV');
+              if (contenedorCV) {
+                const formData = {
+                  nombre: window.nombre,
+                  profesion: window.profesion,
+                  resumen: window.resumen,
+                  experiencia: window.experiencia,
+                  educacion: window.educacion,
+                  habilidades: window.habilidades,
+                };
+                contenedorCV.innerHTML = ''; // limpia antes
+                contenedorCV.appendChild(generarCV(formData));
+              }
             } else {
-              alert('No se encontró una plantilla compatible.');
+              alert("⚠️ No se pudieron extraer correctamente los datos desde el código generado.");
             }
-
           }
         } catch (error) {
-          console.error("❌ Error:", error);
+          console.error("❌ Error al contactar al backend:", error);
           alert("Error al generar el CV. Revisa la consola.");
         }
       } else {

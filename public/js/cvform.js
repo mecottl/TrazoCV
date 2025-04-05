@@ -5,6 +5,7 @@
 export function getBasicCVSummary() {
   const nombre    = document.getElementById('nombre').value.trim();
   const apellido  = document.getElementById('apellido').value.trim();
+  const edad  = document.getElementById('edad').value.trim();
   const telefono  = document.getElementById('telefono').value.trim();
   const correo    = document.getElementById('correo').value.trim();
   const ciudad    = document.getElementById('ciudad').value.trim();
@@ -14,7 +15,7 @@ export function getBasicCVSummary() {
   const experiencia = document.getElementById('experiencia').value.trim();
   const habilidades = document.getElementById('habilidades').value.trim();
 
-  const fullName  = `Mi nombre es ${nombre} ${apellido}.`;
+  const fullName  = `Mi nombre es ${nombre} ${apellido} y tengo ${edad} años.`;
   const contacto  = `Contacto: Tel. ${telefono} - Correo: ${correo}.`;
   const ubicacion = (ciudad || pais)
     ? `Ubicación: ${ciudad}${(ciudad && pais) ? ', ' : ''}${pais}.`
@@ -31,8 +32,12 @@ export function getBasicCVSummary() {
 export function getIntermediateCVSummary() {
   const nombre    = document.getElementById('nombre').value.trim();
   const apellido  = document.getElementById('apellido').value.trim();
+  const edad  = document.getElementById('edad').value.trim();
+
   const telefono  = document.getElementById('telefono').value.trim();
   const correo    = document.getElementById('correo').value.trim();
+  const ciudad    = document.getElementById('ciudad').value.trim();
+  const pais      = document.getElementById('pais').value.trim();
   const perfilProfesional = document.getElementById('perfilProfesional').value.trim();
   const formacion = document.getElementById('formacion').value.trim();
   const experiencia = document.getElementById('experiencia').value.trim();
@@ -41,9 +46,12 @@ export function getIntermediateCVSummary() {
   const certificaciones = document.getElementById('certificaciones').value.trim();
   const proyectos = document.getElementById('proyectos').value.trim();
 
-  const fullName = `Mi nombre es ${nombre} ${apellido}.`;
+  const fullName = `Mi nombre es ${nombre} ${apellido}  y tengo ${edad} años.`;
   const contacto = `Contacto: Tel. ${telefono} - Correo: ${correo}.`;
-  const resumenCV = `${fullName} ${contacto} Perfil Profesional: ${perfilProfesional} Formación: ${formacion} Experiencia: ${experiencia} Habilidades: ${habilidades} Idiomas: ${idiomas} Certificaciones: ${certificaciones} Proyectos: ${proyectos}`;
+  const ubicacion = (ciudad || pais)
+    ? `Ubicación: ${ciudad}${(ciudad && pais) ? ', ' : ''}${pais}.`
+    : '';
+  const resumenCV = `${fullName} ${contacto} ${ubicacion}Perfil Profesional: ${perfilProfesional} Formación: ${formacion} Experiencia: ${experiencia} Habilidades: ${habilidades} Idiomas: ${idiomas} Certificaciones: ${certificaciones} Proyectos: ${proyectos}`;
   
   return { resumenCV };
 }
@@ -55,9 +63,13 @@ export function getIntermediateCVSummary() {
 export function getAdvancedCVSummary() {
   const nombre    = document.getElementById('nombre').value.trim();
   const apellido  = document.getElementById('apellido').value.trim();
+  const edad  = document.getElementById('edad').value.trim();
+
   const tituloProfesional = document.getElementById('tituloProfesional').value.trim();
   const telefono  = document.getElementById('telefono').value.trim();
   const correo    = document.getElementById('correo').value.trim();
+  const ciudad    = document.getElementById('ciudad').value.trim();
+  const pais      = document.getElementById('pais').value.trim();
   const linkedin  = document.getElementById('linkedin').value.trim();
   const portafolio = document.getElementById('portafolio').value.trim();
   const resumen   = document.getElementById('resumen').value.trim();
@@ -68,9 +80,12 @@ export function getAdvancedCVSummary() {
   const publicaciones = document.getElementById('publicaciones').value.trim();
   const portafolioAdicional = document.getElementById('portafolioAdicional').value.trim();
 
-  const fullNameTitle = `Soy ${nombre} ${apellido}, ${tituloProfesional}.`;
+  const fullNameTitle = `Soy ${nombre} ${apellido}, ${tituloProfesional}  y tengo ${edad} años.`;
   const contacto = `Contacto: Tel. ${telefono} - Correo: ${correo} - LinkedIn: ${linkedin} - Portafolio: ${portafolio}.`;
-  const resumenCV = `${fullNameTitle} ${contacto} Resumen: ${resumen} Experiencia: ${experiencia} Formación: ${formacion} Habilidades: ${habilidades} Idiomas: ${idiomas} Publicaciones: ${publicaciones} Enlaces: ${portafolioAdicional}`;
+  const ubicacion = (ciudad || pais)
+    ? `Ubicación: ${ciudad}${(ciudad && pais) ? ', ' : ''}${pais}.`
+    : '';
+  const resumenCV = `${fullNameTitle} ${contacto} ${ubicacion}Resumen: ${resumen} Experiencia: ${experiencia} Formación: ${formacion} Habilidades: ${habilidades} Idiomas: ${idiomas} Publicaciones: ${publicaciones} Enlaces: ${portafolioAdicional}`;
   
   return { resumenCV };
 }
