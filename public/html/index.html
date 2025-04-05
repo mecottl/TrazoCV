@@ -29,17 +29,100 @@
       <a class="create-btn" href="/login">Crear CV</a>
       </div>
 
-      <div class="images">
-      <div class="image-placeholder">
-        <img src="../img/ejemplo1.png" alt="Ejemplo 1" style="width: 100%; height: auto;">
+      <div class="carousel-container">
+        <div class="carousel-shape"></div> <!-- Fondo decorativo -->
+      
+        <div class="carousel">
+          <div class="carousel-track">
+            <div class="carousel-slide active">
+              <img src="../img/ejemplo1.png" alt="Ejemplo 1">
+            </div>
+            <div class="carousel-slide">
+              <img src="../img/ejemplo2.png" alt="Ejemplo 2">
+            </div>
+          </div>
+      
+          <div class="carousel-indicators">
+            <span class="dot active" onclick="showSlide(0)"></span>
+            <span class="dot" onclick="showSlide(1)"></span>
+          </div>
+        </div>
       </div>
-      <div class="image-placeholder">
-        <img src="../img/ejemplo2.png" alt="Ejemplo 2" style="width: 100%; height: auto;">
-      </div>
-      </div>
-    </div>
+      
+
 
     <div class="diagonal"></div>
   </div>
+
+  <script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll(".carousel-slide");
+    const dots = document.querySelectorAll(".dot");
+  
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === index);
+        dots[i].classList.toggle("active", i === index);
+      });
+      currentIndex = index;
+    }
+  
+    // (Opcional) Auto-slide cada 5 segundos
+    setInterval(() => {
+      let nextIndex = (currentIndex + 1) % slides.length;
+      showSlide(nextIndex);
+    }, 3000);
+  </script>
+  <section class="features">
+    <h2>Lleva tu carrera al siguiente nivel</h2>
+    <p class="subtitle">Te acompañamos en cada paso para que consigas el empleo que deseas, de forma rápida y efectiva.</p>
+  
+    <div class="feature-grid">
+      <div class="feature-item">
+        <div class="icon-circle pink">
+          <img src="../img/3.webp" alt="CV Icono">
+        </div>
+        <p>Diseña tu currículum y carta de presentación con un estilo profesional, listos para descargar en solo unos minutos.</p>
+      </div>
+  
+      <div class="feature-item">
+        <div class="icon-circle yellow">
+          <img src="../img/2.webp" alt="Notificaciones">
+        </div>
+        <p>Accede antes que nadie a oportunidades laborales que se ajustan a tu perfil y fortalezas.</p>
+      </div>
+  
+      <div class="feature-item">
+        <div class="icon-circle blue">
+          <img src="../img/1.webp" alt="Aplicaciones">
+        </div>
+        <p>Administra tus postulaciones fácilmente y recibe alertas cuando tu CV haya sido revisado por empleadores.</p>
+      </div>
+    </div>
+  </section>
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Contacto</h3>
+        <p>Email: soporte@trazocv.com</p>
+        <p>Teléfono: +52 (999) 243 5523</p>
+      </div>
+      <div class="footer-section">
+        <h3>Síguenos</h3>
+        <a href="https://www.facebook.com/SolucionesRodai" target="_blank">Facebook</a>
+        <a href="https://www.instagram.com/rodai_soluciones/#" target="_blank">Instagram</a>
+        <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+      </div>
+      <div class="footer-section">
+        <h3>Enlaces útiles</h3>
+        <a href="/about">Sobre nosotros</a>
+        <a href="/faq">Preguntas frecuentes</a>
+        <a href="/privacy">Política de privacidad</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 RODAI. Todos los derechos reservados.</p>
+    </div>
+  </footer>
 </body>
 </html>
