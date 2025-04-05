@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mis Archivos Subidos</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 10px 0;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    a.btn {
+      background: #007BFF;
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    a.btn:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Mis Archivos Subidos</h1>
+    <ul id="fileList">
+      <!-- Aquí se inyectarán los archivos -->
+    </ul>
+    <div style="text-align: center; margin-top: 20px;">
+      <a class="btn" href="/perfil">Volver al Perfil</a>
+    </div>
+  </div>
+
+  <script>
+    // Al cargar la página, se solicita la lista de archivos del usuario
+    window.addEventListener('DOMContentLoaded', () => {
+      fetch('/api/uploaded_files')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor.');
+          }
+          return response.json();
+        })
+        .then(files => {
+          const fileList = document.getElementById('fileList');
+          if (files.length === 0) {
+            fileList.innerHTML = '<li>No se han encontrado archivos subidos.</li>';
+          } else {
+            files.forEach(file => {
+              const li = document.createElement('li');
+              li.innerHTML = `<span>${file.nombre_archivo} (${file.fecha_subida})</span>
+                              <a class="btn" href="/download-cv/${file.id}">Descargar</a>`;
+              fileList.appendChild(li);
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Error al cargar archivos:', error);
+          document.getElementById('fileList').innerHTML = '<li>Error al cargar archivos.</li>';
+        });
+    });
+  </script>
+</body>
+</html>
