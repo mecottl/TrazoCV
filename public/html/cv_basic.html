@@ -8,14 +8,12 @@
     <link rel="stylesheet" href="/css/cv.css" />
     <link rel="icon" type="image/x-icon" href="../img/icono.ico">
 
-
     <style>
       body {
         font-family: "Segoe UI", sans-serif;
         background-color: #f4f4f4;
         padding: 20px;
       }
-
       #cv-render {
         background-color: white;
         color: #000;
@@ -26,33 +24,27 @@
         margin: 0 auto;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
-
       #cv-render h2 {
         color: #007bff;
         margin-top: 20px;
         border-bottom: 1px solid #ccc;
         padding-bottom: 5px;
       }
-
       #cv-render p,
       #cv-render li {
         margin-bottom: 8px;
       }
-
       #cv-render ul {
         padding-left: 20px;
       }
-
       .form-group {
         margin-bottom: 1rem;
       }
-
       label {
         font-weight: bold;
         display: block;
         margin-bottom: 5px;
       }
-
       input,
       textarea {
         width: 100%;
@@ -60,7 +52,6 @@
         border: 1px solid #ccc;
         border-radius: 4px;
       }
-
       button[type="submit"],
       .exportar-pdf-btn {
         background-color: #28a745;
@@ -71,17 +62,13 @@
         font-size: 1rem;
         cursor: pointer;
       }
-
       button[type="submit"]:hover {
         background-color: #218838;
       }
-
       .exportar-pdf-btn {
         background-color: #007bff;
-        display: none;
         margin-top: 20px;
       }
-
       .exportar-pdf-btn:hover {
         background-color: #0056b3;
       }
@@ -136,21 +123,71 @@
           <label for="habilidades">Habilidades:</label>
           <input type="text" id="habilidades" />
         </div>
-
         <button type="submit">Generar CV</button>
+        <a href="/cv">Salir</a>
       </form>
 
-      <!-- Donde se muestra el CV generado -->
-      <div id="contenedorCV"></div>
+      <!-- Contenedor donde se renderiza el CV -->
+      <div id="contenedorCV">
+        <!-- Aquí se renderizará el contenido del CV -->
+      </div>
 
-      <!-- Botón para exportar a PDF -->
+      <!-- Botón para exportar a PDF y subir automáticamente -->
       <button type="button" id="exportarPDF" class="exportar-pdf-btn">
-        Exportar a PDF
+        Exportar y Subir a PDF
       </button>
     </main>
 
     <!-- Scripts del proyecto -->
     <script type="module" src="/js/cvform.js"></script>
     <script type="module" src="/js/iaprueba.js"></script>
+
+    <!-- Script para generar el PDF y subirlo automáticamente -->
+    <script>
+      document.getElementById('exportarPDF').addEventListener('click', () => {
+        // Captura el contenido que se desea convertir en PDF
+        const elemento = document.getElementById('contenedorCV');
+        if (!elemento) {
+          alert("No se encontró el contenido del CV.");
+          return;
+        }
+
+        // Utiliza html2canvas para capturar el contenido
+        html2canvas(elemento).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF('p', 'pt', 'a4');
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
+
+          // Agrega la imagen generada al PDF
+          pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+          // Genera el blob del PDF
+          const blob = pdf.output('blob');
+
+          // Prepara los datos para la subida automática
+          const formData = new FormData();
+          formData.append('pdf', blob, 'cv.pdf');
+
+          // Realiza la petición para subir el PDF
+          fetch('/upload-cv', {
+            method: 'POST',
+            body: formData
+          })
+            .then(response => {
+              if (response.ok) {
+                alert('CV generado y subido automáticamente.');
+              } else {
+                alert('Error al subir el CV.');
+              }
+            })
+            .catch(error => {
+              console.error('Error al subir el CV:', error);
+              alert('Error al subir el CV.');
+            });
+        });
+      });
+    </script>
   </body>
 </html>

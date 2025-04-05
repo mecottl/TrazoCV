@@ -10,7 +10,6 @@
       #contenedorCV {
         margin-top: 30px;
       }
-
       .exportar-pdf-btn {
         margin-top: 20px;
         padding: 10px 20px;
@@ -22,14 +21,14 @@
         cursor: pointer;
         transition: background-color 0.3s ease;
       }
-
       .exportar-pdf-btn:hover {
         background-color: #388e3c;
       }
     </style>
 
-    <!-- jsPDF para exportar a PDF -->
+    <!-- Dependencias para exportar a PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   </head>
 
   <body>
@@ -40,140 +39,139 @@
     <main>
       <form id="cvAdvancedForm">
         <div class="form-group">
-          <label for="nombre">Nombre:</label
-          ><input type="text" id="nombre" required />
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" required />
         </div>
         <div class="form-group">
-          <label for="apellido">Apellido:</label
-          ><input type="text" id="apellido" required />
+          <label for="apellido">Apellido:</label>
+          <input type="text" id="apellido" required />
         </div>
         <div class="form-group">
-          <label for="edad">Edad:</label
-          ><input type="text" id="edad" required />
+          <label for="edad">Edad:</label>
+          <input type="text" id="edad" required />
         </div>
         <div class="form-group">
           <label for="tituloProfesional">Título profesional:</label>
-          <input
-            type="text"
-            id="tituloProfesional"
-            placeholder="Ej: Ing. en Sistemas – Especialista en Ciberseguridad"
-            required
-          />
+          <input type="text" id="tituloProfesional" placeholder="Ej: Ing. en Sistemas – Especialista en Ciberseguridad" required />
         </div>
         <div class="form-group">
-          <label for="telefono">Teléfono:</label
-          ><input type="text" id="telefono" required />
+          <label for="telefono">Teléfono:</label>
+          <input type="text" id="telefono" required />
         </div>
         <div class="form-group">
-          <label for="correo">Correo electrónico:</label
-          ><input type="email" id="correo" required />
+          <label for="correo">Correo electrónico:</label>
+          <input type="email" id="correo" required />
         </div>
         <div class="form-group">
-          <label for="ciudad">Ciudad:</label
-          ><input type="text" id="ciudad" placeholder="Opcional" />
+          <label for="ciudad">Ciudad:</label>
+          <input type="text" id="ciudad" placeholder="Opcional" />
         </div>
         <div class="form-group">
-          <label for="pais">País:</label
-          ><input type="text" id="pais" placeholder="Opcional" />
+          <label for="pais">País:</label>
+          <input type="text" id="pais" placeholder="Opcional" />
         </div>
         <div class="form-group">
-          <label for="linkedin">LinkedIn:</label
-          ><input type="url" id="linkedin" placeholder="Enlace a tu perfil" />
+          <label for="linkedin">LinkedIn:</label>
+          <input type="url" id="linkedin" placeholder="Enlace a tu perfil" />
         </div>
         <div class="form-group">
-          <label for="portafolio">Portafolio / GitHub:</label
-          ><input
-            type="url"
-            id="portafolio"
-            placeholder="Enlace a tu portafolio o GitHub"
-          />
+          <label for="portafolio">Portafolio / GitHub:</label>
+          <input type="url" id="portafolio" placeholder="Enlace a tu portafolio o GitHub" />
         </div>
         <div class="form-group">
-          <label for="resumen"
-            >Resumen profesional (5-6 líneas o bullets):</label
-          >
-          <textarea
-            id="resumen"
-            rows="5"
-            placeholder="Experiencia total, especialidades, fortalezas y resultados logrados"
-            minlength="75"
-          ></textarea>
+          <label for="resumen">Resumen profesional (5-6 líneas o bullets):</label>
+          <textarea id="resumen" rows="5" placeholder="Experiencia total, especialidades, fortalezas y resultados logrados" minlength="75"></textarea>
         </div>
         <div class="form-group">
           <label for="experiencia">Experiencia laboral completa:</label>
-          <textarea
-            id="experiencia"
-            rows="5"
-            placeholder="Descripción detallada con logros medibles"
-            minlength="75"
-          ></textarea>
+          <textarea id="experiencia" rows="5" placeholder="Descripción detallada con logros medibles" minlength="75"></textarea>
         </div>
         <div class="form-group">
           <label for="educacion">Formación y educación complementaria:</label>
-          <textarea
-            id="educacion"
-            rows="3"
-            placeholder="Maestrías, diplomados, certificaciones"
-            minlength="25"
-          ></textarea>
+          <textarea id="educacion" rows="3" placeholder="Maestrías, diplomados, certificaciones" minlength="25"></textarea>
         </div>
         <div class="form-group">
           <label for="habilidades">Habilidades técnicas avanzadas:</label>
-          <input
-            type="text"
-            id="habilidades"
-            placeholder="Ej: Python, Figma, AutoCAD"
-          />
+          <input type="text" id="habilidades" placeholder="Ej: Python, Figma, AutoCAD" />
         </div>
         <div class="form-group">
-          <label for="idiomas">Idiomas:</label
-          ><input
-            type="text"
-            id="idiomas"
-            placeholder="Ej: Inglés (Avanzado, TOEFL 100)"
-          />
+          <label for="idiomas">Idiomas:</label>
+          <input type="text" id="idiomas" placeholder="Ej: Inglés (Avanzado, TOEFL 100)" />
         </div>
         <div class="form-group">
-          <label for="publicaciones"
-            >Publicaciones / Conferencias / Premios:</label
-          >
-          <textarea
-            id="publicaciones"
-            rows="2"
-            placeholder="Publicaciones, conferencias o premios relevantes"
-          ></textarea>
+          <label for="publicaciones">Publicaciones / Conferencias / Premios:</label>
+          <textarea id="publicaciones" rows="2" placeholder="Publicaciones, conferencias o premios relevantes"></textarea>
         </div>
         <div class="form-group">
-          <label for="portafolioAdicional"
-            >Enlaces profesionales adicionales:</label
-          >
-          <input
-            type="url"
-            id="portafolioAdicional"
-            placeholder="Ej: Portafolio o enlaces a trabajos"
-          />
+          <label for="portafolioAdicional">Enlaces profesionales adicionales:</label>
+          <input type="url" id="portafolioAdicional" placeholder="Ej: Portafolio o enlaces a trabajos" />
         </div>
 
-        <button type="submit">Generar CV Avanzado</button>
+        <button type="submit">Generar CV</button>
+        <a href="/cv">Salir</a>
       </form>
 
-      <!-- 📄 Aquí se mostrará el CV generado -->
-      <div id="contenedorCV"></div>
+      <!-- Contenedor donde se renderiza el CV -->
+      <div id="contenedorCV">
+        <!-- Aquí se renderizará el contenido del CV -->
+      </div>
 
-      <!-- 🖨 Botón para exportar a PDF -->
-      <button
-        type="button"
-        id="exportarPDF"
-        class="exportar-pdf-btn"
-        style="display: none"
-      >
-        Exportar a PDF
+      <!-- Botón para exportar a PDF y subir automáticamente -->
+      <button type="button" id="exportarPDF" class="exportar-pdf-btn">
+        Exportar y Subir a PDF
       </button>
     </main>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Scripts del proyecto -->
     <script type="module" src="/js/cvform.js"></script>
     <script type="module" src="/js/iaprueba.js"></script>
+
+    <!-- Script para generar el PDF y subirlo automáticamente -->
+    <script>
+      document.getElementById('exportarPDF').addEventListener('click', () => {
+        // Captura el contenido que se desea convertir en PDF
+        const elemento = document.getElementById('contenedorCV');
+        if (!elemento) {
+          alert("No se encontró el contenido del CV.");
+          return;
+        }
+
+        // Utiliza html2canvas para capturar el contenido
+        html2canvas(elemento).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF('p', 'pt', 'a4');
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
+
+          // Agrega la imagen generada al PDF
+          pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+          // Genera el blob del PDF
+          const blob = pdf.output('blob');
+
+          // Prepara los datos para la subida automática
+          const formData = new FormData();
+          formData.append('pdf', blob, 'cv.pdf');
+
+          // Realiza la petición para subir el PDF
+          fetch('/upload-cv', {
+            method: 'POST',
+            body: formData
+          })
+            .then(response => {
+              if (response.ok) {
+                alert('CV generado y subido automáticamente.');
+              } else {
+                alert('Error al subir el CV.');
+              }
+            })
+            .catch(error => {
+              console.error('Error al subir el CV:', error);
+              alert('Error al subir el CV.');
+            });
+        });
+      });
+    </script>
   </body>
 </html>

@@ -91,6 +91,24 @@ app.post('/register', (req, res) => {
     return res.status(500).json({ success: false, message: 'Error en la base de datos' });
   }
 });
+app.delete('/delete-cv/:id', (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).send("No autorizado. Inicia sesión primero.");
+  }
+  const id = req.params.id;
+  try {
+    const stmt = db.prepare('DELETE FROM cv_pdf WHERE id = ?');
+    const result = stmt.run(id);
+    if (result.changes > 0) {
+      res.sendStatus(200);
+    } else {
+      res.status(404).send("Archivo no encontrado.");
+    }
+  } catch (err) {
+    console.error("Error al eliminar el archivo:", err.message);
+    res.status(500).send("Error al eliminar el archivo.");
+  }
+});
 
 // Ruta para mostrar los CV del usuario autenticado
 app.get('/my-cv', (req, res) => {

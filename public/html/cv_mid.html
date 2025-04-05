@@ -4,13 +4,12 @@
     <meta charset="UTF-8" />
     <title>CV Intermedio</title>
     <link rel="stylesheet" href="/css/cv.css" />
-    <link rel="icon" type="image/x-icon" href="../img/icono.ico">
+    <link rel="icon" type="image/x-icon" href="../img/icono.ico" />
 
     <style>
       #contenedorCV {
         margin-top: 30px;
       }
-
       .exportar-pdf-btn {
         margin-top: 20px;
         padding: 10px 20px;
@@ -22,7 +21,6 @@
         cursor: pointer;
         transition: background-color 0.3s ease;
       }
-
       .exportar-pdf-btn:hover {
         background-color: #388e3c;
       }
@@ -30,12 +28,13 @@
 
     <!-- jsPDF para exportar a PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Incluimos html2pdf (que incluye html2canvas) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   </head>
   <body>
     <header>
       <h1>CV Intermedio</h1>
     </header>
-
     <main>
       <form id="cvIntermediateForm">
         <div class="form-group">
@@ -67,33 +66,16 @@
           <input type="text" id="pais" name="País" placeholder="Opcional" />
         </div>
         <div class="form-group">
-          <label for="perfilProfesional"
-            >Perfil profesional (3-4 líneas):</label
-          >
-          <textarea
-            id="perfilProfesional"
-            name="Perfil profesional"
-            rows="4"
-            minlength="75"
-          ></textarea>
+          <label for="perfilProfesional">Perfil profesional (3-4 líneas):</label>
+          <textarea id="perfilProfesional" name="Perfil profesional" rows="4" minlength="75"></textarea>
         </div>
         <div class="form-group">
           <label for="formacion">Formación académica:</label>
-          <textarea
-            id="formacion"
-            name="Formación académica"
-            rows="3"
-            minlength="25"
-          ></textarea>
+          <textarea id="formacion" name="Formación académica" rows="3" minlength="25"></textarea>
         </div>
         <div class="form-group">
           <label for="experiencia">Experiencia laboral:</label>
-          <textarea
-            id="experiencia"
-            name="Experiencia laboral"
-            rows="4"
-            minlength="70"
-          ></textarea>
+          <textarea id="experiencia" name="Experiencia laboral" rows="4" minlength="70"></textarea>
         </div>
         <div class="form-group">
           <label for="habilidades">Habilidades (técnicas y blandas):</label>
@@ -105,37 +87,124 @@
         </div>
         <div class="form-group">
           <label for="certificaciones">Certificaciones / Cursos:</label>
-          <textarea
-            id="certificaciones"
-            name="Certificaciones"
-            rows="2"
-          ></textarea>
+          <textarea id="certificaciones" name="Certificaciones" rows="2"></textarea>
         </div>
         <div class="form-group">
           <label for="proyectos">Proyectos personales / Voluntariado:</label>
           <textarea id="proyectos" name="Proyectos" rows="2"></textarea>
         </div>
-
         <button type="submit">Generar CV Intermedio</button>
       </form>
 
       <!-- 📄 Aquí se insertará el CV generado -->
       <div id="contenedorCV"></div>
 
-      <!-- 🖨 Botón para exportar a PDF -->
-      <button
-        type="button"
-        id="exportarPDF"
-        class="exportar-pdf-btn"
-        style="display: none"
-      >
-        Exportar a PDF
+      <!-- 🖨 Botón para exportar a PDF y subir automáticamente (oculto inicialmente) -->
+      <button type="button" id="exportarPDF" class="exportar-pdf-btn" style="display: none">
+        Exportar y Subir a PDF
       </button>
     </main>
 
     <!-- Scripts principales -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script type="module" src="/js/cvform.js"></script>
     <script type="module" src="/js/iaprueba.js"></script>
+
+    <!-- Script para generar el PDF y subirlo automáticamente -->
+    <script>
+      // Al enviar el formulario, se genera y renderiza el contenido del CV en #contenedorCV
+      document.getElementById('cvIntermediateForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Obtén los valores del formulario
+        const nombre = document.getElementById('nombre').value;
+        const apellido = document.getElementById('apellido').value;
+        const edad = document.getElementById('edad').value;
+        const telefono = document.getElementById('telefono').value;
+        const correo = document.getElementById('correo').value;
+        const ciudad = document.getElementById('ciudad').value;
+        const pais = document.getElementById('pais').value;
+        const perfilProfesional = document.getElementById('perfilProfesional').value;
+        const formacion = document.getElementById('formacion').value;
+        const experiencia = document.getElementById('experiencia').value;
+        const habilidades = document.getElementById('habilidades').value;
+        const idiomas = document.getElementById('idiomas').value;
+        const certificaciones = document.getElementById('certificaciones').value;
+        const proyectos = document.getElementById('proyectos').value;
+
+        // Renderiza el contenido del CV (ajusta el HTML según tus necesidades)
+        const contenedorCV = document.getElementById('contenedorCV');
+        contenedorCV.innerHTML = `
+          <div id="cv-render">
+            <h2>${nombre} ${apellido}</h2>
+            <p><strong>Edad:</strong> ${edad}</p>
+            <p><strong>Teléfono:</strong> ${telefono}</p>
+            <p><strong>Correo:</strong> ${correo}</p>
+            ${ciudad ? `<p><strong>Ciudad:</strong> ${ciudad}</p>` : ''}
+            ${pais ? `<p><strong>País:</strong> ${pais}</p>` : ''}
+            <h3>Perfil Profesional</h3>
+            <p>${perfilProfesional}</p>
+            <h3>Formación Académica</h3>
+            <p>${formacion}</p>
+            <h3>Experiencia Laboral</h3>
+            <p>${experiencia}</p>
+            <h3>Habilidades</h3>
+            <p>${habilidades}</p>
+            <h3>Idiomas</h3>
+            <p>${idiomas}</p>
+            <h3>Certificaciones / Cursos</h3>
+            <p>${certificaciones}</p>
+            <h3>Proyectos / Voluntariado</h3>
+            <p>${proyectos}</p>
+          </div>
+        `;
+
+        // Muestra el botón para exportar a PDF
+        document.getElementById('exportarPDF').style.display = 'block';
+      });
+
+      // Funcionalidad para generar el PDF y subirlo automáticamente
+      document.getElementById('exportarPDF').addEventListener('click', () => {
+        const elemento = document.getElementById('contenedorCV');
+        if (!elemento) {
+          alert("No se encontró el contenido del CV.");
+          return;
+        }
+        console.log("Generando PDF...");
+        // Captura el contenido del contenedor usando html2canvas
+        html2canvas(elemento).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF('p', 'pt', 'a4');
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
+          pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+          // Genera el blob del PDF (sin llamar a pdf.save())
+          const blob = pdf.output('blob');
+          console.log("PDF blob generado:", blob);
+          
+          const formData = new FormData();
+          formData.append('pdf', blob, 'cv.pdf');
+
+          console.log("Subiendo PDF a /upload-cv...");
+          fetch('/upload-cv', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => {
+            console.log("Respuesta del servidor:", response);
+            if (response.ok) {
+              alert('CV generado y subido automáticamente.');
+            } else {
+              alert('Error al subir el CV.');
+            }
+          })
+          .catch(error => {
+            console.error('Error al subir el CV:', error);
+            alert('Error al subir el CV.');
+          });
+        });
+      });
+    </script>
   </body>
 </html>
