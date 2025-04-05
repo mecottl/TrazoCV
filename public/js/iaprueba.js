@@ -1,4 +1,5 @@
 import { getBasicCVSummary, getIntermediateCVSummary, getAdvancedCVSummary } from '/js/cvform.js';
+import { generarCV } from '/js/plantillaVisual.js';
 
 function getCVSummary() {
   if (document.getElementById('cvBasicForm')) {
@@ -13,31 +14,60 @@ function getCVSummary() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Detecta el formulario activo
-  const form = document.querySelector('form[id^="cv"]'); // busca cualquier formulario que empiece con 'cv'
+  const form = document.querySelector('form[id^="cv"]');
 
   if (form) {
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const resumen = getCVSummary(); // obtiene el resumen del CV
+      const resumen = getCVSummary();
 
       if (resumen && resumen.resumenCV) {
         try {
           const response = await fetch('/generar-cv', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ resumenCV: resumen.resumenCV })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              resumenCV: `Usa los siguientes datos para generar un CV profesional con este formato exacto:
+
+window.nombre = "...";
+window.profesion = "...";
+window.resumen = "...";
+window.experiencia = "...";
+window.educacion = "...";
+window.habilidades = "...";
+
+DATOS DEL USUARIO: ${resumen.resumenCV}
+
+Quiero que devuelvas únicamente un bloque de código JavaScript, sin comentarios ni explicaciones, que asigne los valores usando el objeto global window como se muestra arriba.`
+            })
           });
 
           const data = await response.json();
 
           if (data.cv) {
-            alert("✅ CV generado por la IA:\n\n" + data.cv);
-            console.log(data.cv);
-          } else {
-            alert("⚠️ No se recibió un CV válido desde el servidor.");
+            let codigoLimpio = data.cv.trim();
+            codigoLimpio = codigoLimpio.replace(/^```[\s\S]*?\n/, "");
+            codigoLimpio = codigoLimpio.replace(/```$/, "").trim();
+
+            eval(codigoLimpio); // Define window.nombre, etc.
+
+            if (window.nombre && window.profesion && window.resumen) {
+              const contenedorCV = document.getElementById('contenedorCV');
+              if (contenedorCV) {
+                const formData = {
+                  nombre: window.nombre,
+                  profesion: window.profesion,
+                  resumen: window.resumen,
+                  experiencia: window.experiencia,
+                  educacion: window.educacion,
+                  habilidades: window.habilidades,
+                };
+                contenedorCV.innerHTML = ''; // limpia antes
+                contenedorCV.appendChild(generarCV(formData));
+              }
+            } else {
+              alert("⚠️ No se pudieron extraer correctamente los datos desde el código generado.");
+            }
           }
         } catch (error) {
           console.error("❌ Error al contactar al backend:", error);
@@ -47,7 +77,5 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("❗ No se pudo generar el resumen del CV.");
       }
     });
-  } else {
-    console.log("❗ No se encontró ningún formulario de CV.");
   }
 });
