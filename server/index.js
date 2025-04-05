@@ -25,6 +25,9 @@ app.get('/pdf', (req, res) => {
 app.get('/perfil', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'html', 'perfil.html'));
 });
+app.get('/test', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'html', 'test_upload.html'));
+});
 
   app.listen(app.get('port'), () =>
   
