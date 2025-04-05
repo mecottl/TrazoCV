@@ -1,4 +1,4 @@
-import { getBasicCVSummary, getIntermediateCVSummary, getAdvancedCVSummary } from './cvform.js';
+import { getBasicCVSummary, getIntermediateCVSummary, getAdvancedCVSummary } from '/js/cvform.js';
 
 function getCVSummary() {
   if (document.getElementById('cvBasicForm')) {
@@ -13,22 +13,41 @@ function getCVSummary() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Suponiendo que usas el formulario de CV Básico; adapta según el ID del formulario que tengas
-  const form = document.getElementById('cvBasicForm');
+  // Detecta el formulario activo
+  const form = document.querySelector('form[id^="cv"]'); // busca cualquier formulario que empiece con 'cv'
+
   if (form) {
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const resumen = getCVSummary(); // Obtienes el objeto con el resumen usando los datos ingresados
-      if (resumen) {
-        const txt = `Hola, aquí está tu resumen: ${resumen.resumenCV}`;
-        alert(txt);
-        console.log(txt);
+      const resumen = getCVSummary(); // obtiene el resumen del CV
+
+      if (resumen && resumen.resumenCV) {
+        try {
+          const response = await fetch('/generar-cv', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ resumenCV: resumen.resumenCV })
+          });
+
+          const data = await response.json();
+
+          if (data.cv) {
+            alert("✅ CV generado por la IA:\n\n" + data.cv);
+            console.log(data.cv);
+          } else {
+            alert("⚠️ No se recibió un CV válido desde el servidor.");
+          }
+        } catch (error) {
+          console.error("❌ Error al contactar al backend:", error);
+          alert("Error al generar el CV. Revisa la consola.");
+        }
       } else {
-        console.log("No se detectó ningún formulario de CV.");
+        alert("❗ No se pudo generar el resumen del CV.");
       }
     });
   } else {
-    console.log("No se detectó ningún formulario de CV.");
+    console.log("❗ No se encontró ningún formulario de CV.");
   }
 });
-
