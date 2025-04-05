@@ -39,8 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
       console.log('Respuesta del servidor:', data);
       if (data.success) {
-        alert(data.message); // "Inicio de sesión exitoso"
-        // Redirige a la URL proporcionada (por ejemplo, /profile)
         window.location.href = data.redirect || '/perfil';
       } else {
         alert(data.message); // "Usuario o contraseña incorrectos"
