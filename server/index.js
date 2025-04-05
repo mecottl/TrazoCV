@@ -53,7 +53,7 @@ app.get('/suscription', (req, res) => {
     console.log(`Server listening on port ${config.app.port}`);
   });
 
-  const exportarHtmlAPdf = require('./generarPdf');
+  const exportarHtmlAPdf = require('./exportarPdf');
 
   app.post('/exportar-pdf', async (req, res) => {
     const { html } = req.body;
