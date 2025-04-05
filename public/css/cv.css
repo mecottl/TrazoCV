@@ -63,7 +63,7 @@ input[type="email"],
 input[type="url"],
 textarea {
   width: 100%;
-  padding: 12px 1px;
+  padding: 12px 2px;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 1rem;

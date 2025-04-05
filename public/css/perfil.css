@@ -1,124 +1,123 @@
 /* Fondo general y tipografía */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Inter', sans-serif;
-    background-color: #658791;
-    color: white;
-    display: flex;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #9A897B;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Título principal */
+.page-title {
+  color: rgb(10, 9, 9);
+  font-size: 50px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+
+/* Contenedor del menú de tarjetas */
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Cada tarjeta (card) */
+.card {
+  background-color: #D8CCBF;
+  color: #333;
+  border-radius: 30px;
+  padding: 2rem;
+  height: 300px;
+  width: 500px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+.card p {
+  font-size: 30px;
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #444;
+}
+
+/* Botón con borde blanco */
+.btn {
+  display: inline-block;
+  padding: 24px 48px;
+  background-color: #bea794;
+  color: white;
+  border: 2px solid white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 20px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #a3846c;
+  transform: scale(1.05);
+}
+
+.actions button {
+  padding: 12px 18px;
+  border: 2px solid white;
+  border-radius: 6px;
+  background: #bea794;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.actions button:hover {
+  background: #a3846c;
+  transform: scale(1.05);
+}
+
+
+
+/* Responsive para móviles */
+@media screen and (max-width: 768px) {
+  .menu {
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
-    padding: 2rem;
-    text-align: center;
   }
-  
-  /* Título principal */
-  .page-title {
-    color: white;
-    font-size: 50px;
-    font-weight: 600;
-    text-align: center;
-    margin-top: 40px;
-    margin-bottom: 20px;
-  }
-  
-  
-  /* Contenedor del menú de tarjetas */
-  .menu {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    width: 100%;
-    max-width: 1200px;
-  }
-  
-  /* Cada tarjeta (card) */
+
   .card {
-    background-color: white;
-    color: #333;
-    border-radius: 30px;
-    padding: 2rem;
-    height: 300px;
-    width: 500px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    transition: transform 0.3s ease;
+    width: 90%;
   }
-  
-  .card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .card h2 {
-    margin-top: 0;
-    font-size: 30px;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 1rem;
-    color: #000;
-  }
-  
-  .card p {
-    font-size: 30px;
-    line-height: 1.5;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #444;
-  }
-  
-  /* Botón con borde blanco */
-  .btn {
-    display: inline-block;
-    padding: 24px 48px;
-    background-color: #BF6D3C;
-    color: white;
-    border: 2px solid white;
-    text-decoration: none;
-    border-radius: 30px;
-    font-weight: bold;
-    font-size: 20px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .btn:hover {
-    background-color: #a4572d;
-    transform: scale(1.05);
-  }
-  
-  .actions button {
-    padding: 12px 18px;
-    border: 2px solid white;
-    border-radius: 6px;
-    background: #652fab;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
-  
-  .actions button:hover {
-    background: #31115b;
-    transform: scale(1.05);
-  }
-  
 
-
-  /* Responsive para móviles */
-  @media screen and (max-width: 768px) {
-    .menu {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .card {
-      width: 90%;
-    }
-  
-    h1 {
-      font-size: 2rem;
-    }
+  h1 {
+    font-size: 2rem;
   }
-  
+}

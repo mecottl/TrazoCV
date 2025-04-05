@@ -46,7 +46,7 @@ app.post('/login', (req, res) => {
     if (user) {
       req.session.user = { email: user.email };
       // Si el login es correcto, devolvemos en el JSON la URL de redirección (por ejemplo, a /profile)
-      return res.json({ success: true, message: 'Inicio de sesión exitoso', redirect: '/perfil' });
+      return res.json({ success: true, redirect: '/perfil' });
     } else {
       return res.json({ success: false, message: 'Usuario o contraseña incorrectos' });
     }
@@ -227,5 +227,14 @@ app.get('/api/uploaded_files', (req, res) => {
   }
 });
 
+// Endpoint para obtener el usuario autenticado (por ejemplo, solo su email)
+app.get('/api/user', (req, res) => {
+  if (req.session && req.session.user) {
+    // Devuelve el email del usuario autenticado
+    res.json({ email: req.session.user.email });
+  } else {
+    res.status(401).json({ error: 'No autenticado' });
+  }
+});
 
 module.exports = app;
