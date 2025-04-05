@@ -4,22 +4,30 @@
     <meta charset="UTF-8" />
     <title>CV Básico</title>
     <link rel="stylesheet" href="/css/cv.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <style>
       #contenedorCV {
         margin-top: 30px;
       }
 
-      #mensajeCV {
-        display: none;
-        margin-top: 40px;
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2rem;
-        color: #2a2a2a;
+      .exportar-pdf-btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 14px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .exportar-pdf-btn:hover {
+        background-color: #388e3c;
       }
     </style>
+
+    <!-- jsPDF para exportar a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   </head>
   <body>
     <header>
@@ -30,11 +38,11 @@
       <form id="cvBasicForm">
         <div class="form-group">
           <label for="nombre">Nombre:</label>
-          <input type="text" id="nombre" name="Nombre" required placeholder="Ej: Juan" />
+          <input type="text" id="nombre" name="Nombre" required />
         </div>
         <div class="form-group">
           <label for="apellido">Apellido:</label>
-          <input type="text" id="apellido" name="Apellido" required placeholder="Ej: Pérez Gómez" />
+          <input type="text" id="apellido" name="Apellido" required />
         </div>
         <div class="form-group">
           <label for="edad">Edad:</label>
@@ -42,28 +50,27 @@
         </div>
         <div class="form-group">
           <label for="telefono">Teléfono:</label>
-          <input type="text" id="telefono" name="Teléfono" required placeholder="Ej: +52 55 1234 5678" />
+          <input type="text" id="telefono" name="Teléfono" required />
         </div>
         <div class="form-group">
           <label for="correo">Correo electrónico:</label>
-          <input type="email" id="correo" name="Correo electrónico" required placeholder="Ej: juan.perez@email.com" />
+          <input type="email" id="correo" name="Correo electrónico" required />
         </div>
         <div class="form-group">
           <label for="ciudad">Ciudad:</label>
-          <input type="text" id="ciudad" name="Ciudad" placeholder="Ej: Ciudad de México" />
+          <input type="text" id="ciudad" name="Ciudad" placeholder="Opcional" />
         </div>
         <div class="form-group">
           <label for="pais">País:</label>
-          <input type="text" id="pais" name="País" placeholder="Ej: México" />
+          <input type="text" id="pais" name="País" placeholder="Opcional" />
         </div>
         <div class="form-group">
           <label for="perfil">Perfil personal (2-3 líneas):</label>
           <textarea
             id="perfil"
-            name="Perfil personal (2-3 líneas)"
-            name="Perfil personal (2-3 líneas)"
+            name="Perfil personal"
             rows="3"
-            placeholder="Ej: Ingeniero en sistemas con experiencia en desarrollo web, enfocado en soluciones funcionales y creativas. Busco un puesto desafiante para crecer profesionalmente."
+            placeholder="Quién eres, qué haces y qué buscas"
           ></textarea>
         </div>
         <div class="form-group">
@@ -71,9 +78,8 @@
           <textarea
             id="formacion"
             name="Formación académica"
-            name="Formación académica"
             rows="3"
-            placeholder="Ej: Universidad Nacional Autónoma de México, Ingeniería en Sistemas, 2018 - 2022"
+            placeholder="Institución, carrera, fechas"
           ></textarea>
         </div>
         <div class="form-group">
@@ -81,9 +87,8 @@
           <textarea
             id="experiencia"
             name="Experiencia laboral"
-            name="Experiencia laboral"
             rows="3"
-            placeholder="Ej: Desarrollador Fullstack en Tech Solutions, Enero 2023 - Actualidad"
+            placeholder="Nombre del lugar, puesto, fechas"
           ></textarea>
         </div>
         <div class="form-group">
@@ -92,41 +97,30 @@
             type="text"
             id="habilidades"
             name="Habilidades básicas"
-            placeholder="Ej: Microsoft Office, trabajo en equipo, HTML/CSS, comunicación efectiva"
+            placeholder="Ej: Microsoft Office, trabajo en equipo"
           />
         </div>
 
-        <button type="submit">Guardar CV Básico</button>
+        <button type="submit">Generar CV Básico</button>
       </form>
 
-      <!-- Aviso intuitivo -->
-      <div id="mensajeCV">
-        👇 Tu CV ha sido generado. Puedes previsualizarlo aquí abajo:
-      </div>
-
-      <!-- Contenedor donde se mostrará el CV generado -->
+      <!-- 📄 CV generado dinámicamente -->
       <div id="contenedorCV"></div>
+
+      <!-- Botón para exportar a PDF -->
+      <button
+        type="button"
+        id="exportarPDF"
+        class="exportar-pdf-btn"
+        style="display: none"
+      >
+        Exportar a PDF
+      </button>
     </main>
 
+    <!-- Scripts -->
+    <script type="module" src="/js/cvform.js"></script>
+    <script type="module" src="/js/plantilla.js"></script>
     <script type="module" src="/js/iaprueba.js"></script>
-    <script type="module" src="/js/plantillaVisual.js"></script>
-
-    <!-- Script para mostrar el mensaje cuando se genera el CV -->
-    <script>
-      document.getElementById('cvBasicForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        // Aquí puedes incluir la lógica para generar el CV...
-        // Por ejemplo, podrías tener una función como: generarCV();
-
-        // Mostrar el aviso de previsualización
-        const mensajeCV = document.getElementById('mensajeCV');
-        mensajeCV.style.display = 'block';
-
-        // Scroll automático hacia el mensaje
-        mensajeCV.scrollIntoView({ behavior: 'smooth' });
-      });
-    </script>
-
   </body>
 </html>
