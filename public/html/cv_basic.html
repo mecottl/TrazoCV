@@ -10,6 +10,15 @@
       #contenedorCV {
         margin-top: 30px;
       }
+
+      #mensajeCV {
+        display: none;
+        margin-top: 40px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: #2a2a2a;
+      }
     </style>
   </head>
   <body>
@@ -21,33 +30,31 @@
       <form id="cvBasicForm">
         <div class="form-group">
           <label for="nombre">Nombre:</label>
-          <input type="text" id="nombre" name="Nombre" required />
+          <input type="text" id="nombre" name="Nombre" required placeholder="Ej: Juan" />
         </div>
         <div class="form-group">
           <label for="apellido">Apellido:</label>
-          <input type="text" id="apellido" name="Apellido" required />
+          <input type="text" id="apellido" name="Apellido" required placeholder="Ej: Pérez Gómez" />
         </div>
         <div class="form-group">
           <label for="edad">Edad:</label>
-          <input type="text" id="edad" name="Edad" required />
+          <input type="text" id="edad" required placeholder="Ej: 25" />
         </div>
         <div class="form-group">
           <label for="telefono">Teléfono:</label>
-          <input type="text" id="telefono" name="Teléfono" required />
-      
+          <input type="text" id="telefono" name="Teléfono" required placeholder="Ej: +52 55 1234 5678" />
         </div>
         <div class="form-group">
           <label for="correo">Correo electrónico:</label>
-          <input type="email" id="correo" name="Correo electrónico" required />
- 
+          <input type="email" id="correo" name="Correo electrónico" required placeholder="Ej: juan.perez@email.com" />
         </div>
         <div class="form-group">
           <label for="ciudad">Ciudad:</label>
-          <input type="text" id="ciudad" name="Ciudad" />
+          <input type="text" id="ciudad" name="Ciudad" placeholder="Ej: Ciudad de México" />
         </div>
         <div class="form-group">
           <label for="pais">País:</label>
-          <input type="text" id="pais" name="País" />
+          <input type="text" id="pais" name="País" placeholder="Ej: México" />
         </div>
         <div class="form-group">
           <label for="perfil">Perfil personal (2-3 líneas):</label>
@@ -56,6 +63,7 @@
             name="Perfil personal (2-3 líneas)"
             name="Perfil personal (2-3 líneas)"
             rows="3"
+            placeholder="Ej: Ingeniero en sistemas con experiencia en desarrollo web, enfocado en soluciones funcionales y creativas. Busco un puesto desafiante para crecer profesionalmente."
           ></textarea>
         </div>
         <div class="form-group">
@@ -65,6 +73,7 @@
             name="Formación académica"
             name="Formación académica"
             rows="3"
+            placeholder="Ej: Universidad Nacional Autónoma de México, Ingeniería en Sistemas, 2018 - 2022"
           ></textarea>
         </div>
         <div class="form-group">
@@ -74,30 +83,50 @@
             name="Experiencia laboral"
             name="Experiencia laboral"
             rows="3"
+            placeholder="Ej: Desarrollador Fullstack en Tech Solutions, Enero 2023 - Actualidad"
           ></textarea>
         </div>
         <div class="form-group">
           <label for="habilidades">Habilidades básicas:</label>
-          <input type="text" id="habilidades" name="Habilidades básicas" />
+          <input
+            type="text"
+            id="habilidades"
+            name="Habilidades básicas"
+            placeholder="Ej: Microsoft Office, trabajo en equipo, HTML/CSS, comunicación efectiva"
+          />
         </div>
 
         <button type="submit">Guardar CV Básico</button>
       </form>
 
-      <!-- Contenedor donde se mostrará el CV generado -->
-      <div id="contenedorCV"></div>
+      <!-- Aviso intuitivo -->
+      <div id="mensajeCV">
+        👇 Tu CV ha sido generado. Puedes previsualizarlo aquí abajo:
+      </div>
 
       <!-- Contenedor donde se mostrará el CV generado -->
       <div id="contenedorCV"></div>
     </main>
 
-    <!-- Scripts -->
-
-    <!-- Scripts -->
     <script type="module" src="/js/iaprueba.js"></script>
     <script type="module" src="/js/plantillaVisual.js"></script>
 
-    <!-- Ya no se necesita jsPDF si no generas PDF -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
+    <!-- Script para mostrar el mensaje cuando se genera el CV -->
+    <script>
+      document.getElementById('cvBasicForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Aquí puedes incluir la lógica para generar el CV...
+        // Por ejemplo, podrías tener una función como: generarCV();
+
+        // Mostrar el aviso de previsualización
+        const mensajeCV = document.getElementById('mensajeCV');
+        mensajeCV.style.display = 'block';
+
+        // Scroll automático hacia el mensaje
+        mensajeCV.scrollIntoView({ behavior: 'smooth' });
+      });
+    </script>
+
   </body>
 </html>

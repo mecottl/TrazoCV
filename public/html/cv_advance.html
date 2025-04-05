@@ -14,77 +14,98 @@
     <form id="cvAdvancedForm">
       <div class="form-group">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" required>
+        <input type="text" id="nombre" required placeholder="Ej: Laura" />
       </div>
       <div class="form-group">
         <label for="apellido">Apellido:</label>
-        <input type="text" id="apellido" required>
+        <input type="text" id="apellido" required placeholder="Ej: Rodríguez Herrera" />
       </div>
       <div class="form-group">
         <label for="edad">Edad:</label>
-        <input type="text" id="edad" required />
+        <input type="text" id="edad" required placeholder="Ej: 35" />
       </div>
       <div class="form-group">
         <label for="tituloProfesional">Título profesional:</label>
-        <input type="text" id="tituloProfesional" placeholder="Ej: Ing. en Sistemas – Especialista en Ciberseguridad" required>
+        <input type="text" id="tituloProfesional" required placeholder="Ej: Mtra. en Finanzas – Especialista en Análisis de Riesgos" />
       </div>
       <div class="form-group">
         <label for="telefono">Teléfono:</label>
-        <input type="text" id="telefono" required>
+        <input type="text" id="telefono" required placeholder="Ej: +52 1 81 4567 8901" />
       </div>
       <div class="form-group">
         <label for="correo">Correo electrónico:</label>
-        <input type="email" id="correo" required>
+        <input type="email" id="correo" required placeholder="Ej: laura.rh@profesional.com" />
       </div>
       <div class="form-group">
         <label for="ciudad">Ciudad:</label>
-        <input type="text" id="ciudad" placeholder="Opcional" />
+        <input type="text" id="ciudad" placeholder="Ej: Monterrey" />
       </div>
       <div class="form-group">
         <label for="pais">País:</label>
-        <input type="text" id="pais" placeholder="Opcional" />
+        <input type="text" id="pais" placeholder="Ej: México" />
       </div>
       <div class="form-group">
         <label for="linkedin">LinkedIn:</label>
-        <input type="url" id="linkedin" placeholder="Enlace a tu perfil">
+        <input type="url" id="linkedin" placeholder="Ej: https://www.linkedin.com/in/laura-rodriguez" />
       </div>
       <div class="form-group">
         <label for="portafolio">Portafolio / GitHub:</label>
-        <input type="url" id="portafolio" placeholder="Enlace a tu portafolio o GitHub">
+        <input type="url" id="portafolio" placeholder="Ej: https://github.com/laurarh / https://laura.design" />
       </div>
       <div class="form-group">
         <label for="resumen">Resumen profesional (5-6 líneas o bullets):</label>
-        <textarea id="resumen" rows="5" placeholder="Experiencia total, especialidades, fortalezas y resultados logrados"></textarea>
+        <textarea id="resumen" rows="5" placeholder="Ej: Más de 10 años en gestión financiera corporativa, habilidades analíticas avanzadas, liderazgo de equipos multidisciplinarios, enfoque en resultados y cumplimiento de KPIs."></textarea>
       </div>
       <div class="form-group">
         <label for="experiencia">Experiencia laboral completa:</label>
-        <textarea id="experiencia" rows="5" placeholder="Descripción detallada con logros medibles"></textarea>
+        <textarea id="experiencia" rows="5" placeholder="Ej: Gerente de Finanzas en Banco XYZ, 2018 - Actualidad. Responsable del control presupuestal, proyecciones financieras, auditorías internas, y liderazgo de un equipo de 12 personas. Logro: reducción del 20% en costos operativos."></textarea>
       </div>
       <div class="form-group">
         <label for="formacion">Formación y educación complementaria:</label>
-        <textarea id="formacion" rows="3" placeholder="Maestrías, diplomados, certificaciones"></textarea>
+        <textarea id="formacion" rows="3" placeholder="Ej: Maestría en Finanzas – EGADE Business School, Diplomado en Data Analytics – Coursera (Google Certificate)"></textarea>
       </div>
       <div class="form-group">
         <label for="habilidades">Habilidades técnicas avanzadas:</label>
-        <input type="text" id="habilidades" placeholder="Ej: Python, Figma, AutoCAD">
+        <input type="text" id="habilidades" placeholder="Ej: SAP, SQL, Tableau, Power BI, modelado financiero" />
       </div>
       <div class="form-group">
         <label for="idiomas">Idiomas:</label>
-        <input type="text" id="idiomas" placeholder="Ej: Inglés (Avanzado, TOEFL 100)">
+        <input type="text" id="idiomas" placeholder="Ej: Inglés (Avanzado, TOEFL 107), Francés (Intermedio)" />
       </div>
       <div class="form-group">
         <label for="publicaciones">Publicaciones / Conferencias / Premios:</label>
-        <textarea id="publicaciones" rows="2" placeholder="Publicaciones, conferencias o premios relevantes"></textarea>
+        <textarea id="publicaciones" rows="2" placeholder="Ej: Conferencista en FINTECH LATAM 2023, Publicación en Revista de Economía de Negocios, Premio al Mérito Profesional 2022"></textarea>
       </div>
       <div class="form-group">
         <label for="portafolioAdicional">Enlaces profesionales adicionales:</label>
-        <input type="url" id="portafolioAdicional" placeholder="Ej: Portafolio o enlaces a trabajos">
+        <input type="url" id="portafolioAdicional" placeholder="Ej: https://lauraestrategias.com / https://medium.com/@laurarh" />
       </div>
       <button type="submit">Guardar CV Avanzado</button>
     </form>
-  </main>
-  <script src="/js/cvform.js"></script>
-  <script type="module" src="/js/iaprueba.js"></script>
+    <!-- Aviso intuitivo -->
+    <div id="mensajeCV">
+      👇 Tu CV ha sido generado. Puedes previsualizarlo aquí abajo:
+    </div>
 
+    <!-- Contenedor donde se mostrará el CV generado -->
+    <div id="contenedorCV"></div>
+  </main>
+
+  <script type="module" src="/js/iaprueba.js"></script>
+  <script type="module" src="/js/plantillaVisual.js"></script>
+
+  <!-- Script para mostrar el mensaje cuando se genera el CV -->
+    <script>
+      document.getElementById('cvIntermediateForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+    
+        // Mostrar el aviso de previsualización
+        const mensajeCV = document.getElementById('mensajeCV');
+        mensajeCV.style.display = 'block';
+    
+        // Scroll automático hacia el mensaje
+        mensajeCV.scrollIntoView({ behavior: 'smooth' });
+      });
+    </script>
 </body>
 </html>
