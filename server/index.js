@@ -17,6 +17,14 @@ app.get('/cv', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'html', 'choose_cv.html'));
 });
 
+app.get('/pdf', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'html', 'pruebapdf.html'));
+});
+
+
+app.get('/perfil', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'html', 'perfil.html'));
+});
 
   app.listen(app.get('port'), () =>
   
