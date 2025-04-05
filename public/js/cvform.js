@@ -1,10 +1,8 @@
-// cvFormExport.js
-
 /**
  * Extrae y genera las variables resumidas para el CV Básico a partir del formulario.
- * @returns {Object} Objeto con fullName, contacto, ubicacion y resumenCV.
+ * @returns {Object} Objeto con la propiedad resumenCV.
  */
-function getBasicCVSummary() {
+export function getBasicCVSummary() {
   const nombre    = document.getElementById('nombre').value.trim();
   const apellido  = document.getElementById('apellido').value.trim();
   const telefono  = document.getElementById('telefono').value.trim();
@@ -23,14 +21,14 @@ function getBasicCVSummary() {
     : '';
   const resumenCV = `${fullName} ${contacto} ${ubicacion} Perfil: ${perfil} Formación: ${formacion} Experiencia: ${experiencia} Habilidades: ${habilidades}`;
   
-  return { fullName, contacto, ubicacion, resumenCV };
+  return { resumenCV };
 }
 
 /**
  * Extrae y genera las variables resumidas para el CV Intermedio a partir del formulario.
- * @returns {Object} Objeto con fullName, contacto y resumenCV.
+ * @returns {Object} Objeto con la propiedad resumenCV.
  */
-function getIntermediateCVSummary() {
+export function getIntermediateCVSummary() {
   const nombre    = document.getElementById('nombre').value.trim();
   const apellido  = document.getElementById('apellido').value.trim();
   const telefono  = document.getElementById('telefono').value.trim();
@@ -47,14 +45,14 @@ function getIntermediateCVSummary() {
   const contacto = `Contacto: Tel. ${telefono} - Correo: ${correo}.`;
   const resumenCV = `${fullName} ${contacto} Perfil Profesional: ${perfilProfesional} Formación: ${formacion} Experiencia: ${experiencia} Habilidades: ${habilidades} Idiomas: ${idiomas} Certificaciones: ${certificaciones} Proyectos: ${proyectos}`;
   
-  return { fullName, contacto, resumenCV };
+  return { resumenCV };
 }
 
 /**
  * Extrae y genera las variables resumidas para el CV Avanzado a partir del formulario.
- * @returns {Object} Objeto con fullNameTitle, contacto y resumenCV.
+ * @returns {Object} Objeto con la propiedad resumenCV.
  */
-function getAdvancedCVSummary() {
+export function getAdvancedCVSummary() {
   const nombre    = document.getElementById('nombre').value.trim();
   const apellido  = document.getElementById('apellido').value.trim();
   const tituloProfesional = document.getElementById('tituloProfesional').value.trim();
@@ -74,11 +72,5 @@ function getAdvancedCVSummary() {
   const contacto = `Contacto: Tel. ${telefono} - Correo: ${correo} - LinkedIn: ${linkedin} - Portafolio: ${portafolio}.`;
   const resumenCV = `${fullNameTitle} ${contacto} Resumen: ${resumen} Experiencia: ${experiencia} Formación: ${formacion} Habilidades: ${habilidades} Idiomas: ${idiomas} Publicaciones: ${publicaciones} Enlaces: ${portafolioAdicional}`;
   
-  return { fullNameTitle, contacto, resumenCV };
+  return { resumenCV };
 }
-
-module.exports = {
-  getBasicCVSummary,
-  getIntermediateCVSummary,
-  getAdvancedCVSummary
-};

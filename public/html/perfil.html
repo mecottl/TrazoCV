@@ -3,27 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Mi Perfil</title>
-  <link rel="stylesheet" href="/css/styles.css">
-  <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background: #007BFF;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-      margin: 10px;
-      transition: background 0.3s ease;
-    }
-    .btn:hover { background: #0056b3; }
-  </style>
+  <link rel="stylesheet" href="../css/perfil.css">
 </head>
 <body>
-  <h1>Mi Perfil</h1>
-  <div>
-    <a href="/my-cv" class="btn">Ver mis CV</a>
-    <a href="/choose_cv" class="btn">Crear CV</a>
+  <h1 class="page-title">Bienvenido a tu perfil</h1>
+
+
+  <div class="menu">
+    <div class="card">
+      <h2>Archivos Subidos</h2>
+      <p>Consulta los archivos que has creado anteriormente.</p>
+      <a href="/uploaded-files" class="btn">Ver archivos</a>
+    </div>
+
+    <div class="card">
+      <h2>Crear CV</h2>
+      <p>Diseña y genera un currículum profesional en pocos pasos.</p>
+      <a href="/cv" class="btn">Crear CV</a>
+    </div>
   </div>
 </body>
 </html>
