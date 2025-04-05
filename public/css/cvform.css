@@ -124,3 +124,16 @@ header h1 {
     padding: 10px 12px;
   }
 }
+
+.a {
+  display: inline-block;
+  padding: 18px 36px;
+  background-color: #bea794;
+  color: white;
+  border: 2px solid white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 18px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}

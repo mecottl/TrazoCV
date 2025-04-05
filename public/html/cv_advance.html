@@ -1,177 +1,204 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>CV Avanzado / Profesional</title>
-    <link rel="stylesheet" href="/css/cv.css" />
-    <link rel="icon" type="image/x-icon" href="../img/icono.ico">
 
-    <style>
-      #contenedorCV {
-        margin-top: 30px;
-      }
-      .exportar-pdf-btn {
-        margin-top: 20px;
-        padding: 10px 20px;
-        font-size: 14px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-      .exportar-pdf-btn:hover {
-        background-color: #388e3c;
-      }
-    </style>
+<head>
+  <meta charset="UTF-8" />
+  <title>CV Avanzado / Profesional</title>
+  <link rel="stylesheet" href="/css/cv.css" />
+  <link rel="icon" type="image/x-icon" href="../img/icono.ico">
 
-    <!-- Dependencias para exportar a PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  </head>
+  <style>
+    #contenedorCV {
+      margin-top: 30px;
+    }
 
-  <body>
-    <header>
-      <h1>CV Avanzado / Profesional</h1>
-    </header>
+    .exportar-pdf-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 14px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-    <main>
-      <form id="cvAdvancedForm">
-        <div class="form-group">
-          <label for="nombre">Nombre:</label>
-          <input type="text" id="nombre" required />
-        </div>
-        <div class="form-group">
-          <label for="apellido">Apellido:</label>
-          <input type="text" id="apellido" required />
-        </div>
-        <div class="form-group">
-          <label for="edad">Edad:</label>
-          <input type="text" id="edad" required />
-        </div>
-        <div class="form-group">
-          <label for="tituloProfesional">Título profesional:</label>
-          <input type="text" id="tituloProfesional" placeholder="Ej: Ing. en Sistemas – Especialista en Ciberseguridad" required />
-        </div>
-        <div class="form-group">
-          <label for="telefono">Teléfono:</label>
-          <input type="text" id="telefono" required />
-        </div>
-        <div class="form-group">
-          <label for="correo">Correo electrónico:</label>
-          <input type="email" id="correo" required />
-        </div>
-        <div class="form-group">
-          <label for="ciudad">Ciudad:</label>
-          <input type="text" id="ciudad" placeholder="Opcional" />
-        </div>
-        <div class="form-group">
-          <label for="pais">País:</label>
-          <input type="text" id="pais" placeholder="Opcional" />
-        </div>
-        <div class="form-group">
-          <label for="linkedin">LinkedIn:</label>
-          <input type="url" id="linkedin" placeholder="Enlace a tu perfil" />
-        </div>
-        <div class="form-group">
-          <label for="portafolio">Portafolio / GitHub:</label>
-          <input type="url" id="portafolio" placeholder="Enlace a tu portafolio o GitHub" />
-        </div>
-        <div class="form-group">
-          <label for="resumen">Resumen profesional (5-6 líneas o bullets):</label>
-          <textarea id="resumen" rows="5" placeholder="Experiencia total, especialidades, fortalezas y resultados logrados" minlength="75"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="experiencia">Experiencia laboral completa:</label>
-          <textarea id="experiencia" rows="5" placeholder="Descripción detallada con logros medibles" minlength="75"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="educacion">Formación y educación complementaria:</label>
-          <textarea id="educacion" rows="3" placeholder="Maestrías, diplomados, certificaciones" minlength="25"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="habilidades">Habilidades técnicas avanzadas:</label>
-          <input type="text" id="habilidades" placeholder="Ej: Python, Figma, AutoCAD" />
-        </div>
-        <div class="form-group">
-          <label for="idiomas">Idiomas:</label>
-          <input type="text" id="idiomas" placeholder="Ej: Inglés (Avanzado, TOEFL 100)" />
-        </div>
-        <div class="form-group">
-          <label for="publicaciones">Publicaciones / Conferencias / Premios:</label>
-          <textarea id="publicaciones" rows="2" placeholder="Publicaciones, conferencias o premios relevantes"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="portafolioAdicional">Enlaces profesionales adicionales:</label>
-          <input type="url" id="portafolioAdicional" placeholder="Ej: Portafolio o enlaces a trabajos" />
-        </div>
+    .exportar-pdf-btn:hover {
+      background-color: #388e3c;
+    }
 
-        <button type="submit">Generar CV</button>
-        <a href="/cv">Salir</a>
-      </form>
+    /* Estilos para el botón de salir */
+    a.salir-btn {
+      display: inline-block;
+      background-color: #bea794;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 0.25rem;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-left: 10px;
+    }
 
-      <!-- Contenedor donde se renderiza el CV -->
-      <div id="contenedorCV">
-        <!-- Aquí se renderizará el contenido del CV -->
+    a.salir-btn:hover {
+      background-color: #bea794;
+    }
+  </style>
+
+  <!-- Dependencias para exportar a PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>CV Avanzado / Profesional</h1>
+  </header>
+
+  <main>
+    <form id="cvAdvancedForm">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" required />
+      </div>
+      <div class="form-group">
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" required />
+      </div>
+      <div class="form-group">
+        <label for="edad">Edad:</label>
+        <input type="text" id="edad" required />
+      </div>
+      <div class="form-group">
+        <label for="tituloProfesional">Título profesional:</label>
+        <input type="text" id="tituloProfesional" placeholder="Ej: Ing. en Sistemas – Especialista en Ciberseguridad"
+          required />
+      </div>
+      <div class="form-group">
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" required />
+      </div>
+      <div class="form-group">
+        <label for="correo">Correo electrónico:</label>
+        <input type="email" id="correo" required />
+      </div>
+      <div class="form-group">
+        <label for="ciudad">Ciudad:</label>
+        <input type="text" id="ciudad" placeholder="Opcional" />
+      </div>
+      <div class="form-group">
+        <label for="pais">País:</label>
+        <input type="text" id="pais" placeholder="Opcional" />
+      </div>
+      <div class="form-group">
+        <label for="linkedin">LinkedIn:</label>
+        <input type="url" id="linkedin" placeholder="Enlace a tu perfil" />
+      </div>
+      <div class="form-group">
+        <label for="portafolio">Portafolio / GitHub:</label>
+        <input type="url" id="portafolio" placeholder="Enlace a tu portafolio o GitHub" />
+      </div>
+      <div class="form-group">
+        <label for="resumen">Resumen profesional (5-6 líneas o bullets):</label>
+        <textarea id="resumen" rows="5"
+          placeholder="Experiencia total, especialidades, fortalezas y resultados logrados" minlength="75"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="experiencia">Experiencia laboral completa:</label>
+        <textarea id="experiencia" rows="5" placeholder="Descripción detallada con logros medibles"
+          minlength="75"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="educacion">Formación y educación complementaria:</label>
+        <textarea id="educacion" rows="3" placeholder="Maestrías, diplomados, certificaciones"
+          minlength="25"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="habilidades">Habilidades técnicas avanzadas:</label>
+        <input type="text" id="habilidades" placeholder="Ej: Python, Figma, AutoCAD" />
+      </div>
+      <div class="form-group">
+        <label for="idiomas">Idiomas:</label>
+        <input type="text" id="idiomas" placeholder="Ej: Inglés (Avanzado, TOEFL 100)" />
+      </div>
+      <div class="form-group">
+        <label for="publicaciones">Publicaciones / Conferencias / Premios:</label>
+        <textarea id="publicaciones" rows="2" placeholder="Publicaciones, conferencias o premios relevantes"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="portafolioAdicional">Enlaces profesionales adicionales:</label>
+        <input type="url" id="portafolioAdicional" placeholder="Ej: Portafolio o enlaces a trabajos" />
       </div>
 
-      <!-- Botón para exportar a PDF y subir automáticamente -->
-      <button type="button" id="exportarPDF" class="exportar-pdf-btn">
-        Exportar y Subir a PDF
-      </button>
-    </main>
+      <button type="submit">Generar CV</button>
+      <a href="/cv" class="salir-btn">Salir</a>
+    </form>
 
-    <!-- Scripts del proyecto -->
-    <script type="module" src="/js/cvform.js"></script>
-    <script type="module" src="/js/iaprueba.js"></script>
+    <!-- Contenedor donde se renderiza el CV -->
+    <div id="contenedorCV">
+      <!-- Aquí se renderizará el contenido del CV -->
+    </div>
 
-    <!-- Script para generar el PDF y subirlo automáticamente -->
-    <script>
-      document.getElementById('exportarPDF').addEventListener('click', () => {
-        // Captura el contenido que se desea convertir en PDF
-        const elemento = document.getElementById('contenedorCV');
-        if (!elemento) {
-          alert("No se encontró el contenido del CV.");
-          return;
-        }
+    <!-- Botón para exportar a PDF y subir automáticamente -->
+    <button type="button" id="exportarPDF" class="exportar-pdf-btn">
+      Exportar y Subir a PDF
+    </button>
+  </main>
 
-        // Utiliza html2canvas para capturar el contenido
-        html2canvas(elemento).then(canvas => {
-          const imgData = canvas.toDataURL('image/png');
-          const { jsPDF } = window.jspdf;
-          const pdf = new jsPDF('p', 'pt', 'a4');
-          const pdfWidth = pdf.internal.pageSize.getWidth();
-          const pdfHeight = pdf.internal.pageSize.getHeight();
+  <!-- Scripts del proyecto -->
+  <script type="module" src="/js/cvform.js"></script>
+  <script type="module" src="/js/iaprueba.js"></script>
 
-          // Agrega la imagen generada al PDF
-          pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+  <!-- Script para generar el PDF y subirlo automáticamente -->
+  <script>
+    document.getElementById('exportarPDF').addEventListener('click', () => {
+      const elemento = document.getElementById('contenedorCV');
+      if (!elemento) {
+        alert("No se encontró el contenido del CV.");
+        return;
+      }
 
-          // Genera el blob del PDF
-          const blob = pdf.output('blob');
+      html2canvas(elemento).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'pt', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
 
-          // Prepara los datos para la subida automática
-          const formData = new FormData();
-          formData.append('pdf', blob, 'cv.pdf');
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-          // Realiza la petición para subir el PDF
-          fetch('/upload-cv', {
-            method: 'POST',
-            body: formData
-          })
-            .then(response => {
-              if (response.ok) {
-                alert('CV generado y subido automáticamente.');
-              } else {
-                alert('Error al subir el CV.');
-              }
-            })
-            .catch(error => {
-              console.error('Error al subir el CV:', error);
+        const blob = pdf.output('blob');
+
+        // Generación del nombre dinámico para el archivo PDF
+        const currentDate = new Date();
+        const dateStr = currentDate.toISOString().slice(0, 19).replace(/[:T]/g, '-');
+        const nombreUsuario = document.getElementById('nombre').value.trim() || "CV";
+        const fileName = `${nombreUsuario}_${dateStr}.pdf`;
+
+        // Prepara los datos para la subida automática
+        const formData = new FormData();
+        formData.append('pdf', blob, fileName);
+
+        fetch('/upload-cv', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => {
+            if (response.ok) {
+              alert('CV generado y subido automáticamente.');
+            } else {
               alert('Error al subir el CV.');
-            });
-        });
+            }
+          })
+          .catch(error => {
+            console.error('Error al subir el CV:', error);
+            alert('Error al subir el CV.');
+          });
       });
-    </script>
-  </body>
+    });
+
+  </script>
+</body>
+
 </html>

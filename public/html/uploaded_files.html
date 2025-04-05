@@ -1,43 +1,62 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel de Previsualización de PDFs</title>
   <link rel="stylesheet" href="../css/cvform.css">
   <style>
+    a.back-btn {
+      display: inline-block;
+      background-color: #bea794;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 0.25rem;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-left: 10px;
+
+    }
     .panel-container {
       max-width: 1000px;
       margin: 0 auto;
       padding: 20px;
     }
+
     .pdf-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 20px;
     }
+
     .pdf-card {
       background: #fff;
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 4px;
       text-align: center;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
       position: relative;
     }
+
     .pdf-thumbnail img {
       width: 100%;
       height: auto;
     }
+
     .pdf-details h3 {
       margin: 10px 0 5px;
       font-size: 1.1rem;
     }
+
     .pdf-details p {
       margin: 0;
       font-size: 0.9rem;
       color: #555;
     }
+
     .delete-btn {
       background: #dc3545;
       color: #fff;
@@ -51,11 +70,13 @@
     }
   </style>
 </head>
+
 <body>
   <div class="panel-container">
     <header>
       <h1>Mis CVs Guardados</h1>
-    </br><a href = '/perfil'>Pulsa para regresar</a>
+      </br>
+      <a href='/perfil' class="back-btn ">Pulsa para regresar</a>
     </header>
     <div class="pdf-grid" id="pdfGrid">
       <!-- Las tarjetas de PDF se insertarán dinámicamente aquí -->
@@ -69,7 +90,7 @@
         .then(response => response.json())
         .then(files => {
           if (files.length === 0) {
-            pdfGrid.innerHTML = "<p>No se han encontrado archivos PDF. </br><a href = '/perfil'>Pulsa para regresar</a></p>";
+            pdfGrid.innerHTML = "<p>No se han encontrado archivos PDF. </p>";
             return;
           }
           files.forEach(file => {
@@ -93,11 +114,11 @@
             // Asigna el evento para eliminar el archivo
             const deleteBtn = card.querySelector('.delete-btn');
             deleteBtn.addEventListener('click', () => {
-              if(confirm("¿Estás seguro de eliminar este archivo?")) {
+              if (confirm("¿Estás seguro de eliminar este archivo?")) {
                 const fileId = deleteBtn.getAttribute("data-id");
                 fetch(`/delete-cv/${fileId}`, { method: 'DELETE' })
                   .then(response => {
-                    if(response.ok) {
+                    if (response.ok) {
                       // Elimina la tarjeta de la interfaz
                       card.remove();
                     } else {
@@ -119,4 +140,5 @@
     });
   </script>
 </body>
+
 </html>
