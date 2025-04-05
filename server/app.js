@@ -149,96 +149,16 @@ app.post('/upload-cv', upload.single('pdf'), (req, res) => {
 });
 
 // Ruta para mostrar los CV del usuario autenticado
+// Ruta para mostrar la página de archivos subidos
 app.get('/uploaded-files', (req, res) => {
   // Verifica que el usuario esté autenticado
   if (!req.session.user) {
     return res.redirect('/login');
   }
-  const userEmail = req.session.user.email;
-  try {
-    // Consulta los archivos asociados al email del usuario
-    const stmt = db.prepare('SELECT id, nombre_archivo, fecha_subida FROM cv_pdf WHERE email = ?');
-    const files = stmt.all(userEmail);
-    
-    // Genera una página HTML con la lista de archivos
-    let html = `
-      <!DOCTYPE html>
-      <html lang="es">
-      <head>
-        <meta charset="UTF-8">
-        <title>Mis Archivos Subidos</title>
-        <link rel="stylesheet" href="/css/styles.css">
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            padding: 20px;
-          }
-          .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-          }
-          h1 {
-            text-align: center;
-            margin-bottom: 20px;
-          }
-          ul {
-            list-style: none;
-            padding: 0;
-          }
-          li {
-            margin: 10px 0;
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          }
-          a.btn {
-            background: #007BFF;
-            color: #fff;
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            transition: background 0.3s;
-          }
-          a.btn:hover {
-            background: #0056b3;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          <h1>Mis Archivos Subidos</h1>
-    `;
-    
-    if (files.length === 0) {
-      html += '<p>No se han encontrado CV asociados a tu cuenta.</p>';
-    } else {
-      html += '<ul>';
-      files.forEach(file => {
-        html += `<li>${file.nombre_archivo} (${file.fecha_subida}) - <a class="btn" href="/download-cv/${file.id}">Descargar</a></li>`;
-      });
-      html += '</ul>';
-    }
-    
-    html += `<div style="text-align: center; margin-top: 20px;">
-               <a class="btn" href="/perfil">Volver al Perfil</a>
-             </div>
-             </div>
-             </body>
-             </html>`;
-    
-    res.send(html);
-  } catch (err) {
-    console.error("Error al recuperar archivos:", err.message);
-    res.status(500).send("Error al recuperar archivos.");
-  }
+  // Envía el archivo HTML estático
+  res.sendFile(path.join(__dirname, '..', 'public', 'html', 'uploaded_files.html'));
 });
+
 
 app.get('/download-cv/:id', (req, res) => {
   const id = req.params.id;
@@ -257,5 +177,36 @@ app.get('/download-cv/:id', (req, res) => {
     res.status(500).send("Error al descargar el archivo.");
   }
 });
+
+// Ruta para cerrar sesión
+app.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Error al cerrar sesión:', err);
+      return res.status(500).send("Error al cerrar sesión");
+    }
+    // Opcional: Limpiar la cookie (si se utiliza)
+    res.clearCookie('connect.sid');
+    res.redirect('/login');
+  });
+});
+
+// Endpoint para devolver los archivos subidos en formato JSON
+app.get('/api/uploaded_files', (req, res) => {
+  // Verifica que el usuario esté autenticado
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'No autorizado' });
+  }
+  const userEmail = req.session.user.email;
+  try {
+    const stmt = db.prepare('SELECT id, nombre_archivo, fecha_subida FROM cv_pdf WHERE email = ?');
+    const files = stmt.all(userEmail);
+    res.json(files);
+  } catch (err) {
+    console.error("Error al recuperar archivos:", err.message);
+    res.status(500).json({ error: "Error al recuperar archivos." });
+  }
+});
+
 
 module.exports = app;
