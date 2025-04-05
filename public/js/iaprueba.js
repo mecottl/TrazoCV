@@ -19,7 +19,7 @@ function getCVData() {
 
 function generarPromptHTML(resumenCV, tipo) {
   return `
-Genera un CV en HTML moderno y profesional para un CV de tipo ${tipo}.
+Genera un CV en formato HTML moderno y profesional para un CV de tipo ${tipo}.
 Usa <div>, <h2>, <p>, <ul> y <li> para estructurar secciones como:
 - Datos personales
 - Perfil profesional
@@ -27,8 +27,8 @@ Usa <div>, <h2>, <p>, <ul> y <li> para estructurar secciones como:
 - Educación
 - Habilidades
 - Idiomas
+Solo devuelve el bloque HTML, sin etiquetas <html>, <body> ni comentarios.
 
-Solo devuelve el bloque HTML sin etiquetas <html>, <body>, <head>, ni comentarios.
 Datos del usuario: ${resumenCV}
 `.trim();
 }
@@ -37,14 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('form[id^="cv"]');
   const contenedor = document.getElementById('contenedorCV');
   const exportarBtn = document.getElementById('exportarPDF');
+  let contenidoLimpio = '';
 
-  if (!form || !contenedor || !exportarBtn) return;
-
-  let contenidoHTMLGenerado = '';
+  if (!form) return;
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-
     const datos = getCVData();
     if (!datos || !datos.resumen?.resumenCV) {
       return alert("No se pudo generar el resumen del CV.");
@@ -62,24 +60,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const data = await response.json();
       let htmlGenerado = data.cv?.trim();
-
-      htmlGenerado = htmlGenerado
-        .replace(/^```html/, '')
-        .replace(/^```/, '')
-        .replace(/```$/, '')
-        .trim();
+      htmlGenerado = htmlGenerado.replace(/^```html/, '').replace(/^```/, '').replace(/```$/, '').trim();
 
       if (!htmlGenerado.startsWith('<')) {
         return alert("La IA no devolvió un bloque HTML válido.");
       }
 
-      // Guardamos para luego exportar
-      contenidoHTMLGenerado = htmlGenerado;
-
-      // Renderizar en pantalla
+      contenidoLimpio = htmlGenerado;
       contenedor.innerHTML = '';
       const wrapper = document.createElement('div');
-      wrapper.innerHTML = contenidoHTMLGenerado;
+      wrapper.id = 'cv-render';
+      wrapper.style.maxWidth = '800px';
+      wrapper.style.padding = '20px';
+      wrapper.style.background = 'white';
+      wrapper.style.color = 'black';
+      wrapper.innerHTML = contenidoLimpio;
       contenedor.appendChild(wrapper);
 
       exportarBtn.style.display = 'inline-block';
@@ -90,48 +85,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  exportarBtn.addEventListener('click', () => {
-    if (!contenidoHTMLGenerado) return;
-  
-    // Convertir el HTML generado a Markdown usando Turndown
-    const turndownService = new TurndownService();
-    const markdown = turndownService.turndown(contenidoHTMLGenerado);
-  
-    // Convertir el Markdown a HTML usando marked.parse
-    const htmlFromMarkdown = marked.parse(markdown);
-  
-    // Configurar jsPDF en formato carta
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('p', 'mm', 'letter');
-  
-    const margin = 10;
-    const availableWidth = doc.internal.pageSize.getWidth() - 2 * margin;
-  
-    // Crear un contenedor "wrapper" para forzar el ancho fijo y que se respeten los márgenes
-    const wrapper = document.createElement('div');
-    wrapper.style.boxSizing = 'border-box';
-    wrapper.style.width = availableWidth + 'px';
-    // Puedes agregar overflow-wrap para que las palabras largas se dividan
-    wrapper.style.overflowWrap = 'break-word';
-    // Opcional: ajustar el estilo general del texto (tamaños, fuentes, etc.)
-    wrapper.innerHTML = htmlFromMarkdown;
-    document.body.appendChild(wrapper);
-  
-    // Renderizar el contenido del contenedor a PDF
-    doc.html(wrapper, {
-      callback: function (doc) {
-        document.body.removeChild(wrapper);
-        doc.save('CV_Generado.pdf');
-      },
-      x: margin,
-      y: margin,
-      width: availableWidth,
-      autoPaging: 'text',
-      html2canvas: {
-        scale: 0.3,
-        windowWidth: availableWidth
-      }
-    });
+  exportarBtn.addEventListener('click', async () => {
+    try {
+      const response = await fetch('/exportar-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ html: contenidoLimpio })
+      });
+
+      if (!response.ok) throw new Error("No se pudo exportar el PDF");
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'CV_Generado.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } catch (err) {
+      console.error("❌ Error exportando el PDF:", err);
+      alert("No se pudo exportar el PDF.");
+    }
   });
   
 });

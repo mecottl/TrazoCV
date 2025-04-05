@@ -236,5 +236,6 @@ app.get('/api/user', (req, res) => {
     res.status(401).json({ error: 'No autenticado' });
   }
 });
-
+const generarPdfRoute = require('./generarPdf');
+app.use('/generar-pdf', generarPdfRoute);
 module.exports = app;
