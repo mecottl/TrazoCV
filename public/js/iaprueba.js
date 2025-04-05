@@ -1,3 +1,4 @@
+import { marked } from 'https://cdn.jsdelivr.net/npm/marked@4.3.0/lib/marked.esm.js';
 import {
   getBasicCVSummary,
   getIntermediateCVSummary,
@@ -91,34 +92,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
   exportarBtn.addEventListener('click', () => {
     if (!contenidoHTMLGenerado) return;
-
-    // Creamos un contenedor temporal invisible
-    const tempDiv = document.createElement('div');
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.left = '-9999px';
-    tempDiv.style.top = '0';
-    tempDiv.innerHTML = contenidoHTMLGenerado;
-    document.body.appendChild(tempDiv);
-
-    const opt = {
-      margin: [10, 10, 10, 10],
-      filename: 'CV_Generado.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
-    html2pdf()
-      .set(opt)
-      .from(tempDiv)
-      .save()
-      .then(() => {
-        document.body.removeChild(tempDiv); // limpieza
-      })
-      .catch((error) => {
-        console.error("Error al exportar a PDF:", error);
-        alert("Error al exportar el PDF.");
-        document.body.removeChild(tempDiv);
-      });
+  
+    // Convertir el HTML generado a Markdown usando Turndown
+    const turndownService = new TurndownService();
+    const markdown = turndownService.turndown(contenidoHTMLGenerado);
+  
+    // Convertir el Markdown a HTML usando marked.parse
+    const htmlFromMarkdown = marked.parse(markdown);
+  
+    // Configurar jsPDF en formato carta
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'mm', 'letter');
+  
+    const margin = 10;
+    const availableWidth = doc.internal.pageSize.getWidth() - 2 * margin;
+  
+    // Crear un contenedor "wrapper" para forzar el ancho fijo y que se respeten los márgenes
+    const wrapper = document.createElement('div');
+    wrapper.style.boxSizing = 'border-box';
+    wrapper.style.width = availableWidth + 'px';
+    // Puedes agregar overflow-wrap para que las palabras largas se dividan
+    wrapper.style.overflowWrap = 'break-word';
+    // Opcional: ajustar el estilo general del texto (tamaños, fuentes, etc.)
+    wrapper.innerHTML = htmlFromMarkdown;
+    document.body.appendChild(wrapper);
+  
+    // Renderizar el contenido del contenedor a PDF
+    doc.html(wrapper, {
+      callback: function (doc) {
+        document.body.removeChild(wrapper);
+        doc.save('CV_Generado.pdf');
+      },
+      x: margin,
+      y: margin,
+      width: availableWidth,
+      autoPaging: 'text',
+      html2canvas: {
+        scale: 0.3,
+        windowWidth: availableWidth
+      }
+    });
   });
+  
 });
