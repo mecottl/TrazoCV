@@ -20,6 +20,7 @@
         <div class="form-group">
           <label for="nombre">Nombre:</label>
           <input type="text" id="nombre" name="Nombre" required />
+          <input type="text" id="nombre" name="Nombre" required />
         </div>
         <div class="form-group">
           <label for="apellido">Apellido:</label>
@@ -32,9 +33,11 @@
         <div class="form-group">
           <label for="telefono">Teléfono:</label>
           <input type="text" id="telefono" name="Teléfono" required />
+          <input type="text" id="telefono" name="Teléfono" required />
         </div>
         <div class="form-group">
           <label for="correo">Correo electrónico:</label>
+          <input type="email" id="correo" name="Correo electrónico" required />
           <input type="email" id="correo" name="Correo electrónico" required />
         </div>
         <div class="form-group">
@@ -50,6 +53,7 @@
           <textarea
             id="perfil"
             name="Perfil personal (2-3 líneas)"
+            name="Perfil personal (2-3 líneas)"
             rows="3"
           ></textarea>
         </div>
@@ -58,6 +62,7 @@
           <textarea
             id="formacion"
             name="Formación académica"
+            name="Formación académica"
             rows="3"
           ></textarea>
         </div>
@@ -65,6 +70,7 @@
           <label for="experiencia">Experiencia laboral:</label>
           <textarea
             id="experiencia"
+            name="Experiencia laboral"
             name="Experiencia laboral"
             rows="3"
           ></textarea>
@@ -79,9 +85,18 @@
 
       <!-- Contenedor donde se mostrará el CV generado -->
       <div id="contenedorCV"></div>
+
+      <!-- Contenedor donde se mostrará el CV generado -->
+      <div id="contenedorCV"></div>
     </main>
 
     <!-- Scripts -->
+
+    <!-- Scripts -->
     <script type="module" src="/js/iaprueba.js"></script>
+    <script type="module" src="/js/plantillaVisual.js"></script>
+
+    <!-- Ya no se necesita jsPDF si no generas PDF -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
   </body>
 </html>
