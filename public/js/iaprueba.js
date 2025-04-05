@@ -14,7 +14,12 @@ function getCVSummary() {
   }
 }
 
-// Exportamos la función para poder usarla en otros lugares
-module.exports = {
-  getCVSummary
-};
+const resumen = getCVSummary(); // Obtienes el objeto con el resumen
+if (resumen) {
+  // Supongamos que queremos usar la propiedad 'resumenCV'
+  const txt = `Hola, aquí está tu resumen: ${resumen.resumenCV}`;
+  console.log(txt);
+} else {
+  console.log("No se detectó ningún formulario de CV.");
+}
+

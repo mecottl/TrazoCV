@@ -15,7 +15,7 @@ const genAI = new GoogleGenerativeAI("AIzaSyAsOPZkxV2Mj5OX9Igu4G0IZ0Wiel6M5bc");
 async function obtenerRespuestaGemini(prompt) {
   try {
     // Obtenemos el modelo específico de Gemini (en este caso, gemini-1.5-flash)
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     // Enviamos el prompt al modelo
     const result = await model.generateContent(prompt);
