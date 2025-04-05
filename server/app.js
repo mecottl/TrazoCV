@@ -122,5 +122,91 @@ app.get('/my-cv', (req, res) => {
   }
 });
 
+const multer = require('multer');
+// Configura Multer para almacenar archivos en memoria (o en disco, según lo que necesites)
+const upload = multer({ storage: multer.memoryStorage() });
+
+// Ruta para procesar la subida de CV en PDF
+app.post('/upload-cv', upload.single('pdf'), (req, res) => {
+  // Verifica que el usuario esté autenticado (se supone que el correo está en la sesión)
+  if (!req.session.user) {
+    return res.status(401).send("No autorizado. Inicia sesión primero.");
+  }
+  // Verifica que se haya subido un archivo
+  if (!req.file) {
+    return res.status(400).send("No se ha seleccionado ningún archivo.");
+  }
+  try {
+    const userEmail = req.session.user.email;
+    // Inserta el archivo en la tabla cv_pdf (asegúrate de que la tabla esté creada correctamente)
+    const stmt = db.prepare('INSERT INTO cv_pdf (email, nombre_archivo, tipo_archivo, pdf) VALUES (?, ?, ?, ?)');
+    stmt.run(userEmail, req.file.originalname, req.file.mimetype, req.file.buffer);
+    res.send("Archivo subido y guardado correctamente.");
+  } catch (err) {
+    console.error("Error al insertar archivo:", err.message);
+    res.status(500).send("Error al guardar el archivo en la base de datos.");
+  }
+});
+
+// Ruta para mostrar los CV del usuario autenticado
+// Ruta para mostrar la página de archivos subidos
+app.get('/uploaded-files', (req, res) => {
+  // Verifica que el usuario esté autenticado
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  // Envía el archivo HTML estático
+  res.sendFile(path.join(__dirname, '..', 'public', 'html', 'uploaded_files.html'));
+});
+
+
+app.get('/download-cv/:id', (req, res) => {
+  const id = req.params.id;
+  try {
+    const stmt = db.prepare('SELECT nombre_archivo, tipo_archivo, pdf FROM cv_pdf WHERE id = ?');
+    const file = stmt.get(id);
+    if (file) {
+      res.setHeader('Content-Type', file.tipo_archivo);
+      res.setHeader('Content-Disposition', `attachment; filename="${file.nombre_archivo}"`);
+      res.send(file.pdf);
+    } else {
+      res.status(404).send("Archivo no encontrado.");
+    }
+  } catch (err) {
+    console.error("Error al descargar el archivo:", err.message);
+    res.status(500).send("Error al descargar el archivo.");
+  }
+});
+
+// Ruta para cerrar sesión
+app.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Error al cerrar sesión:', err);
+      return res.status(500).send("Error al cerrar sesión");
+    }
+    // Opcional: Limpiar la cookie (si se utiliza)
+    res.clearCookie('connect.sid');
+    res.redirect('/login');
+  });
+});
+
+// Endpoint para devolver los archivos subidos en formato JSON
+app.get('/api/uploaded_files', (req, res) => {
+  // Verifica que el usuario esté autenticado
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'No autorizado' });
+  }
+  const userEmail = req.session.user.email;
+  try {
+    const stmt = db.prepare('SELECT id, nombre_archivo, fecha_subida FROM cv_pdf WHERE email = ?');
+    const files = stmt.all(userEmail);
+    res.json(files);
+  } catch (err) {
+    console.error("Error al recuperar archivos:", err.message);
+    res.status(500).json({ error: "Error al recuperar archivos." });
+  }
+});
+
 
 module.exports = app;

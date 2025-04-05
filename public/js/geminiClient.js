@@ -5,31 +5,33 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // Creamos una instancia del modelo con la API Key que recibimos desde otro archivo
 // Recomendado: pasarla como variable o desde .env
-const genAI = new GoogleGenerativeAI("AIzaSyAsOPZkxV2Mj5OX9Igu4G0IZ0Wiel6M5bc");
+const genAI = new GoogleGenerativeAI("AIzaSyB1EI2PUQkCZlM2WJ5PozARP_KgHEKroAQ"); // ¡Reemplaza con tu API Key!
 
 /**
- * Genera contenido usando Gemini a partir de un prompt.
- * @param {string} prompt - El texto que quieres enviarle a Gemini.
- * @returns {Promise<string>} - Retorna la respuesta generada por Gemini.
+ * Genera contenido usando el modelo Gemini especificado a partir de un prompt.
+ * @param {string} prompt - El texto que se enviará a Gemini.
+ * @param {string} [modelName="gemini-2.0-flash"] - El nombre del modelo de Gemini a utilizar. Por defecto es "gemini-2.0-flash".
+ * @returns {Promise<string>} - Una promesa que resuelve con la respuesta generada por Gemini o rechaza con un error.
  */
-async function obtenerRespuestaGemini(prompt) {
+async function obtenerRespuestaGemini(prompt, modelName = "gemini-2.0-flash") {
   try {
-    // Obtenemos el modelo específico de Gemini (en este caso, gemini-1.5-flash)
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // Obtenemos el modelo específico de Gemini
+    const model = genAI.getGenerativeModel({ model: modelName });
 
     // Enviamos el prompt al modelo
     const result = await model.generateContent(prompt);
 
-    // Extraemos el texto de la respuesta
-    const respuesta = result.response.text();
-
-    // Retornamos la respuesta generada
-    return respuesta;
+    // Verificamos si la respuesta contiene texto
+    if (result && result.response && result.response.text) {
+      return result.response.text();
+    } else {
+      console.warn("Advertencia: La respuesta de Gemini no contenía texto.");
+      return "La respuesta generada no contenía texto.";
+    }
 
   } catch (error) {
-    // Si hay un error, lo mostramos y retornamos un mensaje de error
     console.error("Error al generar respuesta desde Gemini:", error);
-    return "Hubo un error al generar la respuesta.";
+    return `Hubo un error al generar la respuesta: ${error.message}`;
   }
 }
 
