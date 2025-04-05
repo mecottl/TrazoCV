@@ -110,8 +110,14 @@
           <input type="text" id="pais" />
         </div>
         <div class="form-group">
-          <label for="perfil">Perfil personal:</label>
-          <textarea id="perfil" rows="3"></textarea>
+          <label for="perfil">Perfil personal (2-3 líneas):</label>
+          <textarea
+            id="perfil"
+            name="Perfil personal"
+            rows="3"
+            placeholder="Quién eres, qué haces y qué buscas"
+            minlength="120"
+          ></textarea>
         </div>
         <div class="form-group">
           <label for="formacion">Formación académica:</label>
@@ -119,7 +125,13 @@
         </div>
         <div class="form-group">
           <label for="experiencia">Experiencia laboral:</label>
-          <textarea id="experiencia" rows="3"></textarea>
+          <textarea
+            id="experiencia"
+            name="Experiencia laboral"
+            rows="3"
+            placeholder="Nombre del lugar, puesto, fechas"
+            minlength="50"
+          ></textarea>
         </div>
         <div class="form-group">
           <label for="habilidades">Habilidades básicas:</label>
