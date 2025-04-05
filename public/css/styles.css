@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', sans-serif;
-  background-color: #6A858C;
+  background-color: #8e7663 ;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -10,14 +10,14 @@ body {
 }
 
 .login-menu {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color:  #9a897b99;
   backdrop-filter: blur(12px);
   padding: 3rem 5rem;
   border-radius: 20px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   width: 100%;
   max-width: 400px;
-  color: white;
+  color: #EDE3D6;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -36,7 +36,7 @@ body {
 h2 {
   font-size: 2.2rem;
   margin-bottom: 1rem;
-  color: white;
+  color:#EDE3D6;
 }
 
 label {
@@ -55,7 +55,7 @@ input[type="password"] {
   border: none;
   border-radius: 25px;
   font-size: 1rem;
-  background-color: #ffffff;
+  background-color: #EDE3D6;
   color: #333;
   transition: 0.3s ease;
 
@@ -63,12 +63,12 @@ input[type="password"] {
 
 input[type="email"]:focus,
 input[type="password"]:focus {
-  outline: 2px solid #BF6D3C;
+  outline: 2px solid #bea794;
 }
 
 button[type="submit"] {
   width: 100%;
-  background-color: #BF6D3C;
+  background-color: #bea794;
   color: white;
   border: none;
   border-radius: 25px;
@@ -81,7 +81,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #a4572d;
+  background-color: #a3846c;
   transform: scale(1.02);
 }
 

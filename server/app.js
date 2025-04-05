@@ -227,5 +227,14 @@ app.get('/api/uploaded_files', (req, res) => {
   }
 });
 
+// Endpoint para obtener el usuario autenticado (por ejemplo, solo su email)
+app.get('/api/user', (req, res) => {
+  if (req.session && req.session.user) {
+    // Devuelve el email del usuario autenticado
+    res.json({ email: req.session.user.email });
+  } else {
+    res.status(401).json({ error: 'No autenticado' });
+  }
+});
 
 module.exports = app;

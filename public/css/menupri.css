@@ -30,16 +30,17 @@ body {
 }
 
 .login-btn {
-  background-color: #BF6D3C;
-  color: white;
+  background-color: #bea794;
+  color: #765137;
   padding: 0.8rem 2rem;
   border-radius: 25px;
   border: none;
   font-weight: 600;
   cursor: pointer;
+  text-decoration: none;
 }
 .login-btn:hover {
-  background-color: #a4572d;
+  background-color: #a3846c;
 }
 
 .diagonal {
@@ -48,7 +49,7 @@ body {
   right: 0;
   width: 100%;
   height: 100%;
-  background-color: #6A858C;
+  background-color: #9A897B;
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
   z-index: -1;
 }
@@ -73,17 +74,18 @@ body {
   display: inline-block; /* Necesario para que margin funcione bien en <a> */
   margin-top: 42px; /* 10px extra respecto al estilo anterior */
   padding: 1rem 2rem;
-  background-color: #6A858C;
-  color: white;
+  background-color: #d8ccbf;
+  color: #765137;
   font-size: 1.2rem;
   text-decoration: none;
   border-radius: 30px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  text-decoration: none;
 }
 
 .create-btn:hover {
-  background-color: #4f646b;
+  background-color: #a3846c;
 }
 
 .images {

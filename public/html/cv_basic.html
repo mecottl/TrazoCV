@@ -4,73 +4,84 @@
     <meta charset="UTF-8" />
     <title>CV Básico</title>
     <link rel="stylesheet" href="/css/cv.css" />
+    <style>
+      #contenedorCV {
+        margin-top: 30px;
+      }
+    </style>
   </head>
   <body>
     <header>
       <h1>CV Básico</h1>
     </header>
+
     <main>
       <form id="cvBasicForm">
         <div class="form-group">
           <label for="nombre">Nombre:</label>
-          <input type="text" id="nombre" required />
+          <input type="text" id="nombre" name="Nombre" required />
         </div>
         <div class="form-group">
           <label for="apellido">Apellido:</label>
-          <input type="text" id="apellido" required />
+          <input type="text" id="apellido" name="Apellido" required />
+        </div>
+        <div class="form-group">
+          <label for="edad">Edad:</label>
+          <input type="text" id="edad" name="Edad" required />
         </div>
         <div class="form-group">
           <label for="telefono">Teléfono:</label>
-          <input type="text" id="telefono" required />
+          <input type="text" id="telefono" name="Teléfono" required />
         </div>
         <div class="form-group">
           <label for="correo">Correo electrónico:</label>
-          <input type="email" id="correo" required />
+          <input type="email" id="correo" name="Correo electrónico" required />
         </div>
         <div class="form-group">
           <label for="ciudad">Ciudad:</label>
-          <input type="text" id="ciudad" placeholder="Opcional" />
+          <input type="text" id="ciudad" name="Ciudad" />
         </div>
         <div class="form-group">
           <label for="pais">País:</label>
-          <input type="text" id="pais" placeholder="Opcional" />
+          <input type="text" id="pais" name="País" />
         </div>
         <div class="form-group">
           <label for="perfil">Perfil personal (2-3 líneas):</label>
           <textarea
             id="perfil"
+            name="Perfil personal (2-3 líneas)"
             rows="3"
-            placeholder="Quién eres, qué haces y qué buscas"
           ></textarea>
         </div>
         <div class="form-group">
           <label for="formacion">Formación académica:</label>
           <textarea
             id="formacion"
+            name="Formación académica"
             rows="3"
-            placeholder="Institución, carrera, fechas"
           ></textarea>
         </div>
         <div class="form-group">
           <label for="experiencia">Experiencia laboral:</label>
           <textarea
             id="experiencia"
+            name="Experiencia laboral"
             rows="3"
-            placeholder="Nombre del lugar, puesto, fechas"
           ></textarea>
         </div>
         <div class="form-group">
           <label for="habilidades">Habilidades básicas:</label>
-          <input
-            type="text"
-            id="habilidades"
-            placeholder="Ej: Microsoft Office, trabajo en equipo"
-          />
+          <input type="text" id="habilidades" name="Habilidades básicas" />
         </div>
+
         <button type="submit">Guardar CV Básico</button>
       </form>
+
+      <!-- Contenedor donde se mostrará el CV generado -->
+      <div id="contenedorCV"></div>
     </main>
-    <script src="/js/cvform.js"></script>
+
+    <!-- Scripts -->
     <script type="module" src="/js/iaprueba.js"></script>
   </body>
 </html>

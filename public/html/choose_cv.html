@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <title>Selecciona el Nivel de tu CV</title>
   <link rel="stylesheet" href="/css/choose.css">
-
+  <style>
+    /* Puedes incluir estilos adicionales aquí */
+  </style>
 </head>
 <body>
   <header>
@@ -38,8 +40,8 @@
         <a href="/inter" class="btn-card">Siguiente</a>
       </div>
   
-      <!-- CV Avanzado -->
-      <div class="card">
+      <!-- CV Avanzado (sólo para usuarios premium) -->
+      <div class="card card-advanced">
         <h3>AVANZADO</h3>
         <ul>
           <li>Combina cronológico y funcional.</li>
@@ -47,9 +49,36 @@
           <li>Incluye experiencia laboral en orden inverso.</li>
           <li>Ideal para profesionales con amplia experiencia.</li>
         </ul>
-        <a href="/advance" class="btn-card">Siguiente</a>
+        <a href="/advance" class="btn-card advanced-link">Siguiente</a>
       </div>
   
     </div>
   </main>
-  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Realiza un fetch al endpoint para obtener el email del usuario autenticado
+      fetch('/api/user')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Usuario no autenticado');
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Asigna el email a window.userEmail para otros usos
+          window.userEmail = data.email;
+          // Si el usuario es free, se cambia el enlace de la tarjeta Avanzada
+          if (window.userEmail === 'free@example.com') {
+            const advancedLink = document.querySelector('.advanced-link');
+            if (advancedLink) {
+              advancedLink.href = '/suscription'; // Redirige a la página de suscripción
+              advancedLink.textContent = 'Suscribirse a Premium';
+            }
+          }
+        })
+        .catch(error => {
+          console.error('Error al obtener el usuario:', error);
+        });
+    });
+  </script>
+</html>
