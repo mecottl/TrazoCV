@@ -147,6 +147,25 @@ app.post('/upload-cv', upload.single('pdf'), (req, res) => {
     res.status(500).send("Error al guardar el archivo en la base de datos.");
   }
 });
+const obtenerRespuestaGemini = require('./geminiClient');
+
+// Ruta para generar CV con Gemini
+app.post('/generar-cv', async (req, res) => {
+  const { resumenCV } = req.body;
+
+  if (!resumenCV) {
+    return res.status(400).json({ error: 'Falta el resumenCV' });
+  }
+
+  try {
+    const prompt = `Genera un currículum profesional con base en el siguiente resumen del usuario:\n\n${resumenCV}`;
+    const resultado = await obtenerRespuestaGemini(prompt);
+    res.json({ cv: resultado });
+  } catch (err) {
+    console.error("Error al generar el CV con Gemini:", err.message);
+    res.status(500).json({ error: 'Error al generar el CV con Gemini' });
+  }
+});
 
 // Ruta para mostrar los CV del usuario autenticado
 // Ruta para mostrar la página de archivos subidos
