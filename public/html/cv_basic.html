@@ -8,7 +8,26 @@
       #contenedorCV {
         margin-top: 30px;
       }
+
+      .exportar-pdf-btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 14px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .exportar-pdf-btn:hover {
+        background-color: #388e3c;
+      }
     </style>
+
+    <!-- jsPDF para exportar a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   </head>
   <body>
     <header>
@@ -32,28 +51,26 @@
         <div class="form-group">
           <label for="telefono">Teléfono:</label>
           <input type="text" id="telefono" name="Teléfono" required />
-      
         </div>
         <div class="form-group">
           <label for="correo">Correo electrónico:</label>
           <input type="email" id="correo" name="Correo electrónico" required />
- 
         </div>
         <div class="form-group">
           <label for="ciudad">Ciudad:</label>
-          <input type="text" id="ciudad" name="Ciudad" />
+          <input type="text" id="ciudad" name="Ciudad" placeholder="Opcional" />
         </div>
         <div class="form-group">
           <label for="pais">País:</label>
-          <input type="text" id="pais" name="País" />
+          <input type="text" id="pais" name="País" placeholder="Opcional" />
         </div>
         <div class="form-group">
           <label for="perfil">Perfil personal (2-3 líneas):</label>
           <textarea
             id="perfil"
-            name="Perfil personal (2-3 líneas)"
-            name="Perfil personal (2-3 líneas)"
+            name="Perfil personal"
             rows="3"
+            placeholder="Quién eres, qué haces y qué buscas"
           ></textarea>
         </div>
         <div class="form-group">
@@ -61,8 +78,8 @@
           <textarea
             id="formacion"
             name="Formación académica"
-            name="Formación académica"
             rows="3"
+            placeholder="Institución, carrera, fechas"
           ></textarea>
         </div>
         <div class="form-group">
@@ -70,32 +87,40 @@
           <textarea
             id="experiencia"
             name="Experiencia laboral"
-            name="Experiencia laboral"
             rows="3"
+            placeholder="Nombre del lugar, puesto, fechas"
           ></textarea>
         </div>
         <div class="form-group">
           <label for="habilidades">Habilidades básicas:</label>
-          <input type="text" id="habilidades" name="Habilidades básicas" />
+          <input
+            type="text"
+            id="habilidades"
+            name="Habilidades básicas"
+            placeholder="Ej: Microsoft Office, trabajo en equipo"
+          />
         </div>
 
-        <button type="submit">Guardar CV Básico</button>
+        <button type="submit">Generar CV Básico</button>
       </form>
 
-      <!-- Contenedor donde se mostrará el CV generado -->
+      <!-- 📄 CV generado dinámicamente -->
       <div id="contenedorCV"></div>
 
-      <!-- Contenedor donde se mostrará el CV generado -->
-      <div id="contenedorCV"></div>
+      <!-- Botón para exportar a PDF -->
+      <button
+        type="button"
+        id="exportarPDF"
+        class="exportar-pdf-btn"
+        style="display: none"
+      >
+        Exportar a PDF
+      </button>
     </main>
 
     <!-- Scripts -->
-
-    <!-- Scripts -->
+    <script type="module" src="/js/cvform.js"></script>
+    <script type="module" src="/js/plantilla.js"></script>
     <script type="module" src="/js/iaprueba.js"></script>
-    <script type="module" src="/js/plantillaVisual.js"></script>
-
-    <!-- Ya no se necesita jsPDF si no generas PDF -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
   </body>
 </html>

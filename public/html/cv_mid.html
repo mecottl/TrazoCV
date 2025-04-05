@@ -1,77 +1,136 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>CV Intermedio</title>
-  <link rel="stylesheet" href="/css/cv.css">
-</head>
-<body>
-  <header>
-    <h1>CV Intermedio</h1>
-  </header>
-  <main>
-    <form id="cvIntermediateForm">
-      <div class="form-group">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" required>
-      </div>
-      <div class="form-group">
-        <label for="apellido">Apellido:</label>
-        <input type="text" id="apellido" required>
-      </div>
-      <div class="form-group">
-        <label for="edad">Edad:</label>
-        <input type="text" id="edad" required />
-      </div>
-      <div class="form-group">
-        <label for="telefono">Teléfono:</label>
-        <input type="text" id="telefono" required>
-      </div>
-      <div class="form-group">
-        <label for="correo">Correo electrónico:</label>
-        <input type="email" id="correo" required>
-      </div>
-      <div class="form-group">
-        <label for="ciudad">Ciudad:</label>
-        <input type="text" id="ciudad" placeholder="Opcional" />
-      </div>
-      <div class="form-group">
-        <label for="pais">País:</label>
-        <input type="text" id="pais" placeholder="Opcional" />
-      </div>
-      <div class="form-group">
-        <label for="perfilProfesional">Perfil profesional (3-4 líneas):</label>
-        <textarea id="perfilProfesional" rows="4" placeholder="Describe tus fortalezas, experiencia y objetivos"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="formacion">Formación académica:</label>
-        <textarea id="formacion" rows="3" placeholder="Institución, carrera, fechas, logros"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="experiencia">Experiencia laboral:</label>
-        <textarea id="experiencia" rows="4" placeholder="Puesto, empresa, fechas, responsabilidades y logros"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="habilidades">Habilidades (técnicas y blandas):</label>
-        <input type="text" id="habilidades" placeholder="Ej: comunicación, liderazgo, Excel">
-      </div>
-      <div class="form-group">
-        <label for="idiomas">Idiomas:</label>
-        <input type="text" id="idiomas" placeholder="Ej: Inglés (Intermedio)">
-      </div>
-      <div class="form-group">
-        <label for="certificaciones">Certificaciones / Cursos:</label>
-        <textarea id="certificaciones" rows="2" placeholder="Certificaciones relevantes"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="proyectos">Proyectos personales / Freelance / Voluntariado:</label>
-        <textarea id="proyectos" rows="2" placeholder="Proyectos o actividades adicionales"></textarea>
-      </div>
-      <button type="submit">Guardar CV Intermedio</button>
-    </form>
-  </main>
-  <script src="/js/cvform.js"></script>
-  <script type="module" src="/js/iaprueba.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <title>CV Intermedio</title>
+    <link rel="stylesheet" href="/css/cv.css" />
+    <style>
+      #contenedorCV {
+        margin-top: 30px;
+      }
 
-</body>
+      .exportar-pdf-btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 14px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .exportar-pdf-btn:hover {
+        background-color: #388e3c;
+      }
+    </style>
+
+    <!-- jsPDF para exportar a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>CV Intermedio</h1>
+    </header>
+
+    <main>
+      <form id="cvIntermediateForm">
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="Nombre" required />
+        </div>
+        <div class="form-group">
+          <label for="apellido">Apellido:</label>
+          <input type="text" id="apellido" name="Apellido" required />
+        </div>
+        <div class="form-group">
+          <label for="edad">Edad:</label>
+          <input type="text" id="edad" name="Edad" required />
+        </div>
+        <div class="form-group">
+          <label for="telefono">Teléfono:</label>
+          <input type="text" id="telefono" name="Teléfono" required />
+        </div>
+        <div class="form-group">
+          <label for="correo">Correo electrónico:</label>
+          <input type="email" id="correo" name="Correo electrónico" required />
+        </div>
+        <div class="form-group">
+          <label for="ciudad">Ciudad:</label>
+          <input type="text" id="ciudad" name="Ciudad" placeholder="Opcional" />
+        </div>
+        <div class="form-group">
+          <label for="pais">País:</label>
+          <input type="text" id="pais" name="País" placeholder="Opcional" />
+        </div>
+        <div class="form-group">
+          <label for="perfilProfesional"
+            >Perfil profesional (3-4 líneas):</label
+          >
+          <textarea
+            id="perfilProfesional"
+            name="Perfil profesional"
+            rows="4"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="formacion">Formación académica:</label>
+          <textarea
+            id="formacion"
+            name="Formación académica"
+            rows="3"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="experiencia">Experiencia laboral:</label>
+          <textarea
+            id="experiencia"
+            name="Experiencia laboral"
+            rows="4"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="habilidades">Habilidades (técnicas y blandas):</label>
+          <input type="text" id="habilidades" name="Habilidades" />
+        </div>
+        <div class="form-group">
+          <label for="idiomas">Idiomas:</label>
+          <input type="text" id="idiomas" name="Idiomas" />
+        </div>
+        <div class="form-group">
+          <label for="certificaciones">Certificaciones / Cursos:</label>
+          <textarea
+            id="certificaciones"
+            name="Certificaciones"
+            rows="2"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="proyectos">Proyectos personales / Voluntariado:</label>
+          <textarea id="proyectos" name="Proyectos" rows="2"></textarea>
+        </div>
+
+        <button type="submit">Generar CV Intermedio</button>
+      </form>
+
+      <!-- 📄 Aquí se insertará el CV generado -->
+      <div id="contenedorCV"></div>
+
+      <!-- 🖨 Botón para exportar a PDF -->
+      <button
+        type="button"
+        id="exportarPDF"
+        class="exportar-pdf-btn"
+        style="display: none"
+      >
+        Exportar a PDF
+      </button>
+    </main>
+
+    <!-- Scripts principales -->
+    <script type="module" src="/js/cvform.js"></script>
+    <script type="module" src="/js/plantilla2.js"></script>
+    <script type="module" src="/js/iaprueba.js"></script>
+  </body>
 </html>
