@@ -1,21 +1,22 @@
+/* Base mobile-first styles */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', sans-serif;
-  background-color: #8e7663 ;
-  height: 100vh;
+  background-color: #8e7663;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .login-menu {
-  background-color:  #9a897b99;
+  background-color: #9a897b99;
   backdrop-filter: blur(12px);
-  padding: 3rem 5rem;
+  padding: 2rem;
   border-radius: 20px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  width: 100%;
+  width: 90%;
   max-width: 400px;
   color: #EDE3D6;
   text-align: center;
@@ -34,9 +35,9 @@ body {
 }
 
 h2 {
-  font-size: 2.2rem;
+  font-size: 2rem;
   margin-bottom: 1rem;
-  color:#EDE3D6;
+  color: #EDE3D6;
 }
 
 label {
@@ -44,21 +45,21 @@ label {
   margin: 1rem 0 0.5rem;
   font-weight: 600;
   text-align: left;
+  width: 100%;
+  font-size: 1rem;
   color: #ffffffcc;
 }
 
 input[type="email"],
 input[type="password"] {
   width: 100%;
-  padding: 12px 18px;
-  margin: 8px 10px;
+  padding: 14px 18px;
+  margin: 0.5rem 0;
   border: none;
   border-radius: 25px;
   font-size: 1rem;
   background-color: #EDE3D6;
   color: #333;
-  transition: 0.3s ease;
-
 }
 
 input[type="email"]:focus,
@@ -72,12 +73,12 @@ button[type="submit"] {
   color: white;
   border: none;
   border-radius: 25px;
-  padding: 12px 0;
+  padding: 14px;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
+  margin-top: 1rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-top: 0.5rem;
 }
 
 button[type="submit"]:hover {
@@ -90,7 +91,7 @@ a {
   margin-top: 1rem;
   color: #ffffffcc;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 a:hover {
@@ -99,13 +100,11 @@ a:hover {
 
 .register-link {
   position: fixed;
-  bottom: 15px;
-  left: 20px;
-  font-size: 0.95rem;
+  bottom: 10px;
+  left: 15px;
+  font-size: 0.9rem;
   color: rgb(5, 5, 5);
-  font-weight: 400;
   z-index: 10;
-  margin: 0;
 }
 
 .register-link a {
@@ -116,4 +115,30 @@ a:hover {
 
 .register-link a:hover {
   text-decoration: underline;
+}
+
+/* Media queries para pantallas más grandes */
+@media (min-width: 600px) {
+  .login-menu {
+    padding: 3rem 4rem;
+  }
+
+  h2 {
+    font-size: 2.4rem;
+  }
+
+  input[type="email"],
+  input[type="password"],
+  button[type="submit"] {
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+
+  a {
+    font-size: 1rem;
+  }
+
+  .register-link {
+    font-size: 1rem;
+  }
 }

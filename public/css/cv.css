@@ -1,19 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
 /* Estilo base */
+* {
+  box-sizing: border-box;
+}
+
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to bottom, #A39178 0%, #C2B39C 40%, #C2B39C 100%);
-    color: #333;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom, #A39178 0%, #C2B39C 40%, #C2B39C 100%);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 /* Encabezado */
 header {
   background-color: #A39178;
   padding: 2rem 1rem;
   text-align: center;
+  width: 100%;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
@@ -26,13 +35,14 @@ header h1 {
 
 /* Contenedor principal */
 main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 2rem 1rem;
-    width: 100%;
-  }  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem 1rem;
+  width: 100%;
+}
+
 /* Formulario */
 form {
   background-color: #E2D6C1;
@@ -41,35 +51,36 @@ form {
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
   max-width: 700px;
   width: 100%;
-  
-  
 }
 
+/* Agrupación de campos */
 .form-group {
   margin-bottom: 1.5rem;
   text-align: left;
-
 }
 
+/* Etiquetas */
 label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
   color: #444;
+  font-size: 1rem;
 }
 
+/* Campos */
 input[type="text"],
 input[type="email"],
 input[type="url"],
 textarea {
   width: 100%;
-  padding: 12px 2px;
+  padding: 14px 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
   background-color: #F8EDDA;
-  resize: none; /* ❌ Elimina la posibilidad de cambiar el tamaño */
+  transition: border-color 0.3s ease;
+  resize: none;
 }
 
 input:focus,
@@ -98,18 +109,53 @@ button[type="submit"]:hover {
 }
 
 /* Responsive */
-@media (max-width: 600px) {
-  form {
-    padding: 1.5rem 1rem;
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.8rem;
   }
 
-  header h1 {
-    font-size: 1.6rem;
+  form {
+    padding: 2rem 1.5rem;
+    margin: 0 10px; /* margen lateral pequeño para evitar desbordes */
+  }
+
+  input,
+  textarea {
+    font-size: 1rem;
+  }
+
+  label {
+    font-size: 0.95rem;
   }
 
   button[type="submit"] {
     width: 100%;
+    font-size: 1rem;
   }
 }
 
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.5rem;
+  }
 
+  form {
+    padding: 1.5rem 1rem;
+    margin: 0 8px;
+  }
+
+  input,
+  textarea {
+    font-size: 0.95rem;
+    padding: 12px 10px;
+  }
+
+  label {
+    font-size: 0.9rem;
+  }
+
+  button[type="submit"] {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+}
