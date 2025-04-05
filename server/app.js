@@ -46,7 +46,7 @@ app.post('/login', (req, res) => {
     if (user) {
       req.session.user = { email: user.email };
       // Si el login es correcto, devolvemos en el JSON la URL de redirección (por ejemplo, a /profile)
-      return res.json({ success: true, message: 'Inicio de sesión exitoso', redirect: '/perfil' });
+      return res.json({ success: true, redirect: '/perfil' });
     } else {
       return res.json({ success: false, message: 'Usuario o contraseña incorrectos' });
     }
