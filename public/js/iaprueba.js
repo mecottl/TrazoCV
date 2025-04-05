@@ -16,14 +16,24 @@ function getCVData() {
   }
 }
 
-function generarPromptLibre(resumenCV, tipo) {
-  return `Quiero que redactes un currículum vitae profesional, bien estructurado y completo, usando el siguiente resumen con datos del usuario. 
-No utilices formato de código. Redáctalo como si lo enviaras por correo o lo fueras a imprimir en un archivo PDF profesional. 
+function generarPromptHTML(resumenCV, tipo) {
+  return `
+Crea un CV visualmente atractivo en formato HTML moderno, sin comentarios ni bloques de código.
+Utiliza etiquetas HTML como <div>, <h2>, <p>, <ul>, etc. 
+Debe contener estas secciones:
 
-Resumen del CV (${tipo}): 
+- Datos personales
+- Perfil profesional
+- Experiencia
+- Educación
+- Habilidades
+- Idiomas (si aplica)
+
+No incluyas etiquetas <html>, <head> ni <body>. No uses markdown ni bloques de código. Solo devuelve el contenido HTML del CV listo para insertar en el DOM.
+
+Datos del usuario:
 ${resumenCV}
-
-Solo responde con el texto del CV (sin encabezados como "Aquí tienes", ni bloques de código).`;
+`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -38,12 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const datos = getCVData();
     if (!datos || !datos.resumen?.resumenCV) {
-      alert("No se pudo generar el resumen del CV.");
-      return;
+      return alert("No se pudo generar el resumen del CV.");
     }
 
     const { resumen, tipo } = datos;
-    const prompt = generarPromptLibre(resumen.resumenCV, tipo);
+    const prompt = generarPromptHTML(resumen.resumenCV, tipo);
 
     try {
       const response = await fetch('/generar-cv', {
@@ -53,39 +62,31 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const data = await response.json();
-      const contenido = data.cv?.trim() || data.text?.trim();
+      let htmlGenerado = data.cv?.trim();
 
-      if (!contenido) {
-        alert("La IA no devolvió texto válido.");
-        return;
-      }
+      // 🔥 Limpieza por seguridad en caso de que la IA aún agregue ```html o comentarios
+      htmlGenerado = htmlGenerado
+        .replace(/^```html\s*/i, '')
+        .replace(/```$/i, '')
+        .replace(/<!--[\s\S]*?-->/g, '')
+        .trim();
 
-      // Mostrar CV generado
-      contenedor.innerHTML = '';
-      const resultado = document.createElement('div');
-      resultado.style.whiteSpace = 'pre-wrap';
-      resultado.style.padding = '20px';
-      resultado.style.fontFamily = 'Segoe UI, sans-serif';
-      resultado.style.border = '1px solid #ccc';
-      resultado.style.borderRadius = '8px';
-      resultado.style.backgroundColor = '#fdfdfd';
-      resultado.style.lineHeight = '1.6';
-      resultado.innerText = contenido;
-      contenedor.appendChild(resultado);
+      if (!htmlGenerado) return alert("La IA no devolvió un contenido HTML válido.");
 
-      // Mostrar botón de exportar a PDF
+      contenedor.innerHTML = htmlGenerado;
+
       if (exportarBtn) {
         exportarBtn.style.display = 'inline-block';
         exportarBtn.onclick = () => {
           const { jsPDF } = window.jspdf;
           const doc = new jsPDF();
-          doc.setFont('helvetica', 'normal');
-          doc.setFontSize(12);
-          doc.text(resultado.innerText, 10, 10, { maxWidth: 180 });
-          doc.save(`CV_${tipo}.pdf`);
+          doc.html(contenedor, {
+            callback: (doc) => doc.save(`CV_Generado.pdf`),
+            x: 10,
+            y: 10
+          });
         };
       }
-
     } catch (err) {
       console.error("❌ Error procesando el CV:", err);
       alert("Ocurrió un error al generar el CV.");

@@ -1,90 +1,93 @@
-/**
- * Extrae y genera las variables resumidas para el CV Básico a partir del formulario.
- * @returns {Object} Objeto con la propiedad resumenCV.
- */
+function safeValue(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
 export function getBasicCVSummary() {
-  const nombre    = document.getElementById('nombre').value.trim();
-  const apellido  = document.getElementById('apellido').value.trim();
-  const edad  = document.getElementById('edad').value.trim();
-  const telefono  = document.getElementById('telefono').value.trim();
-  const correo    = document.getElementById('correo').value.trim();
-  const ciudad    = document.getElementById('ciudad').value.trim();
-  const pais      = document.getElementById('pais').value.trim();
-  const perfil    = document.getElementById('perfil').value.trim();
-  const formacion = document.getElementById('formacion').value.trim();
-  const experiencia = document.getElementById('experiencia').value.trim();
-  const habilidades = document.getElementById('habilidades').value.trim();
+  const nombre = safeValue('nombre');
+  const apellido = safeValue('apellido');
+  const edad = safeValue('edad');
+  const telefono = safeValue('telefono');
+  const correo = safeValue('correo');
+  const ciudad = safeValue('ciudad');
+  const pais = safeValue('pais');
+  const perfil = safeValue('perfil');
+  const formacion = safeValue('formacion');
+  const experiencia = safeValue('experiencia');
+  const habilidades = safeValue('habilidades');
 
-  const fullName  = `Mi nombre es ${nombre} ${apellido} y tengo ${edad} años.`;
-  const contacto  = `Contacto: Tel. ${telefono} - Correo: ${correo}.`;
-  const ubicacion = (ciudad || pais)
-    ? `Ubicación: ${ciudad}${(ciudad && pais) ? ', ' : ''}${pais}.`
-    : '';
-  const resumenCV = `${fullName} ${contacto} ${ubicacion} Perfil: ${perfil} Formación: ${formacion} Experiencia: ${experiencia} Habilidades: ${habilidades}`;
-  
+  const resumenCV = `
+    Nombre: ${nombre} ${apellido}, Edad: ${edad}.
+    Teléfono: ${telefono}, Correo: ${correo}, Ciudad: ${ciudad}, País: ${pais}.
+    Perfil: ${perfil}.
+    Formación: ${formacion}.
+    Experiencia: ${experiencia}.
+    Habilidades: ${habilidades}.
+  `;
   return { resumenCV };
 }
 
-/**
- * Extrae y genera las variables resumidas para el CV Intermedio a partir del formulario.
- * @returns {Object} Objeto con la propiedad resumenCV.
- */
 export function getIntermediateCVSummary() {
-  const nombre    = document.getElementById('nombre').value.trim();
-  const apellido  = document.getElementById('apellido').value.trim();
-  const edad  = document.getElementById('edad').value.trim();
+  const nombre = safeValue('nombre');
+  const apellido = safeValue('apellido');
+  const edad = safeValue('edad');
+  const telefono = safeValue('telefono');
+  const correo = safeValue('correo');
+  const ciudad = safeValue('ciudad');
+  const pais = safeValue('pais');
+  const perfilProfesional = safeValue('perfilProfesional');
+  const formacion = safeValue('formacion');
+  const experiencia = safeValue('experiencia');
+  const habilidades = safeValue('habilidades');
+  const idiomas = safeValue('idiomas');
+  const certificaciones = safeValue('certificaciones');
+  const proyectos = safeValue('proyectos');
 
-  const telefono  = document.getElementById('telefono').value.trim();
-  const correo    = document.getElementById('correo').value.trim();
-  const ciudad    = document.getElementById('ciudad').value.trim();
-  const pais      = document.getElementById('pais').value.trim();
-  const perfilProfesional = document.getElementById('perfilProfesional').value.trim();
-  const formacion = document.getElementById('formacion').value.trim();
-  const experiencia = document.getElementById('experiencia').value.trim();
-  const habilidades = document.getElementById('habilidades').value.trim();
-  const idiomas = document.getElementById('idiomas').value.trim();
-  const certificaciones = document.getElementById('certificaciones').value.trim();
-  const proyectos = document.getElementById('proyectos').value.trim();
-
-  const fullName = `Mi nombre es ${nombre} ${apellido}  y tengo ${edad} años.`;
-  const contacto = `Contacto: Tel. ${telefono} - Correo: ${correo}.`;
-  const ubicacion = (ciudad || pais)
-    ? `Ubicación: ${ciudad}${(ciudad && pais) ? ', ' : ''}${pais}.`
-    : '';
-  const resumenCV = `${fullName} ${contacto} ${ubicacion}Perfil Profesional: ${perfilProfesional} Formación: ${formacion} Experiencia: ${experiencia} Habilidades: ${habilidades} Idiomas: ${idiomas} Certificaciones: ${certificaciones} Proyectos: ${proyectos}`;
-  
+  const resumenCV = `
+    Nombre: ${nombre} ${apellido}, Edad: ${edad}.
+    Teléfono: ${telefono}, Correo: ${correo}, Ciudad: ${ciudad}, País: ${pais}.
+    Perfil Profesional: ${perfilProfesional}.
+    Formación: ${formacion}.
+    Experiencia: ${experiencia}.
+    Habilidades: ${habilidades}.
+    Idiomas: ${idiomas}.
+    Certificaciones: ${certificaciones}.
+    Proyectos: ${proyectos}.
+  `;
   return { resumenCV };
 }
 
-/**
- * Extrae y genera las variables resumidas para el CV Avanzado a partir del formulario.
- * @returns {Object} Objeto con la propiedad resumenCV.
- */
 export function getAdvancedCVSummary() {
-  const nombre    = document.getElementById('nombre').value.trim();
-  const apellido  = document.getElementById('apellido').value.trim();
-  const edad  = document.getElementById('edad').value.trim();
-  const tituloProfesional = document.getElementById('tituloProfesional').value.trim();
-  const telefono  = document.getElementById('telefono').value.trim();
-  const correo    = document.getElementById('correo').value.trim();
-  const ciudad    = document.getElementById('ciudad').value.trim();
-  const pais      = document.getElementById('pais').value.trim();
-  const linkedin  = document.getElementById('linkedin').value.trim();
-  const portafolio = document.getElementById('portafolio').value.trim();
-  const resumen   = document.getElementById('resumen').value.trim();
-  const experiencia = document.getElementById('experiencia').value.trim();
-  const formacion = document.getElementById('formacion').value.trim();
-  const habilidades = document.getElementById('habilidades').value.trim();
-  const idiomas   = document.getElementById('idiomas').value.trim();
-  const publicaciones = document.getElementById('publicaciones').value.trim();
-  const portafolioAdicional = document.getElementById('portafolioAdicional').value.trim();
+  const nombre = safeValue('nombre');
+  const apellido = safeValue('apellido');
+  const edad = safeValue('edad');
+  const profesion = safeValue('tituloProfesional');
+  const telefono = safeValue('telefono');
+  const correo = safeValue('correo');
+  const ciudad = safeValue('ciudad');
+  const pais = safeValue('pais');
+  const linkedin = safeValue('linkedin');
+  const portafolio = safeValue('portafolio');
+  const resumen = safeValue('resumen');
+  const experiencia = safeValue('experiencia');
+  const formacion = safeValue('formacion');
+  const habilidades = safeValue('habilidades');
+  const idiomas = safeValue('idiomas');
+  const publicaciones = safeValue('publicaciones');
+  const portafolioAdicional = safeValue('portafolioAdicional');
 
-  const fullNameTitle = `Soy ${nombre} ${apellido}, ${tituloProfesional}  y tengo ${edad} años.`;
-  const contacto = `Contacto: Tel. ${telefono} - Correo: ${correo} - LinkedIn: ${linkedin} - Portafolio: ${portafolio}.`;
-  const ubicacion = (ciudad || pais)
-    ? `Ubicación: ${ciudad}${(ciudad && pais) ? ', ' : ''}${pais}.`
-    : '';
-  const resumenCV = `${fullNameTitle} ${contacto} ${ubicacion}Resumen: ${resumen} Experiencia: ${experiencia} Formación: ${formacion} Habilidades: ${habilidades} Idiomas: ${idiomas} Publicaciones: ${publicaciones} Enlaces: ${portafolioAdicional}`;
-  
+  const resumenCV = `
+    Nombre: ${nombre} ${apellido}, Edad: ${edad}, Profesión: ${profesion}.
+    Teléfono: ${telefono}, Correo: ${correo}.
+    Ciudad: ${ciudad}, País: ${pais}.
+    LinkedIn: ${linkedin}, Portafolio: ${portafolio}.
+    Resumen: ${resumen}.
+    Experiencia: ${experiencia}.
+    Formación: ${formacion}.
+    Habilidades: ${habilidades}.
+    Idiomas: ${idiomas}.
+    Publicaciones: ${publicaciones}.
+    Enlaces adicionales: ${portafolioAdicional}.
+  `;
   return { resumenCV };
 }

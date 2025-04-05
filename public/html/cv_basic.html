@@ -26,7 +26,10 @@
       }
     </style>
 
-    <!-- jsPDF para exportar a PDF -->
+    <!-- 📦 html2canvas necesario para exportar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- 📄 jsPDF para generar PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   </head>
   <body>
@@ -46,7 +49,7 @@
         </div>
         <div class="form-group">
           <label for="edad">Edad:</label>
-          <input type="text" id="edad" required placeholder="Ej: 25" />
+          <input type="text" id="edad" name="Edad" required />
         </div>
         <div class="form-group">
           <label for="telefono">Teléfono:</label>
@@ -104,10 +107,10 @@
         <button type="submit">Generar CV Básico</button>
       </form>
 
-      <!-- 📄 CV generado dinámicamente -->
+      <!-- 📄 Aquí se mostrará el CV generado -->
       <div id="contenedorCV"></div>
 
-      <!-- Botón para exportar a PDF -->
+      <!-- 🖨 Botón para exportar a PDF -->
       <button
         type="button"
         id="exportarPDF"
@@ -118,7 +121,7 @@
       </button>
     </main>
 
-    <!-- Scripts -->
+    <!-- Scripts del proyecto -->
     <script type="module" src="/js/cvform.js"></script>
     <script type="module" src="/js/plantilla.js"></script>
     <script type="module" src="/js/iaprueba.js"></script>
