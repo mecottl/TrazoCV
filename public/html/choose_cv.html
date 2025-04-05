@@ -49,7 +49,7 @@
           <li>Incluye experiencia laboral en orden inverso.</li>
           <li>Ideal para profesionales con amplia experiencia.</li>
         </ul>
-        <a href="/advance" class="btn-card">Siguiente</a>
+        <a href="/advance" class="btn-card advanced-link">Siguiente</a>
       </div>
   
     </div>
@@ -65,13 +65,14 @@
           return response.json();
         })
         .then(data => {
-          // Asigna el email a window.userEmail (opcional, para otros usos)
+          // Asigna el email a window.userEmail para otros usos
           window.userEmail = data.email;
-          // Si el email es free@example.com, oculta la tarjeta de CV Avanzado
+          // Si el usuario es free, se cambia el enlace de la tarjeta Avanzada
           if (window.userEmail === 'free@example.com') {
-            const advancedCard = document.querySelector('.card-advanced');
-            if (advancedCard) {
-              advancedCard.style.display = 'none';
+            const advancedLink = document.querySelector('.advanced-link');
+            if (advancedLink) {
+              advancedLink.href = '/suscription'; // Redirige a la página de suscripción
+              advancedLink.textContent = 'Suscribirse a Premium';
             }
           }
         })
@@ -80,5 +81,4 @@
         });
     });
   </script>
-</body>
 </html>
