@@ -1,141 +1,192 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>CV Intermedio</title>
-    <link rel="stylesheet" href="/css/cv.css" />
-    <link rel="icon" type="image/x-icon" href="../img/icono.ico">
 
-    <style>
-      #contenedorCV {
-        margin-top: 30px;
+<head>
+  <meta charset="UTF-8" />
+  <title>CV Intermedio</title>
+  <link rel="stylesheet" href="/css/cv.css" />
+  <link rel="icon" type="image/x-icon" href="../img/icono.ico" />
+
+  <style>
+    #contenedorCV {
+      margin-top: 30px;
+    }
+
+    .exportar-pdf-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 14px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .exportar-pdf-btn:hover {
+      background-color: #388e3c;
+    }
+
+    /* Estilos para el botón de salir */
+    a.salir-btn {
+      display: inline-block;
+      background-color: #bea794;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 0.25rem;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    a.salir-btn:hover {
+      background-color: #bea794;
+    }
+  </style>
+
+  <!-- jsPDF para exportar a PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- Incluimos html2pdf (que incluye html2canvas) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>CV Intermedio</h1>
+  </header>
+  <main>
+    <form id="cvIntermediateForm">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="Nombre" required placeholder="Ej: María" />
+      </div>
+      <div class="form-group">
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="Apellido" required placeholder="Ej: García" />
+      </div>
+      <div class="form-group">
+        <label for="edad">Edad:</label>
+        <input type="text" id="edad" name="Edad" required placeholder="Ej: 28" />
+      </div>
+      <div class="form-group">
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" name="Teléfono" required placeholder="Ej: +34 600 123 456" />
+      </div>
+      <div class="form-group">
+        <label for="correo">Correo electrónico:</label>
+        <input type="email" id="correo" name="Correo electrónico" required placeholder="Ej: maria.garcia@example.com" />
+      </div>
+      <div class="form-group">
+        <label for="ciudad">Ciudad:</label>
+        <input type="text" id="ciudad" name="Ciudad" placeholder="Ej: Madrid (Opcional)" />
+      </div>
+      <div class="form-group">
+        <label for="pais">País:</label>
+        <input type="text" id="pais" name="País" placeholder="Ej: España (Opcional)" />
+      </div>
+      <div class="form-group">
+        <label for="perfilProfesional">Perfil profesional (3-4 líneas):</label>
+        <textarea id="perfilProfesional" name="Perfil profesional" rows="4" minlength="75" placeholder="Ej: Profesional en marketing con 5 años de experiencia en estrategias digitales"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="formacion">Formación académica:</label>
+        <textarea id="formacion" name="Formación académica" rows="3" minlength="25" placeholder="Ej: Licenciatura en Administración, Universidad Complutense de Madrid"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="experiencia">Experiencia laboral:</label>
+        <textarea id="experiencia" name="Experiencia laboral" rows="4" minlength="70" placeholder="Ej: 3 años de experiencia en ventas y gestión de equipos en el sector tecnológico"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="habilidades">Habilidades (técnicas y blandas):</label>
+        <input type="text" id="habilidades" name="Habilidades" placeholder="Ej: Comunicación, trabajo en equipo, liderazgo" />
+      </div>
+      <div class="form-group">
+        <label for="idiomas">Idiomas:</label>
+        <input type="text" id="idiomas" name="Idiomas" placeholder="Ej: Español (nativo), Inglés (avanzado)" />
+      </div>
+      <div class="form-group">
+        <label for="certificaciones">Certificaciones / Cursos:</label>
+        <textarea id="certificaciones" name="Certificaciones" rows="2" placeholder="Ej: Certificación en Google Analytics, Curso de SEO"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="proyectos">Proyectos personales / Voluntariado:</label>
+        <textarea id="proyectos" name="Proyectos" rows="2" placeholder="Ej: Proyecto de voluntariado en ONG, Desarrollo de app personal"></textarea>
+      </div>
+      <button type="submit">Generar CV</button>
+      <a href="/cv" class="salir-btn">Salir</a>
+    </form>
+
+    <!-- Contenedor donde se renderiza el CV -->
+    <div id="contenedorCV">
+      <!-- Aquí se renderizará el contenido del CV -->
+    </div>
+
+    <!-- Botón para exportar a PDF y subir automáticamente -->
+    <button type="button" id="exportarPDF" class="exportar-pdf-btn">
+      Exportar y Subir a PDF
+    </button>
+  </main>
+
+  <!-- Scripts del proyecto -->
+  <script type="module" src="/js/cvform.js"></script>
+  <script type="module" src="/js/iaprueba.js"></script>
+  </main>
+
+  <!-- Scripts principales -->
+  <script type="module" src="/js/cvform.js"></script>
+  <script type="module" src="/js/iaprueba.js"></script>
+
+  <!-- Script para generar el PDF y subirlo automáticamente -->
+  <script>
+    // Muestra el botón para exportar a PDF
+    document.getElementById('exportarPDF').addEventListener('click', () => {
+      const elemento = document.getElementById('contenedorCV');
+      if (!elemento) {
+        alert("No se encontró el contenido del CV.");
+        return;
       }
 
-      .exportar-pdf-btn {
-        margin-top: 20px;
-        padding: 10px 20px;
-        font-size: 14px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
+      html2canvas(elemento).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'pt', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
 
-      .exportar-pdf-btn:hover {
-        background-color: #388e3c;
-      }
-    </style>
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-    <!-- jsPDF para exportar a PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  </head>
-  <body>
-    <header>
-      <h1>CV Intermedio</h1>
-    </header>
+        const blob = pdf.output('blob');
 
-    <main>
-      <form id="cvIntermediateForm">
-        <div class="form-group">
-          <label for="nombre">Nombre:</label>
-          <input type="text" id="nombre" name="Nombre" required />
-        </div>
-        <div class="form-group">
-          <label for="apellido">Apellido:</label>
-          <input type="text" id="apellido" name="Apellido" required />
-        </div>
-        <div class="form-group">
-          <label for="edad">Edad:</label>
-          <input type="text" id="edad" name="Edad" required />
-        </div>
-        <div class="form-group">
-          <label for="telefono">Teléfono:</label>
-          <input type="text" id="telefono" name="Teléfono" required />
-        </div>
-        <div class="form-group">
-          <label for="correo">Correo electrónico:</label>
-          <input type="email" id="correo" name="Correo electrónico" required />
-        </div>
-        <div class="form-group">
-          <label for="ciudad">Ciudad:</label>
-          <input type="text" id="ciudad" name="Ciudad" placeholder="Opcional" />
-        </div>
-        <div class="form-group">
-          <label for="pais">País:</label>
-          <input type="text" id="pais" name="País" placeholder="Opcional" />
-        </div>
-        <div class="form-group">
-          <label for="perfilProfesional"
-            >Perfil profesional (3-4 líneas):</label
-          >
-          <textarea
-            id="perfilProfesional"
-            name="Perfil profesional"
-            rows="4"
-            minlength="75"
-          ></textarea>
-        </div>
-        <div class="form-group">
-          <label for="formacion">Formación académica:</label>
-          <textarea
-            id="formacion"
-            name="Formación académica"
-            rows="3"
-            minlength="25"
-          ></textarea>
-        </div>
-        <div class="form-group">
-          <label for="experiencia">Experiencia laboral:</label>
-          <textarea
-            id="experiencia"
-            name="Experiencia laboral"
-            rows="4"
-            minlength="70"
-          ></textarea>
-        </div>
-        <div class="form-group">
-          <label for="habilidades">Habilidades (técnicas y blandas):</label>
-          <input type="text" id="habilidades" name="Habilidades" />
-        </div>
-        <div class="form-group">
-          <label for="idiomas">Idiomas:</label>
-          <input type="text" id="idiomas" name="Idiomas" />
-        </div>
-        <div class="form-group">
-          <label for="certificaciones">Certificaciones / Cursos:</label>
-          <textarea
-            id="certificaciones"
-            name="Certificaciones"
-            rows="2"
-          ></textarea>
-        </div>
-        <div class="form-group">
-          <label for="proyectos">Proyectos personales / Voluntariado:</label>
-          <textarea id="proyectos" name="Proyectos" rows="2"></textarea>
-        </div>
+        // Generación del nombre dinámico para el archivo PDF
+        const currentDate = new Date();
+        const dateStr = currentDate.toISOString().slice(0, 19).replace(/[:T]/g, '-');
+        const nombreUsuario = document.getElementById('nombre').value.trim() || "CV";
+        const fileName = `${nombreUsuario}_${dateStr}.pdf`;
 
-        <button type="submit">Generar CV Intermedio</button>
-      </form>
+        // Prepara los datos para la subida automática
+        const formData = new FormData();
+        formData.append('pdf', blob, fileName);
 
-      <!-- 📄 Aquí se insertará el CV generado -->
-      <div id="contenedorCV"></div>
+        fetch('/upload-cv', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => {
+            if (response.ok) {
+              alert('CV generado y subido automáticamente.');
+            } else {
+              alert('Error al subir el CV.');
+            }
+          })
+          .catch(error => {
+            console.error('Error al subir el CV:', error);
+            alert('Error al subir el CV.');
+          });
+      });
+    });
+  </script>
+</body>
 
-      <!-- 🖨 Botón para exportar a PDF -->
-      <button
-        type="button"
-        id="exportarPDF"
-        class="exportar-pdf-btn"
-        style="display: none"
-      >
-        Exportar a PDF
-      </button>
-    </main>
-
-    <!-- Scripts principales -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script type="module" src="/js/cvform.js"></script>
-    <script type="module" src="/js/iaprueba.js"></script>
-  </body>
 </html>

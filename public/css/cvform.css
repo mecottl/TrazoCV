@@ -1,74 +1,79 @@
-/* Importante para que el padding no cause desbordes */
+
+/* Reset y estilos básicos */
 * {
   box-sizing: border-box;
 }
-
 body {
-  background: #a3846c;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #a3846c;
+  color: #030303;
 }
-
-/* Contenedor principal */
-.container {
-  max-width: 700px;
-  margin: 60px auto;
-  background: #d8ccbf;
-  padding: 30px 40px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+.panel-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
-
-/* Título */
-h1 {
+header {
   text-align: center;
-  color: #333;
   margin-bottom: 30px;
 }
-
-/* Lista de archivos */
-ul#fileList {
-  list-style: none;
-  padding: 0;
+header h1 {
+  font-size: 2rem;
+  margin: 0;
 }
-
-ul#fileList li {
+/* Grid estilo Bento */
+.pdf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+.pdf-card {
+  background-color: #d8ccbf;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #d8ccbf9f;
-  padding: 12px 20px;
-  margin-bottom: 12px;
-  border-left: 4px solid #070012;
-  border-radius: 6px;
-  transition: background 0.3s;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out;
 }
-
-ul#fileList li:hover {
-  background: #eee;
+.pdf-card:hover {
+  transform: translateY(-5px);
 }
-
-ul#fileList li span {
-  color: #444;
-  font-size: 16px;
+.pdf-thumbnail {
+  background-color: #ececec;
+  text-align: center;
+  padding: 10px;
 }
-
-/* Botón */
-.btn {
-  background-color: #bea794;
-  color: white;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 6px;
-  text-decoration: none;
-  font-size: 14px;
-  transition: background 0.3s ease;
+.pdf-thumbnail img {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 250px;
+  object-fit: cover;
 }
-
-.btn:hover {
-  background-color: #9c846b;
+.pdf-details {
+  padding: 15px;
+  text-align: center;
+}
+.pdf-details h3 {
+  font-size: 1.2rem;
+  margin: 0 0 10px 0;
+}
+.pdf-details p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #777;
+}
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 600px) {
+  .pdf-details h3 {
+    font-size: 1rem;
+  }
+  .pdf-details p {
+    font-size: 0.8rem;
+  }
 }
 
 /* ------------------- RESPONSIVE ------------------- */
@@ -118,4 +123,17 @@ ul#fileList li span {
     font-size: 14px;
     padding: 10px 12px;
   }
+}
+
+.a {
+  display: inline-block;
+  padding: 18px 36px;
+  background-color: #bea794;
+  color: white;
+  border: 2px solid white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 18px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }

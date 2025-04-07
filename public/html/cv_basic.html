@@ -1,58 +1,172 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CV Básico</title>
 
-    <link rel="stylesheet" href="/css/cv.css" />
-    <link rel="icon" type="image/x-icon" href="../img/icono.ico">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV Básico</title>
 
+  <link rel="stylesheet" href="/css/cv.css" />
+  <link rel="icon" type="image/x-icon" href="../img/icono.ico">
 
-    <style>
-      body {
-        font-family: "Segoe UI", sans-serif;
-        background-color: #f4f4f4;
-        padding: 20px;
+  <style>
+    #contenedorCV {
+      margin-top: 30px;
+    }
+
+    .exportar-pdf-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 14px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .exportar-pdf-btn:hover {
+      background-color: #388e3c;
+    }
+
+    /* Estilos para el botón de salir */
+    a.salir-btn {
+      display: inline-block;
+      background-color: #bea794;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 0.25rem;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    a.salir-btn:hover {
+      background-color: #bea794;
+    }
+  </style>
+
+  <!-- Dependencias para exportar a PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>CV Básico</h1>
+  </header>
+
+  <main>
+    <!-- Formulario para capturar datos -->
+    <form id="cvBasicForm">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" placeholder="Ej: Juan" required />
+      </div>
+      <div class="form-group">
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" placeholder="Ej: Pérez" required />
+      </div>
+      <div class="form-group">
+        <label for="edad">Edad:</label>
+        <input type="text" id="edad" placeholder="Ej: 30" required />
+      </div>
+      <div class="form-group">
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" placeholder="Ej: +34 600 123 456" required />
+      </div>
+      <div class="form-group">
+        <label for="correo">Correo electrónico:</label>
+        <input type="email" id="correo" placeholder="Ej: juan.perez@example.com" required />
+      </div>
+      <div class="form-group">
+        <label for="perfil">Perfil:</label>
+        <textarea id="perfil" rows="3" placeholder="Ej: Profesional con experiencia en..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="formacion">Formación:</label>
+        <textarea id="formacion" rows="3" placeholder="Ej: Licenciatura en Informática, Universidad de..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="experiencia">Experiencia:</label>
+        <textarea id="experiencia" rows="3" placeholder="Ej: Experiencia en desarrollo web, gestión de proyectos..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="habilidades">Habilidades:</label>
+        <input type="text" id="habilidades" placeholder="Ej: HTML, CSS, JavaScript" />
+      </div>
+      <button type="submit">Generar CV</button>
+      <a href="/cv" class="salir-btn">Salir</a>
+    </form>
+
+    <!-- Contenedor donde se renderiza el CV -->
+    <div id="contenedorCV">
+      <!-- Aquí se renderizará el contenido del CV -->
+    </div>
+
+    <!-- Botón para exportar a PDF y subir automáticamente -->
+    <button type="button" id="exportarPDF" class="exportar-pdf-btn">
+      Exportar y Subir a PDF
+    </button>
+  </main>
+
+  <!-- Scripts del proyecto -->
+  <script type="module" src="/js/cvform.js"></script>
+  <script type="module" src="/js/iaprueba.js"></script>
+
+  <!-- Script para generar el PDF y subirlo automáticamente -->
+  <script>
+    document.getElementById('exportarPDF').addEventListener('click', () => {
+      const elemento = document.getElementById('contenedorCV');
+      if (!elemento) {
+        alert("No se encontró el contenido del CV.");
+        return;
       }
 
-      #cv-render {
-        background-color: white;
-        color: #000;
-        font-size: 14px;
-        padding: 20px;
-        line-height: 1.6;
-        max-width: 800px;
-        margin: 0 auto;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
+      html2canvas(elemento).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'pt', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
 
-      #cv-render h2 {
-        color: #007bff;
-        margin-top: 20px;
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 5px;
-      }
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-      #cv-render p,
-      #cv-render li {
-        margin-bottom: 8px;
-      }
+        const blob = pdf.output('blob');
 
-      #cv-render ul {
-        padding-left: 20px;
-      }
+        // Generación del nombre dinámico para el archivo PDF
+        const currentDate = new Date();
+        const dateStr = currentDate.toISOString().slice(0, 19).replace(/[:T]/g, '-');
+        const nombreUsuario = document.getElementById('nombre').value.trim() || "CV";
+        const fileName = `${nombreUsuario}_${dateStr}.pdf`;
 
-      .form-group {
-        margin-bottom: 1rem;
-      }
+        // Prepara los datos para la subida automática
+        const formData = new FormData();
+        formData.append('pdf', blob, fileName);
 
-      label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-      }
+        fetch('/upload-cv', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => {
+            if (response.ok) {
+              alert('CV generado y subido automáticamente.');
+            } else {
+              alert('Error al subir el CV.');
+            }
+          })
+          .catch(error => {
+            console.error('Error al subir el CV:', error);
+            alert('Error al subir el CV.');
+          });
+      });
+    });
+  </script>
+</body>
 
+<<<<<<< HEAD
       input,
       textarea {
         width: 100%;
@@ -167,4 +281,6 @@
     <script type="module" src="/js/cvform.js"></script>
     <script type="module" src="/js/iaprueba.js"></script>
   </body>
+=======
+>>>>>>> 23818909841fd3a4b1ec9a5edda5d432654ad7e6
 </html>

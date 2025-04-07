@@ -1,88 +1,144 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
-  <title>Mis Archivos Subidos</title>
-  <link rel="stylesheet" href="/css/cvform.css">
-  <link rel="icon" type="image/x-icon" href="../img/icono.ico">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Previsualización de PDFs</title>
+  <link rel="stylesheet" href="../css/cvform.css">
+  <style>
+    a.back-btn {
+      display: inline-block;
+      background-color: #bea794;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 0.25rem;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-left: 10px;
+
+    }
+    .panel-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .pdf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .pdf-card {
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-align: center;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .pdf-thumbnail img {
+      width: 100%;
+      height: auto;
+    }
+
+    .pdf-details h3 {
+      margin: 10px 0 5px;
+      font-size: 1.1rem;
+    }
+
+    .pdf-details p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .delete-btn {
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  </style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>Mis Archivos Subidos</h1>
-    <ul id="fileList">
-      <!-- Aquí se inyectarán los archivos -->
-    </ul>
-    <div style="text-align: center; margin-top: 20px;">
-      <a class="btn" href="/perfil">Volver al Perfil</a>
+  <div class="panel-container">
+    <header>
+      <h1>Mis CVs Guardados</h1>
+      </br>
+      <a href='/perfil' class="back-btn ">Pulsa para regresar</a>
+    </header>
+    <div class="pdf-grid" id="pdfGrid">
+      <!-- Las tarjetas de PDF se insertarán dinámicamente aquí -->
     </div>
   </div>
 
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      fetch('/api/uploaded_files')
-        .then(response => {
-          if (!response.ok) throw new Error('Error en la respuesta del servidor.');
-          return response.json();
-        })
+    document.addEventListener("DOMContentLoaded", () => {
+      const pdfGrid = document.getElementById("pdfGrid");
+      fetch("/api/uploaded_files")
+        .then(response => response.json())
         .then(files => {
-          const fileList = document.getElementById('fileList');
           if (files.length === 0) {
-            fileList.innerHTML = '<li>No se han encontrado archivos subidos.</li>';
-          } else {
-            files.forEach(file => {
-              const li = document.createElement('li');
-              const span = document.createElement('span');
-              span.textContent = `${file.nombre_archivo} (${file.fecha_subida})`;
-
-              const actionsDiv = document.createElement('div');
-              actionsDiv.className = 'file-actions';
-
-              const downloadBtn = document.createElement('a');
-              downloadBtn.className = 'btn';
-              downloadBtn.href = `/download-cv/${file.id}`;
-              downloadBtn.textContent = 'Descargar';
-
-              const deleteBtn = document.createElement('button');
-              deleteBtn.className = 'btn';
-              deleteBtn.style.backgroundColor = '#e74c3c';
-              deleteBtn.style.cursor = 'pointer';
-              deleteBtn.textContent = 'Eliminar';
-              deleteBtn.addEventListener('click', () => eliminarArchivo(file.id, li));
-
-              actionsDiv.appendChild(downloadBtn);
-              actionsDiv.appendChild(deleteBtn);
-
-              li.appendChild(span);
-              li.appendChild(actionsDiv);
-              fileList.appendChild(li);
-            });
+            pdfGrid.innerHTML = "<p>No se han encontrado archivos PDF. </p>";
+            return;
           }
-        })
-        .catch(error => {
-          console.error('Error al cargar archivos:', error);
-          document.getElementById('fileList').innerHTML = '<li>Error al cargar archivos.</li>';
-        });
+          files.forEach(file => {
+            const fecha = new Date(file.fecha_subida).toLocaleDateString("es-ES");
+            const card = document.createElement("div");
+            card.className = "pdf-card";
+            card.innerHTML = `
+              <a href="/download-cv/${file.id}" target="_blank">
+                <div class="pdf-thumbnail">
+                  <img src="https://via.placeholder.com/220x300.png?text=PDF" alt="Vista previa PDF">
+                </div>
+              </a>
+              <div class="pdf-details">
+                <h3>${file.nombre_archivo}</h3>
+                <p>Fecha: ${fecha}</p>
+              </div>
+              <button class="delete-btn" data-id="${file.id}">Eliminar</button>
+            `;
+            pdfGrid.appendChild(card);
 
-      function eliminarArchivo(id, liElement) {
-        if (confirm('¿Estás seguro de que deseas eliminar este archivo?')) {
-          fetch(`/api/delete_file/${id}`, {
-            method: 'DELETE'
-          })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('No se pudo eliminar el archivo.');
-            }
-            liElement.remove();
-          })
-          .catch(error => {
-            console.error('Error al eliminar archivo:', error);
-            alert('Ocurrió un error al intentar eliminar el archivo.');
+            // Asigna el evento para eliminar el archivo
+            const deleteBtn = card.querySelector('.delete-btn');
+            deleteBtn.addEventListener('click', () => {
+              if (confirm("¿Estás seguro de eliminar este archivo?")) {
+                const fileId = deleteBtn.getAttribute("data-id");
+                fetch(`/delete-cv/${fileId}`, { method: 'DELETE' })
+                  .then(response => {
+                    if (response.ok) {
+                      // Elimina la tarjeta de la interfaz
+                      card.remove();
+                    } else {
+                      alert("Error al eliminar el archivo");
+                    }
+                  })
+                  .catch(error => {
+                    console.error("Error al eliminar el archivo:", error);
+                    alert("Error al eliminar el archivo");
+                  });
+              }
+            });
           });
-        }
-      }
+        })
+        .catch(err => {
+          console.error("Error al obtener los archivos:", err);
+          pdfGrid.innerHTML = "<p>Error al cargar los archivos.</p>";
+        });
     });
   </script>
 </body>
+
 </html>
