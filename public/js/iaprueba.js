@@ -18,7 +18,7 @@ function getCVData() {
 
 function generarPromptHTML(resumenCV, tipo) {
   return `
-Genera un CV en formato HTML moderno, estilizado y profesional para un CV de tipo ${tipo}.
+Genera un CV en formato HTML, sentrate en meter mas informacion que corresponda a los datos, se mas bonnito y creativo, ademas quiero que ayudes a tener mas informacion, estilizado y profesional para un CV de tipo ${tipo}.
 Usa <div>, <h2>, <p>, <ul> y <li> para estructurar secciones como:
 - Datos personales
 - Perfil profesional
