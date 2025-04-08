@@ -166,4 +166,121 @@
   </script>
 </body>
 
+<<<<<<< HEAD
+      input,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      button[type="submit"],
+      .exportar-pdf-btn {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 0.25rem;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #218838;
+      }
+
+      .exportar-pdf-btn {
+        background-color: #007bff;
+        display: none;
+        margin-top: 20px;
+      }
+
+      .exportar-pdf-btn:hover {
+        background-color: #0056b3;
+      }
+    </style>
+
+    <!-- Dependencias para exportar a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>CV Básico</h1>
+    </header>
+
+    <main>
+      <!-- Formulario para capturar datos -->
+      <form id="cvBasicForm">
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" required />
+        </div>
+        <div class="form-group">
+          <label for="apellido">Apellido:</label>
+          <input type="text" id="apellido" required />
+        </div>
+        <div class="form-group">
+          <label for="edad">Edad:</label>
+          <input type="text" id="edad" required />
+        </div>
+        <div class="form-group">
+          <label for="telefono">Teléfono:</label>
+          <input type="text" id="telefono" required />
+        </div>
+        <div class="form-group">
+          <label for="correo">Correo electrónico:</label>
+          <input type="email" id="correo" required />
+        </div>
+        <div class="form-group">
+          <label for="perfil">Perfil:</label>
+          <textarea id="perfil" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="pais">País:</label>
+          <input type="text" id="pais" />
+        </div>
+        <div class="form-group">
+          <label for="perfil">Perfil personal (2-3 líneas):</label>
+          <textarea
+            id="perfil"
+            name="Perfil personal"
+            rows="3"
+            placeholder="Quién eres, qué haces y qué buscas"
+            minlength="30"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="formacion">Formación académica:</label>
+          <textarea id="formacion" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="experiencia">Experiencia:</label>
+          <textarea id="experiencia" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="habilidades">Habilidades:</label>
+          <input type="text" id="habilidades" />
+        </div>
+
+        <button type="submit">Generar CV</button>
+      </form>
+
+      <!-- Donde se muestra el CV generado -->
+      <div id="contenedorCV"></div>
+
+      <!-- Botón para exportar a PDF -->
+      <button type="button" id="exportarPDF" class="exportar-pdf-btn">
+        Exportar a PDF
+      </button>
+    </main>
+
+    <!-- Scripts del proyecto -->
+    <script type="module" src="/js/cvform.js"></script>
+    <script type="module" src="/js/iaprueba.js"></script>
+  </body>
+=======
+>>>>>>> 23818909841fd3a4b1ec9a5edda5d432654ad7e6
 </html>
